@@ -1,0 +1,11 @@
+source_id,query,canonical_id,expected_name,levenshtein_normalized_rank,rapidfuzz_wratio_rank,similarity_rank,strict_word_similarity_rank,text_embedding_3_small_cosine_rank,word_similarity_rank,semantic_top3_names
+7628096,Kid lads,4648752,Alternate Universe - Rooster Teeth/Achievement Hunter Kids,169886,454,4869,424,909,428,"[""Lads Are Children"", ""Schoolboys"", ""Kid Direction""]"
+2412687,慢热,94431,Slow Build,3671,3671,3671,3671,80,3671,"[""Heat Stroke"", ""Fever"", ""Hot Weather""]"
+12551329,Description of Sex,4926,Sex,62130,1,55,679,13,1142,"[""Suit Sex"", ""Good Sex"", ""Happy Sex""]"
+6705718,jikook is life,39843271,I'm Bangtan Boys | BTS Trash,157103,174281,39659,22078,10698,47653,"[""Jikook Week"", ""Jikook Week 2018"", ""Jikook Bingo 2020""]"
+1058420,Canonical Divergence,143795,Alternate Universe - Canon Divergence,103,1,35,1,32,1,"[""Canon Divergence - Co-Existence"", ""Divergence (Divergent)"", ""Canon Divergence - The Reichenbach Fall""]"
+309660,Dark-fic,1252,Dark,7,1,2,6,45,45,"[""Dark Fic Fest"", ""Bad Fic"", ""Deathfic""]"
+33486076,OnS Gift Exchange,36549517,Owari no Seraph Gift Exchange,69,696,68,195,34,196,"[""Gift Exchange"", ""HS Gift Exchange 2013"", ""SPN Holidays Gift Exchange""]"
+5476116,Jack is a dick,23252790,Handsome Jack (Borderlands) Being an Asshole,42732,1851,2828,1094,41,1209,"[""Jack Being an Asshole"", ""Jack is a Tease"", ""Jack being Jack""]"
+26353055,Missing moments from canon,2298,Missing Scene,34,1,10,7,71,18,"[""During Canon"", ""Mid-Canon"", ""Early in Canon""]"
+15606549,side taegimin,46961233,Minor Kim Taehyung | V/Min Yoongi | Suga/Park Jimin,81273,5780,245,622,560,2297,"[""Taegi Week"", ""Taegi Week 2018"", ""Taegi Week 2017""]"

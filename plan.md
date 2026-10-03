@@ -4,7 +4,7 @@
 
 Evaluate lexical retrieval, semantic embedding retrieval, candidate fusion, and optional Jev adjudication for AO3 canonicalisation. Separate candidate recall, final selection, and the decision to automate a mapping.
 
-**Active dataset:** the local AO3 selective dump under `data/ao3-dump/`, with filenames dated 2021-02-26. The [README](README.md) is the live writeup. The [dataset audit](results/ao3/audit/analysis.json) and [type counts](results/ao3/audit/tag_types.csv) are the current measured artifacts. Dataset analysis is complete; benchmark export and AO3 Stage 1 are pending. No previous dataset's scores carry over.
+**Active dataset:** the local AO3 selective dump under `data/ao3-dump/`, with filenames dated 2021-02-26. The [README](README.md) is the live writeup. Dataset analysis, the [frozen benchmark export](results/ao3/benchmark/manifest.json), the AO3 ID/type adapter, and **Stage 1 on the frozen Freeform development sample are complete**. See the [AO3 results](results/ao3/stage1/summary.json). No previous dataset's scores carry over.
 
 ## Dataset decision — adopt AO3
 
@@ -31,9 +31,9 @@ This supports a substantial retrieval/adjudication study with natural-language a
 - Do not infer visibility from `cached_count`: 96,873 redacted rows have counts at least five, while 849,932 named canonical rows have counts below five. Use the actual name marker; counts are approximate.
 - Keep the 221,190 visible noncanonical rows without a merger as unlabelled data. They need a separate adjudication process before they can support no-match or ambiguous-case evaluation.
 
-### Proposed split and initial scope
+### Frozen split and initial scope
 
-Use canonical IDs as the grouping unit. The proposed diagnostic rule hashes `tag-matching-jev-ao3-v1:canonical_id`, takes the first 64 bits modulo ten, and assigns buckets 0–5 to development, 6–7 to calibration, and 8–9 to test. Source aliases and identity controls follow their resolved canonical group.
+Use canonical IDs as the grouping unit. The frozen rule hashes `tag-matching-jev-ao3-v1:canonical_id`, takes the first 64 bits modulo ten, and assigns buckets 0–5 to development, 6–7 to calibration, and 8–9 to test. Source aliases and identity controls follow their resolved canonical group.
 
 | Freeform split | Eligible synonyms | Canonical groups with synonyms |
 |---|---:|---:|
@@ -41,7 +41,7 @@ Use canonical IDs as the grouping unit. The proposed diagnostic rule hashes `tag
 | Calibration | 24,943 | 9,394 |
 | Test | 21,406 | 9,302 |
 
-These are population counts under a proposed split, not a frozen benchmark export or evaluated results. Keep all 181,067 eligible Freeform canonical names available across query splits. Begin Stage 1 with a deterministic budgeted development sample, for example 2,000 aliases with a cap per canonical group, then scale up after measuring runtime. Freeze the sample definition and record any resulting selection bias before scoring. Keep calibration and test for their designated later stages.
+These are the frozen population split counts. Stage 1 takes 2,000 development aliases in SHA-256 order under seed `tag-matching-jev-ao3-freeform-stage1-v1`, skipping targets after three aliases. The sample covers 1,761 groups. Separately select 250 development canonical identity controls with the seed's `:identity` suffix. The [manifest](results/ao3/benchmark/manifest.json) fixes the exact rules before scoring and records the visible-name/capped-family sampling bias. All 181,067 eligible Freeform canonical names remain available across splits. Keep calibration and test for their designated later stages.
 
 Any catalogue reduction is a separate experimental condition: adding or removing distractors changes recall. Never retain only the correct targets of selected queries and report that as full-catalogue performance.
 
@@ -51,17 +51,17 @@ The works CSV provides associated tag IDs and metadata. It does not provide text
 
 Use `(works_file_hash, CSV_record_ordinal)` as a local work identifier if contexts are materialized. Mask the query, all equivalents of its expected target, and held-out aliases before constructing prompts or descriptions. Define work-level separation as well as canonical-group separation so a work's context is not reused across splits. Keep the tag-only benchmark as the primary baseline.
 
-## Implementation before AO3 Stage 1
+## AO3 Stage 1 implementation
 
-1. Export a frozen AO3 catalogue and positive-pair pool using the audited ID/type rules; write checksums, exclusions, sampling policy, and splits into a manifest.
-2. Adapt the evaluation loader to source IDs and tag types. The earlier runners assume a different CSV schema and dataset; they are not an AO3 adapter.
-3. Select and freeze the initial Freeform development sample. Report identity controls separately and mask evaluated aliases in every retrieval path.
-4. Implement batched exhaustive lexical and vector ranking. A dense matrix for all 70,294 development aliases against 181,067 canonical names has about 12.73 billion cells, around 101.8 GB in float64, before rankings and overhead. Do not allocate it as one array.
-5. Run Stage 1 below with one embedding model, then update the live README with AO3-only measurements.
+1. **Complete:** export a frozen AO3 catalogue and positive-pair pool using audited ID/type rules, with checksums, exclusions, sampling policy, and splits in the manifest.
+2. **Complete:** implement a separate AO3 loader using source IDs and tag types, with integrity checks.
+3. **Complete:** freeze the initial Freeform development sample; report identities separately and mask evaluated aliases in every retrieval path.
+4. **Complete:** implement batched exhaustive lexical/vector ranking with numeric-ID tie breaks and resumable rank checkpoints. A dense matrix for all 70,294 development aliases against 181,067 canonical names would have about 12.73 billion cells, around 101.8 GB in float64; the runner does not allocate it.
+5. **Complete:** evaluate Stage 1 below with one embedding model and record AO3-only measurements, paired intervals, and limitations in the live README.
 
 ### Proposed persistent schema
 
-PostgreSQL with `pg_trgm` and pgvector remains the intended backend. The extension name for pgvector is `vector`. Persistent AO3 schema, imports, embeddings, and indexes have not yet been implemented; pin versions before starting.
+PostgreSQL with `pg_trgm` and pgvector remains the intended serving backend. The extension name for pgvector is `vector`. Stage 1 uses a disposable PostgreSQL 18.6 cluster with `pg_trgm` 1.6 and local embedding files with exact NumPy search. Persistent AO3 schema/imports and pgvector indexes remain later work; pin versions before starting them.
 
 | Table | Key and main fields | Purpose |
 |---|---|---|
@@ -136,13 +136,13 @@ Where possible, maintain:
 - Distinguish tag-only input from observed work co-tags. Work metadata contains no title, summary, body text, or original work ID.
 - Before using a work's co-tags, remove the query tag, the expected canonical target, and all tags resolving to that target; also exclude held-out aliases from retrieval and enrichment. Prevent the same work record from supplying contexts across splits.
 - Report performance by usage range, name length, script/language where actually established, punctuation, and lexical difficulty. Work language alone is not a tag-language label.
-- Keep an untouched test set. Dataset auditing and proposed split counts do not constitute evaluation.
+- Keep an untouched test set. Dataset auditing and split counts do not constitute evaluation.
 
 ---
 
 # 1. Establish Simple Baselines
 
-**Pending for AO3.** Complete the AO3 benchmark export and adapter before running these methods. The active [README](README.md) currently reports dataset analysis only; no AO3 retrieval or Jev result has been measured.
+**Complete for the initial AO3 Freeform development pilot.** Name-only Recall@10 is 70.35% for the best lexical method (`pg_trgm similarity`) and 80.95% for `text-embedding-3-small`; the paired improvement is 10.60 points (95% group-bootstrap interval 8.57–12.65). Trigram retrieval with other development aliases reaches 85.00% under the separate alias-permitted condition. Results are under `results/ao3/stage1/` and summarized in the [README](README.md). Calibration/test evaluation and Jev adjudication remain later stages.
 
 Do not use Jev yet.
 
@@ -208,6 +208,8 @@ At this stage, do not optimise for final mapping accuracy. The main question is:
 ---
 
 # 2. Test Text Representation
+
+**Next stage; not yet run.** Stage 1 supports retaining ordinary `pg_trgm similarity` and `text-embedding-3-small` as the lexical and semantic references. Keep the frozen Freeform sample and full catalogue when comparing representations.
 
 Freeze one lexical method and one embedding model temporarily.
 
@@ -852,6 +854,30 @@ Measure performance by subset rather than only reporting one aggregate score.
 # 11. Efficiency and Production-Oriented Tests
 
 Only after quality is understood should performance optimisations be introduced.
+
+## 11.0 PostgreSQL index experiment
+
+Use the frozen Stage 1 rankings as the reference for indexed retrieval. Proposed indexes for tables already scoped to one snapshot, Freeform type, and (for vectors) embedding configuration:
+
+```sql
+CREATE INDEX freeform_term_trgm
+    ON freeform_term USING gist (name gist_trgm_ops);
+
+CREATE INDEX freeform_embedding_cosine
+    ON freeform_embedding USING hnsw (embedding vector_cosine_ops);
+```
+
+These are proposed DDL examples; the persistent tables and indexes have not been created.
+
+- **Lexical:** use GiST nearest-neighbour ordering: `name <-> $1` for similarity, `$1 <<-> name` for word similarity, and `$1 <<<-> name` for strict word similarity, with `LIMIT`. GIN is an alternative for threshold/pattern filtering. [pg_trgm index support](https://www.postgresql.org/docs/18/pgtrgm.html#PGTRGM-INDEX).
+- **Exact lookup:** use a nonunique B-tree on `(snapshot_id, type, normalization_version, normalized_name)` and retain all colliding canonical IDs for abstention. [PostgreSQL index types](https://www.postgresql.org/docs/18/indexes-types.html).
+- **Vectors:** start with HNSW cosine ordering, `embedding <=> $1`, ascending with `LIMIT`. Vary `hnsw.ef_search`; compare IVFFlat if build time or memory becomes limiting. Use type/configuration partitions or partial indexes, and evaluate iterative scans where filters reduce returned neighbours. [pgvector indexing and filtering](https://github.com/pgvector/pgvector#hnsw).
+
+Preserve alias masking, canonical-ID deduplication and numeric-ID tie breaks. For lexical alias retrieval, fetch enough representation rows and cutoff ties before selecting ten distinct canonical IDs. A fixed ten alias rows can hide valid targets. Test indexed shortlists against the existing exhaustive outputs, including punctuation and tied-score cases.
+
+First compare exact pgvector ranking on the cached float32 vectors with the float64 NumPy reference; then measure additional ANN loss separately. Record `EXPLAIN (ANALYZE, BUFFERS)`, p50/p95 latency, build time, index size, shortlist overlap and labelled Recall@k on development only. Keep query type, snapshot, and model configuration identical across conditions.
+
+Indexes speed shortlist retrieval. Exhaustive all-pairs scoring and full target ranks still require broader work. For Levenshtein/WRatio, test trigram retrieval followed by reranking as a separate configuration and measure the effect of candidate pruning on recall.
 
 ## 11.1 Approximate vector search
 

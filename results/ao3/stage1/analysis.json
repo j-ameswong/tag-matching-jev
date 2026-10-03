@@ -1,0 +1,27 @@
+{
+  "status": "complete",
+  "kind": "descriptive development follow-up",
+  "source_sha256": "225b8580d7d48ad62fecac150149d2c183b3332ed020f647cf74feb821e4a881",
+  "summary_sha256": "125e2ca6db08bc57a25ebb8b8b2c237adfa4c9c3c318bdfd16b5e9c4a424326d",
+  "independent_membership_metric_checks": 152,
+  "error_selection": {
+    "seed": "ao3-stage1-error-review-v1",
+    "pool": "semantic canonical-name Recall@10 misses",
+    "pool_size": 381,
+    "selected": 10,
+    "rule": "first ten by SHA256(seed:source_id), numeric ID tie break"
+  },
+  "difficulty": "Raw query/label name normalized Levenshtein similarity, quartile-width bands; descriptive only",
+  "artifacts": {
+    "lexical_difficulty.csv": {
+      "rows": 24,
+      "sha256": "cb5593e98a6cbcc7c333ee587951df3532a23444036a320acd45b5e62e2f70ec",
+      "bytes": 2826
+    },
+    "semantic_errors.csv": {
+      "rows": 10,
+      "sha256": "d36b79bf44bd0213cf1c6556689dddc68fe7006ffa7962727b79d8b01c032511",
+      "bytes": 1702
+    }
+  }
+}

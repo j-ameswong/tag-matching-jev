@@ -1,0 +1,346 @@
+{
+  "format": "ao3-tag-benchmark-v1",
+  "snapshot_id": "ao3-20210226-ac07b915acab",
+  "source_file_date": "2021-02-26",
+  "source_directory": "data/ao3-dump",
+  "source_files": {
+    "tags-20210226.csv": {
+      "sha256": "ac07b915acab15a6a89e88c45e161dfb7a0046a76d1871e54821d14f3dc55463",
+      "bytes": 581517630
+    },
+    "works-20210226.csv": {
+      "sha256": "2ce9a15d378587245bf69fabc5bd8a75bf36908755d81c3d4e7e72c24ed2dfdb",
+      "bytes": 968060352
+    }
+  },
+  "export_sources_sha256": {
+    "build_ao3_benchmark.py": "606289ada94b775a73ff06ca169885aa66ae9b3e3af3e39e5c5f785d9f82c850",
+    "ao3_benchmark.py": "d482e1918533e761b03d6b9ae61d78e966802e653672d7e81e70a8e34b928aaa",
+    "analyze_ao3_dataset.py": "26a8c4cb8de15c78354b8501d6011ec10186009796f0fea9a13692b497a62968"
+  },
+  "catalogue_policy": "All visible canonical=true rows without outgoing merger; all types exported; no count threshold",
+  "positive_policy": "Visible noncanonical source; resolve merger to visible canonical with no conflict; same source/target type",
+  "excluded_named_merged": {
+    "missing_target": 1,
+    "canonical_merger_conflict": 2,
+    "unmerged_terminal": 0,
+    "cross_type": 0
+  },
+  "suppression": "Exclude literal Redacted and blank names; retain original names and approximate counts",
+  "unlabelled_visible_unmerged": 221190,
+  "split": {
+    "seed": "tag-matching-jev-ao3-v1",
+    "unit": "resolved canonical ID",
+    "rule": "SHA256(seed:canonical_id), first 64 bits modulo 10: 0-5 development, 6-7 calibration, 8-9 test"
+  },
+  "by_type": [
+    {
+      "type": "ArchiveWarning",
+      "total_tags": 6,
+      "visible_names": 6,
+      "canonical_tags": 6,
+      "catalogue_candidates": 6,
+      "merged_tags_including_redacted": 0,
+      "usable_synonyms": 0,
+      "canonical_targets_with_synonyms": 0,
+      "visible_unmerged_noncanonical": 0,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 4
+        },
+        "calibration": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 1
+        },
+        "test": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 1
+        }
+      }
+    },
+    {
+      "type": "Category",
+      "total_tags": 15,
+      "visible_names": 8,
+      "canonical_tags": 6,
+      "catalogue_candidates": 6,
+      "merged_tags_including_redacted": 0,
+      "usable_synonyms": 0,
+      "canonical_targets_with_synonyms": 0,
+      "visible_unmerged_noncanonical": 2,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 3
+        },
+        "calibration": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 2
+        },
+        "test": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 1
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "total_tags": 1509000,
+      "visible_names": 386635,
+      "canonical_tags": 327455,
+      "catalogue_candidates": 327424,
+      "merged_tags_including_redacted": 553710,
+      "usable_synonyms": 47646,
+      "canonical_targets_with_synonyms": 28888,
+      "visible_unmerged_noncanonical": 11534,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 28932,
+          "synonym_target_groups": 17423,
+          "canonical_candidates": 196608
+        },
+        "calibration": {
+          "synonyms": 9448,
+          "synonym_target_groups": 5741,
+          "canonical_candidates": 65255
+        },
+        "test": {
+          "synonyms": 9266,
+          "synonym_target_groups": 5724,
+          "canonical_candidates": 65561
+        }
+      }
+    },
+    {
+      "type": "Fandom",
+      "total_tags": 204858,
+      "visible_names": 58822,
+      "canonical_tags": 42344,
+      "catalogue_candidates": 42344,
+      "merged_tags_including_redacted": 129278,
+      "usable_synonyms": 15236,
+      "canonical_targets_with_synonyms": 4959,
+      "visible_unmerged_noncanonical": 1242,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 8601,
+          "synonym_target_groups": 2975,
+          "canonical_candidates": 25371
+        },
+        "calibration": {
+          "synonyms": 2821,
+          "synonym_target_groups": 992,
+          "canonical_candidates": 8506
+        },
+        "test": {
+          "synonyms": 3814,
+          "synonym_target_groups": 992,
+          "canonical_candidates": 8467
+        }
+      }
+    },
+    {
+      "type": "Freeform",
+      "total_tags": 9244331,
+      "visible_names": 463965,
+      "canonical_tags": 181076,
+      "catalogue_candidates": 181067,
+      "merged_tags_including_redacted": 1822087,
+      "usable_synonyms": 116643,
+      "canonical_targets_with_synonyms": 46901,
+      "visible_unmerged_noncanonical": 166244,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 70294,
+          "synonym_target_groups": 28205,
+          "canonical_candidates": 108646
+        },
+        "calibration": {
+          "synonyms": 24943,
+          "synonym_target_groups": 9394,
+          "canonical_candidates": 36560
+        },
+        "test": {
+          "synonyms": 21406,
+          "synonym_target_groups": 9302,
+          "canonical_candidates": 35861
+        }
+      }
+    },
+    {
+      "type": "Media",
+      "total_tags": 12,
+      "visible_names": 12,
+      "canonical_tags": 12,
+      "catalogue_candidates": 12,
+      "merged_tags_including_redacted": 0,
+      "usable_synonyms": 0,
+      "canonical_targets_with_synonyms": 0,
+      "visible_unmerged_noncanonical": 0,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 7
+        },
+        "calibration": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 2
+        },
+        "test": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 3
+        }
+      }
+    },
+    {
+      "type": "Rating",
+      "total_tags": 6,
+      "visible_names": 6,
+      "canonical_tags": 5,
+      "catalogue_candidates": 5,
+      "merged_tags_including_redacted": 0,
+      "usable_synonyms": 0,
+      "canonical_targets_with_synonyms": 0,
+      "visible_unmerged_noncanonical": 1,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 3
+        },
+        "calibration": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 2
+        },
+        "test": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 0
+        }
+      }
+    },
+    {
+      "type": "Relationship",
+      "total_tags": 2048295,
+      "visible_names": 674687,
+      "canonical_tags": 625133,
+      "catalogue_candidates": 625122,
+      "merged_tags_including_redacted": 961842,
+      "usable_synonyms": 45219,
+      "canonical_targets_with_synonyms": 24592,
+      "visible_unmerged_noncanonical": 4334,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 27438,
+          "synonym_target_groups": 14857,
+          "canonical_candidates": 375473
+        },
+        "calibration": {
+          "synonyms": 8802,
+          "synonym_target_groups": 4849,
+          "canonical_candidates": 124478
+        },
+        "test": {
+          "synonyms": 8979,
+          "synonym_target_groups": 4886,
+          "canonical_candidates": 125171
+        }
+      }
+    },
+    {
+      "type": "UnsortedTag",
+      "total_tags": 1460615,
+      "visible_names": 37834,
+      "canonical_tags": 1,
+      "catalogue_candidates": 1,
+      "merged_tags_including_redacted": 0,
+      "usable_synonyms": 0,
+      "canonical_targets_with_synonyms": 0,
+      "visible_unmerged_noncanonical": 37833,
+      "cross_type_named_positive": 0,
+      "proposed_split": {
+        "development": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 1
+        },
+        "calibration": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 0
+        },
+        "test": {
+          "synonyms": 0,
+          "synonym_target_groups": 0,
+          "canonical_candidates": 0
+        }
+      }
+    }
+  ],
+  "sampling": {
+    "type": "Freeform",
+    "split": "development",
+    "seed": "tag-matching-jev-ao3-freeform-stage1-v1",
+    "synonyms": 2000,
+    "per_target_cap": 3,
+    "identities": 250,
+    "synonym_rule": "Sort by full SHA256(seed:source_id), numeric ID tie break; greedily take aliases until size, skipping targets at cap",
+    "identity_rule": "Sort development canonicals by SHA256(seed:identity:canonical_id), numeric ID tie break; take identities count",
+    "bias": "Visible-name positives only; unweighted hash sample with cap downweights large alias families; not a usage-weighted or full-population estimate"
+  },
+  "sample_counts": {
+    "synonyms": 2000,
+    "identities": 250,
+    "synonym_target_groups": 1761,
+    "aliases_per_sampled_target": {
+      "1": 1583,
+      "2": 117,
+      "3": 61
+    },
+    "freeform_candidates": 181067,
+    "permitted_development_aliases": 70294
+  },
+  "leakage_policy": {
+    "query_text": "raw source name only; observed type selects catalogue",
+    "secondary_alias_pool": "all same-type development synonyms, exclude the evaluated source ID per query",
+    "holdout_aliases": "calibration and test aliases never indexed, embedded, or scored",
+    "canonical_names": "all eligible same-type canonicals remain candidates across every split",
+    "works_context": false
+  },
+  "artifacts": {
+    "catalogue.csv": {
+      "rows": 1175987,
+      "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+      "bytes": 80317513
+    },
+    "synonyms.csv": {
+      "rows": 224744,
+      "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+      "bytes": 21921338
+    },
+    "development.csv": {
+      "rows": 2250,
+      "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+      "bytes": 380125
+    }
+  }
+}

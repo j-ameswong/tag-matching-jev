@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "benchmark_manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+  "summary_sha256": "125e2ca6db08bc57a25ebb8b8b2c237adfa4c9c3c318bdfd16b5e9c4a424326d",
+  "metrics_sha256": "fc2d58799aca3d6e974d2191f2ebaef4c47c6f30277861318a1fa51f4574dbb6",
+  "predictions_sha256": "5138a112a15bf994d7d7ff42726ed0452108e57b7c6ca8e04474938620cc7ac0",
+  "checks": [
+    "export checksums and frozen sampling rule",
+    "source IDs, target IDs, names and types agree",
+    "canonical groups follow frozen split",
+    "development-only query and alias pools",
+    "all baseline conditions complete",
+    "checkpoint recipe and content hashes",
+    "shortlists contain unique catalogue IDs",
+    "full ranks agree with top-10 lists"
+  ]
+}

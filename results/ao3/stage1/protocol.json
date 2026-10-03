@@ -1,0 +1,31 @@
+{
+  "version": "ao3-freeform-stage1-v1",
+  "ks": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "tie_break": "numeric canonical ID ascending",
+  "normalizations": [
+    "raw",
+    "casefold",
+    "whitespace",
+    "safe_punctuation"
+  ],
+  "alias_policies": [
+    "canonical_names",
+    "development_aliases_leave_one_out"
+  ],
+  "safe_punctuation": "After casefold and whitespace collapse, map internal U+2010/U+2011 to hyphen and U+2018/U+2019 to apostrophe, only between alphanumeric characters",
+  "lexical_input": "raw strings; no RapidFuzz processor; PostgreSQL function arguments query, candidate",
+  "alias_aggregation": "maximum permitted representation score per canonical ID; mask queried source ID before aggregation",
+  "search": "exhaustive, all same-type candidates, no score threshold or approximate index",
+  "bootstrap_unit": "canonical target; percentile intervals for micro recall and paired differences",
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 20261003,
+  "query_features": "raw tag name; observed type restricts candidate catalogue",
+  "calibration_and_test_evaluated": false,
+  "jev_used": false,
+  "fitted_parameters": false
+}
