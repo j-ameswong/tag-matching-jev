@@ -1,0 +1,17 @@
+{
+  "audited_at_utc": "2026-10-03T17:55:54.358031+00:00",
+  "snapshot_id": "stackoverflow-7d95f64002496ef5",
+  "summary_sha256": "9099dfb0d53e62dc664d220b2446e932699e2f588a3b9d9b4eaebe720ddb66fc",
+  "metrics_csv_sha256": "317767ce2548a6a2b60c5c02c683a8e7d5c7195dde8036c4a0544b85d2e5fa61",
+  "predictions_sha256": "85aa99d1183823c3885030c227106bb57682213825a55d6d47b756f9a13283bd",
+  "validated_configurations": 19,
+  "validated_prediction_rows": 46607,
+  "validated_metric_rows": 38,
+  "source_and_dataset_checksums_match": true,
+  "per_example_identity_and_split_match": true,
+  "ranks_agree_with_unique_canonical_shortlists": true,
+  "raw_hits_micro_and_macro_metrics_recomputed": true,
+  "csv_agrees_with_json_report": true,
+  "embedding_inputs_equal_catalogue_plus_development_queries": true,
+  "calibration_and_test_queries_evaluated": false
+}

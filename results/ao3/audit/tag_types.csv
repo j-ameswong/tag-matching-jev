@@ -1,0 +1,10 @@
+type,total_tags,visible_names,canonical_tags,catalogue_candidates,merged_tags_including_redacted,usable_synonyms,canonical_targets_with_synonyms,visible_unmerged_noncanonical,cross_type_named_positive
+ArchiveWarning,6,6,6,6,0,0,0,0,0
+Category,15,8,6,6,0,0,0,2,0
+Character,1509000,386635,327455,327424,553710,47646,28888,11534,0
+Fandom,204858,58822,42344,42344,129278,15236,4959,1242,0
+Freeform,9244331,463965,181076,181067,1822087,116643,46901,166244,0
+Media,12,12,12,12,0,0,0,0,0
+Rating,6,6,5,5,0,0,0,1,0
+Relationship,2048295,674687,625133,625122,961842,45219,24592,4334,0
+UnsortedTag,1460615,37834,1,1,0,0,0,37833,0

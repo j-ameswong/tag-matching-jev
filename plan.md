@@ -1,166 +1,85 @@
-# Tag Canonicalisation Experiment Plan
+# AO3 Tag Canonicalisation Experiment Plan
 
-## Goal
+## Goal and current status
 
-Evaluate a tag-canonicalisation pipeline that combines lexical retrieval, semantic embedding retrieval, candidate fusion, and optional Jev adjudication.
+Evaluate lexical retrieval, semantic embedding retrieval, candidate fusion, and optional Jev adjudication for AO3 canonicalisation. Separate candidate recall, final selection, and the decision to automate a mapping.
 
-The experiment should answer four separate questions:
+**Active dataset:** the local AO3 selective dump under `data/ao3-dump/`, with filenames dated 2021-02-26. The [README](README.md) is the live writeup. The [dataset audit](results/ao3/audit/analysis.json) and [type counts](results/ao3/audit/tag_types.csv) are the current measured artifacts. Dataset analysis is complete; benchmark export and AO3 Stage 1 are pending. No previous dataset's scores carry over.
 
-1. Can the correct canonical tag be retrieved?
-2. Which retrieval configuration gives the best candidate recall?
-3. Does Jev improve final selection or abstention once the correct candidate is present?
-4. What configuration gives the best automation coverage at an acceptable incorrect-mapping rate?
+## Dataset decision — adopt AO3
 
-A core principle throughout the experiment is:
+The audited tags table contains **14,467,138 unique tag IDs**, of which **1,621,975 have visible names**. `Redacted` occurs on **12,845,163 rows** and is a missing-name marker. There are **1,175,987 named canonical candidates without an outgoing merger**, and **224,744 usable named synonym mappings to 105,340 canonical targets** after integrity checks.
 
-> Retrieval should optimise for candidate recall. Jev, or another adjudicator, should optimise for final discrimination. The final policy should optimise for safe automation.
-
-## First step: Stack Exchange CSV snapshot — completed
-
-The initial dataset was collected on 2026-10-03, before designing the database. Snapshot ID: `stackoverflow-7d95f64002496ef5`.
-
-The collector uses the two requested public endpoints:
-
-```text
-GET https://api.stackexchange.com/2.3/tags?site=stackoverflow&pagesize=100&page=1&sort=popular&order=desc
-GET https://api.stackexchange.com/2.3/tags/synonyms?site=stackoverflow&pagesize=100&page=1&sort=applied&order=desc
-```
-
-Each endpoint was paged from 1 through 25. These reads succeeded anonymously, so this snapshot needs no OAuth token or API key. Anonymous access is limited to page 25 and pages contain at most 100 items. An authenticated expansion should follow the [authentication documentation](https://api.stackexchange.com/docs/authentication). See the [API overview](https://api.stackexchange.com/docs) and [paging documentation](https://api.stackexchange.com/docs/paging) for the sample limits.
-
-| Artifact | Rows | Purpose |
-|---|---:|---|
-| [experiment.csv](data/stackoverflow/experiment.csv) | 4,224 | Main benchmark: incoming tag, canonical target, example kind, label, split, source group, counts, and provenance |
-| [tags.csv](data/stackoverflow/tags.csv) | 2,476 | Distinct sampled tags and metadata; filter `is_canonical_candidate=true` for the 2,454-tag catalogue |
-| [synonyms.csv](data/stackoverflow/synonyms.csv) | 2,500 | All sampled direct mappings, resolved targets, and `target_in_catalogue` flags |
-| [manifest.json](data/stackoverflow/manifest.json) | — | Sampling parameters, capture times, checksums, counts, split rules, and validation results |
-| [raw/](data/stackoverflow/raw/) | 50 responses | Original response objects wrapped with request URLs and UTC fetch times |
-
-The 2,500 returned tag records contained 24 repeated names across pages. The collector retains the first occurrence of each name. Of the distinct tags, 22 are known synonym sources in this synonym sample and are excluded from the canonical catalogue. Synonym chains are resolved within the sampled mappings, while `to_tag` retains the original direct target. Conflicting targets and cycles fail the build.
-
-The benchmark contains 2,454 canonical-name identity examples and 1,770 synonym examples whose resolved targets occur in the catalogue. The other 730 synonym mappings remain in `synonyms.csv` and are excluded from this benchmark. They are candidates for a later, explicitly defined missing-canonical experiment; they are not automatically labelled as real-world no-match examples.
-
-### Split and evaluation rules
-
-Canonical tags define the source groups. A deterministic SHA-256 hash of `tag-matching-jev-v1:stackoverflow:canonical_name` assigns each entire group to development, calibration, or test using 60/20/20 hash buckets. Row proportions vary because groups contain different numbers of synonyms.
-
-| Split | Canonical groups / identity examples | Synonym examples | Total examples |
+| Type | Canonical candidates | Usable synonyms | Targets with usable synonyms |
 |---|---:|---:|---:|
-| Development | 1,420 | 1,033 | 2,453 |
-| Calibration | 517 | 369 | 886 |
-| Test | 517 | 368 | 885 |
+| Freeform | 181,067 | 116,643 | 46,901 |
+| Character | 327,424 | 47,646 | 28,888 |
+| Relationship | 625,122 | 45,219 | 24,592 |
+| Fandom | 42,344 | 15,236 | 4,959 |
+| ArchiveWarning, Category, Media, Rating, UnsortedTag combined | 30 | 0 | 0 |
 
-All examples are currently `matchable`, with no observed question context or curated definitions. Treat `synonyms.csv` as ground-truth labels. Calibration and test aliases must be excluded from alias retrieval and canonical enrichment; also mask any evaluated development alias when measuring held-out synonym retrieval. Canonical names remain available across all splits because they define the catalogue. Report canonical-name and synonym metrics separately so identity examples do not inflate the synonym result.
+This supports a substantial retrieval/adjudication study with natural-language aliases, structured types, and optional observed co-tag context. Start with **Freeform** as the primary semantic canonicalisation task; add the other three large types as separate evaluations. Do not let identity controls or large relationship vocabularies dominate a combined score.
 
-The API names are preserved without punctuation removal or other custom normalisation. CSVs use UTF-8, standard CSV quoting, lowercase boolean strings, and blank cells for unavailable values. Synonym dates retain API Unix seconds; fetch times are UTC ISO timestamps. [The synonym type documentation](https://api.stackexchange.com/docs/types/tag-synonym) permits an absent `last_applied_date`.
+### Input and integrity policy
 
-Both final pages returned `has_more=true`: this is a bounded sample, with the requested popularity/applied-count sorts, rather than a complete or uniformly sampled Stack Overflow vocabulary. The returned tags were not ordered by count within each page, so CSV row order is alphabetical and is not a popularity rank. Synonym-source exclusion is limited to the mappings actually sampled; unobserved mappings may remain. These limits must accompany experiment results.
+- Keep both downloaded CSVs unchanged and record their SHA-256 hashes. The file date and the analysis date are different provenance fields; these are historical labels.
+- Retain `id`, `type`, raw `name`, `canonical`, `cached_count`, and direct `merger_id`. Use SQL `NULL` for absent IDs/counts; use a separate flag for suppressed names.
+- Canonical candidates require a visible name, `canonical=true`, and no outgoing merger.
+- Positive queries require a visible noncanonical source, a merger resolving to a named candidate, and matching source/target type. Keep direct and resolved target IDs separately.
+- Quarantine 51 canonical rows with merger links and paths reaching those conflicts. The graph also contains 20 references to missing IDs and one merged path ending at a noncanonical node. No cycles or self-mergers were found. Seven valid chains need two hops.
+- Of 224,747 visible noncanonical rows with a merger, one reaches a missing target and two reach canonical/merger conflicts; the remaining 224,744 are eligible. No eligible named mapping crosses types.
+- Do not infer visibility from `cached_count`: 96,873 redacted rows have counts at least five, while 849,932 named canonical rows have counts below five. Use the actual name marker; counts are approximate.
+- Keep the 221,190 visible noncanonical rows without a merger as unlabelled data. They need a separate adjudication process before they can support no-match or ambiguous-case evaluation.
 
-### Reproduce the CSVs
+### Proposed split and initial scope
 
-The [collector](scripts/build_stackexchange_dataset.py) uses Python's standard library and `curl`. Rerunning reuses cached successful pages and resumes a partial collection. Requests are sequential, paced, and honour response `backoff`; quota exhaustion and API errors stop the collection. See the [API throttle documentation](https://api.stackexchange.com/docs/throttle).
+Use canonical IDs as the grouping unit. The proposed diagnostic rule hashes `tag-matching-jev-ao3-v1:canonical_id`, takes the first 64 bits modulo ten, and assigns buckets 0–5 to development, 6–7 to calibration, and 8–9 to test. Source aliases and identity controls follow their resolved canonical group.
 
-```bash
-python3 scripts/build_stackexchange_dataset.py
-```
+| Freeform split | Eligible synonyms | Canonical groups with synonyms |
+|---|---:|---:|
+| Development | 70,294 | 28,205 |
+| Calibration | 24,943 | 9,394 |
+| Test | 21,406 | 9,302 |
 
-Rebuild the frozen snapshot without network access:
+These are population counts under a proposed split, not a frozen benchmark export or evaluated results. Keep all 181,067 eligible Freeform canonical names available across query splits. Begin Stage 1 with a deterministic budgeted development sample, for example 2,000 aliases with a cap per canonical group, then scale up after measuring runtime. Freeze the sample definition and record any resulting selection bias before scoring. Keep calibration and test for their designated later stages.
 
-```bash
-python3 scripts/build_stackexchange_dataset.py --offline
-```
+Any catalogue reduction is a separate experimental condition: adding or removing distractors changes recall. Never retain only the correct targets of selected queries and report that as full-catalogue performance.
 
-For a fresh capture, use a new output directory with `--output`; preserve this directory for the current benchmark. The anonymous collector intentionally caps each endpoint at 2,500 records.
+### Context and leakage
 
-### Full tag catalogue: API continuation and historical dump
+The works CSV provides associated tag IDs and metadata. It does not provide text descriptions or a canonical hierarchy. A work's co-tags are observed context, not a definition, synonym label, or assertion that two concepts are equivalent.
 
-The API continuation is prepared in `data/stackoverflow-full/raw/` using copies of the existing 25 tag pages and 25 synonym pages. Its first uncached tag page is 26. A direct `curl` request to page 26 returned HTTP 400 with API error `403 access_denied`: `page above 25 requires access token or app key`. No remaining pages of that unfiltered API query have been fetched.
+Use `(works_file_hash, CSV_record_ordinal)` as a local work identifier if contexts are materialized. Mask the query, all equivalents of its expected target, and held-out aliases before constructing prompts or descriptions. Define work-level separation as well as canonical-group separation so a work's context is not reused across splits. Keep the tag-only benchmark as the primary baseline.
 
-Anonymous filtered queries do work: a request with `sort=popular&order=desc&max=2882&page=1` returned 100 tags with counts from 2,762 through 2,882. The API's [documented inclusive min/max windows](https://api.stackexchange.com/docs/min-max) offer a possible way to enumerate smaller result sets without requesting page 26. However, roughly 65,000 tags need roughly 650 requests at 100 items per page, exceeding the observed anonymous daily quota of 300 and the 247 requests remaining at the probe. Full live enumeration would require a key or collection over multiple quota periods, plus careful boundary handling.
+## Implementation before AO3 Stage 1
 
-#### Historical catalogue — completed
+1. Export a frozen AO3 catalogue and positive-pair pool using the audited ID/type rules; write checksums, exclusions, sampling policy, and splits into a manifest.
+2. Adapt the evaluation loader to source IDs and tag types. The earlier runners assume a different CSV schema and dataset; they are not an AO3 adapter.
+3. Select and freeze the initial Freeform development sample. Report identity controls separately and mask evaluated aliases in every retrieval path.
+4. Implement batched exhaustive lexical and vector ranking. A dense matrix for all 70,294 development aliases against 181,067 canonical names has about 12.73 billion cells, around 101.8 GB in float64, before rankings and overhead. Do not allocate it as one array.
+5. Run Stage 1 below with one embedding model, then update the live README with AO3-only measurements.
 
-The accessible, company-published [April 2024 dump](https://archive.org/details/stackexchange) has a standalone [Stack Overflow Tags archive](https://archive.org/download/stackexchange/stackoverflow.com-Tags.7z). Downloaded anonymously with `curl`, it contains **65,675 distinct tag names** in `Tags.xml`. Its 1,117,182-byte compressed file matches the size, MD5, and SHA-1 in the [Internet Archive metadata](https://archive.org/metadata/stackexchange). The archive file's metadata modification time is `2024-04-06T21:11:23+00:00`; the release label is month-level provenance rather than a per-tag observation timestamp.
+### Proposed persistent schema
 
-| Artifact | Purpose |
-|---|---|
-| [Historical tags.csv](data/stackoverflow-dump-2024-04/tags.csv) | All 65,675 rows, with name, question count, source tag ID, optional excerpt/wiki post IDs, snapshot ID, and release month |
-| [Historical manifest.json](data/stackoverflow-dump-2024-04/manifest.json) | Source URLs, historical date, download time, checksum validation, row counts, and unavailable fields |
-| [Historical raw files](data/stackoverflow-dump-2024-04/raw/) | Downloaded `.7z`, extracted `Tags.xml`, and original archive metadata |
+PostgreSQL with `pg_trgm` and pgvector remains the intended backend. The extension name for pgvector is `vector`. Persistent AO3 schema, imports, embeddings, and indexes have not yet been implemented; pin versions before starting.
 
-The file contains tag names and counts, with excerpt/wiki post IDs where available. It contains no synonym mappings, definitions, question context, or API flags such as `has_synonyms`. Missing IDs are blank; unavailable flags must stay unknown during database import, rather than becoming false. The [dump schema documentation](https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede) describes the tag ID and post-ID fields.
-
-Rebuild the historical CSV offline using the [dump converter](scripts/build_stackexchange_dump_csv.py):
-
-```bash
-python3 -B scripts/build_stackexchange_dump_csv.py
-```
-
-The [June 2026 community mirror](https://archive.org/details/stackexchange_20260630) is newer, but its [metadata](https://archive.org/metadata/stackexchange_20260630) lists Stack Overflow as one 68,946,936,349-byte archive, with no separate Stack Overflow Tags archive. The April 2024 tag-only file supplies the complete historical catalogue with a small download.
-
-The existing API synonyms were captured in October 2026. A benchmark combining those labels with the April 2024 catalogue must record both dates and recompute target membership. The `target_in_catalogue` flags in the original `synonyms.csv` refer to the original 2,454-tag sample. The historical catalogue is preserved separately and has not been silently mixed into the existing benchmark. Catalogue membership alone also does not establish that a tag is canonical.
-
-#### Future live API continuation
-
-The collector now accepts `--all-tags` and reads an app key from `STACKEXCHANGE_API_KEY` or `--key-file`. Once the key is available, run:
-
-```bash
-python3 scripts/build_stackexchange_dataset.py --output data/stackoverflow-full --all-tags --key-file /path/to/stackexchange-api-key
-```
-
-This command reuses the copied cache, continues with page 26, and stops when the API returns `has_more=false`, rather than assuming exactly 65,000 tags. It keeps the existing 2,500-synonym sample, rebuilds the CSVs against the expanded catalogue, and records the resulting counts in the new manifest. The key is sent in an authorization header through curl's standard input and is omitted from cached URLs and metadata. The original sample remains in `data/stackoverflow/`.
-
-An offline rebuild of a completed live capture will use the same `--output` and `--all-tags` options with `--offline`. Requests honour API backoff and stop on live quota exhaustion across endpoints. Until the API has returned its final tag page, that continuation must not be reported as a complete catalogue. Use the selected snapshot's manifest counts for the later database import checks.
-
-## Next step: proposed PostgreSQL schema — planning only
-
-This section proposes the later database work. Database provisioning, migrations, imports, embeddings, indexes, and retrieval experiments have not been implemented. The intended extensions are `pg_trgm` and pgvector; the PostgreSQL extension name for pgvector is `vector`. Choose and pin PostgreSQL and extension versions when implementation starts.
-
-### Proposed tables
-
-The snapshot is the catalogue version. Give canonical tags database IDs scoped to their snapshot rather than assuming Stack Exchange provides stable tag IDs.
-
-| Table | Principal columns and types | Keys and purpose |
+| Table | Key and main fields | Purpose |
 |---|---|---|
-| `dataset_snapshot` | `snapshot_id text`, `site text`, source type `text`, nullable `api_version text`, optional historical release month `text`, capture start/end `timestamptz`, `manifest jsonb`, manifest checksum `text` | Primary key `snapshot_id`; immutable source, historical date, and sampling provenance |
-| `canonical_tag` | `tag_id bigint` identity, `snapshot_id text`, `name text`, `normalised_name text`, `question_count bigint`, nullable source flags `boolean`, optional source tag/post IDs in `source_metadata jsonb`, `source_url text`, `fetched_at timestamptz` | Primary key `tag_id`; unique `(snapshot_id, name)` and `(snapshot_id, tag_id)`; load candidates after applying the selected catalogue's synonym policy |
-| `tag_synonym` | `snapshot_id text`, `from_tag text`, `to_tag text`, `resolved_target_name text`, nullable `target_tag_id bigint`, `applied_count bigint`, `created_at timestamptz`, nullable `last_applied_at timestamptz`, source URL/fetch time | Primary key `(snapshot_id, from_tag)`; preserve all 2,500 labels, including targets outside the catalogue |
-| `benchmark_group` | `snapshot_id text`, `source_group text`, `split text` | Primary key `(snapshot_id, source_group)`; store development/calibration/test once per group |
-| `benchmark_example` | `example_id text`, `snapshot_id text`, `source_group text`, `incoming_tag text`, `example_kind text`, `label text`, `expected_target_name text`, nullable `expected_tag_id bigint`, source URL/fetch time; optional context text and provenance later | Primary key `example_id`, preserving the CSV ID; group foreign key determines the split; load `experiment.csv` |
-| `embedding_configuration` | configuration ID `bigint`, provider/model/revision `text`, `dimensions integer`, distance metric `text`, normalisation policy `text`, canonical/query template versions `text`, alias-mask policy `text`, optional enrichment model/prompt hash, configuration fingerprint `text` | Primary key configuration ID; unique fingerprint and unique `(configuration_id, dimensions)`; freeze the complete embedding recipe |
-| `canonical_embedding` | `snapshot_id text`, `tag_id bigint`, configuration ID `bigint`, `dimensions integer`, `input_text text`, input checksum `text`, `embedding vector`, `created_at timestamptz` | Primary key `(tag_id, configuration_id)`; immutable canonical vector cache for a frozen snapshot/configuration |
-| `query_embedding` | `snapshot_id text`, `example_id text`, configuration ID `bigint`, `dimensions integer`, `input_text text`, input checksum `text`, `embedding vector`, `created_at timestamptz` | Primary key `(example_id, configuration_id)`; independently cache each incoming representation |
+| `dataset_snapshot` | `snapshot_id`, file dates, source paths, SHA-256 hashes, audit/benchmark manifests | Immutable source and filtering provenance |
+| `source_tag` | `(snapshot_id, source_tag_id)`, type, raw name, redaction flag, canonical flag, approximate count, direct merger ID | Preserve every source record, including quarantined/unlabelled rows |
+| `canonical_tag` | `(snapshot_id, canonical_id)`, type, name, versioned normalized name | Named candidates satisfying the integrity policy |
+| `tag_synonym` | `(snapshot_id, source_tag_id)`, direct merger ID, resolved canonical ID, resolution status/hops | Ground-truth edges and exclusion reasons |
+| `benchmark_group` | `(snapshot_id, canonical_id)`, split | Keep target families together |
+| `benchmark_example` | example ID, snapshot, source tag ID, expected canonical ID, type, kind, label, group | Frozen identity and synonym queries |
+| `work_record` / `work_tag` | snapshot, source record ordinal, metadata; associated source tag IDs | Optional observed co-tag context and work-level holdouts |
+| `embedding_configuration` | model/provider/revision, dimensions, metric, normalization, input template, mask policy | Version the complete embedding recipe |
+| `canonical_embedding` / `query_embedding` | snapshot, entity ID, configuration, input checksum, dimensions, vector | Cache vectors without crossing snapshot/configuration boundaries |
 
-Keep generated descriptions and observed context out of the initial import. Later additions must record their provenance and create a new snapshot or configuration when embedding inputs change. Experiment-run, candidate-rank, fusion, and Jev-decision tables can be designed once those stages begin.
+Use composite foreign keys including the snapshot. Preserve raw names, detect normalization collisions, and allow identical normalized names to point to multiple IDs. Do not use names as relational identity. Enforce source/target type agreement in the primary benchmark; record optional cross-type tasks separately.
 
-### Integrity and import policy
+For lexical retrieval, score every candidate within the declared type and use stable ID tie breaks; do not prune with the `%` threshold operator during the recall study. `pg_trgm` discards non-alphanumeric characters, so relationship punctuation needs specific tests and an exact-name control. [PostgreSQL documentation](https://www.postgresql.org/docs/18/pgtrgm.html).
 
-- Foreign keys referencing a tag or example must include `snapshot_id`, with matching composite unique keys on the parent tables. This prevents labels or embeddings from referring to another catalogue version.
-- Require non-empty names, non-negative counts, and one of the defined split/category values. A `matchable` example must have an expected tag in its own catalogue; a `no_match` example must have no expected catalogue tag. Ambiguous examples need an explicit later labelling policy.
-- Store direct and resolved synonym targets separately. A null `target_tag_id` means the resolved name is outside this sampled catalogue; it does not erase the known upstream target.
-- Enforce group membership through `benchmark_group`. Validate that each CSV group's split and expected canonical target agree before importing.
-- Preserve original names and derive a versioned normalised name for lookup. Retain punctuation in `c`, `c++`, `c#`, and `.net`; allow normalisation collisions to be detected rather than forcing a unique normalised-name constraint.
-- Convert API Unix seconds to `timestamptz` during the later import; blank optional values and unavailable dump flags become SQL `NULL`. Keep historical release dates separate from download times. Import through staging and verify manifest checksums, counts, and foreign keys before exposing a snapshot to retrieval.
-
-### Lexical retrieval with `pg_trgm`
-
-Propose B-tree indexes on snapshot/name and snapshot/normalised-name for exact lookups. Initially rank all canonical names in the selected snapshot using `similarity`, with deterministic name/ID tie breaks; compare `word_similarity` and `strict_word_similarity` separately. The `%` operator applies a threshold, so using it to prune the initial top-K baseline could hide relevant candidates. For later speed work, GiST `gist_trgm_ops` supports nearest-neighbour ordering by trigram distance; GIN `gin_trgm_ops` supports threshold/filter searches. `pg_trgm` ignores non-alphanumeric characters, so punctuation-heavy tags need separate error reporting and an exact-name baseline. [PostgreSQL `pg_trgm` documentation](https://www.postgresql.org/docs/current/pgtrgm.html).
-
-Alias lookup must apply the benchmark's holdout mask. Start synonym retrieval against canonical names only; permitted aliases can be introduced as a separate configuration and deduplicated by canonical tag ID.
-
-### Semantic retrieval with pgvector
-
-Propose unconstrained `vector` columns so different configurations can use different dimensions. Each embedding row carries a dimension count, checks `vector_dims(embedding) = dimensions`, and references `(configuration_id, dimensions)` in the configuration table. This avoids choosing a model or hardcoding a dimension now. Keep configurations immutable and validate input hashes before reusing embeddings. [pgvector dimension guidance](https://github.com/pgvector/pgvector#can-i-store-vectors-with-different-dimensions-in-the-same-column).
-
-Initial searches must restrict both snapshot and configuration and use exact vector search. The distance operators are `<=>` for cosine, `<->` for Euclidean distance, and `<#>` for negative inner product; choose the configured model's metric and sort distance ascending. Record normalisation explicitly. HNSW/IVFFlat and metric-specific operator classes belong to the later efficiency study, after an exact baseline is established. [pgvector querying and indexing documentation](https://github.com/pgvector/pgvector#querying).
-
-### Later implementation sequence
-
-1. Review this schema against the frozen CSVs and select PostgreSQL/extension versions.
-2. Implement migrations and a transactional, repeatable CSV import, using the selected manifest's counts. The original API sample has 2,454 candidates, 2,500 synonyms, 2,454 groups, and 4,224 examples; the separate historical catalogue has 65,675 raw tags and requires an explicit synonym/date policy before becoming a benchmark.
-3. Implement exact-name and canonical-name trigram baselines with synonym-only Recall@K reporting.
-4. Select an embedding model, freeze its dimensions/representation/metric, generate cached vectors, and measure exact retrieval.
-5. Add definitions, context, negatives, fusion, adjudication, and approximate indexes in the experimental order below.
+For embeddings, cache both sides with the same recipe and use exact search initially. Keep snapshot/configuration filters explicit. Batch matrix computation or database scans so memory stays bounded. HNSW/IVFFlat and serving optimizations belong to the later efficiency stage.
 
 ---
 
@@ -170,23 +89,11 @@ Before comparing models or retrieval methods, define what counts as a correct ma
 
 ## 0.1 Define canonical equivalence
 
-Decide whether the task is:
+The primary task is to recover AO3's recorded canonicalisation policy in the frozen dump. Resolve `merger_id` to a named, internally consistent canonical tag and use its ID as the expected answer. These are platform-defined labels, which can reflect wrangling conventions beyond literal dictionary synonymy.
 
-- strict canonical equivalence, or
-- broader "best tag for this context" assignment.
+Do not substitute a merely related tag, infer a synonym from co-occurrence, or treat a metatag/subtag relationship as an equivalence label. This dump does not contain the metatag graph. For later adjudication, check that the prompt's equivalence rule agrees with the intended AO3 label policy; evaluate generic strict semantic equivalence separately if that is a different objective.
 
-For this experiment, prefer strict equivalence:
-
-> Map the incoming tag to a canonical tag only when they represent the same underlying concept at the intended ontology granularity.
-
-A broader, narrower, or related concept should not count as equivalent.
-
-Example:
-
-- `postgres` -> `PostgreSQL`: correct
-- `postgres` -> `Relational Database`: related but not equivalent
-- `postgres` -> `Database`: broader, not equivalent
-- `postgres` -> `MySQL`: related but incorrect
+Tag type is an observed input field. The initial experiment retrieves within that type. Inferring the type from an unknown tag string is a separate task and requires an untyped evaluation.
 
 ## 0.2 Define benchmark categories
 
@@ -207,6 +114,7 @@ Keep these categories separate in evaluation.
 
 For held-out synonym tests:
 
+- keep `merger_id`, resolved target IDs/names, and canonical-status labels out of query embeddings and adjudicator inputs; the initial incoming representation is the raw source name and its observed type;
 - remove the tested synonym from alias lookup;
 - do not include the held-out synonym in generated canonical descriptions;
 - do not let the enrichment process see the answer;
@@ -218,28 +126,23 @@ Where possible, maintain:
 - calibration set;
 - untouched final test set.
 
-## 0.4 Benchmark notes for Stack Overflow
+## 0.4 Benchmark notes for AO3
 
-If Stack Overflow tags/synonyms are used:
-
-- treat synonym mappings as platform-defined canonicalisation ground truth;
-- distinguish genuinely observed context from reconstructed context;
-- remember that Stack Overflow may rewrite synonym tags to their target tags automatically;
-- keep lexical-easy mappings separate from semantically difficult cases.
-
-Useful evaluation subsets:
-
-- exact/near-exact aliases;
-- spelling variants;
-- abbreviations;
-- semantically similar aliases;
-- ambiguous aliases;
-- related but non-equivalent hard negatives;
-- missing-canonical cases.
+- Use numeric source and target tag IDs, scoped to the frozen snapshot; preserve names and types as attributes.
+- Exclude the literal `Redacted`, blanks, invalid targets, and canonical/merger conflicts from named positive examples.
+- A noncanonical tag without a merger is unlabelled. It is not automatically a negative or ambiguous example.
+- Preserve meaningful punctuation, especially `/`, `&`, `|`, and parenthetical fandom qualifiers. Do not strip diacritics or reorder relationship participants by default.
+- Keep `Freeform`, `Character`, `Relationship`, and `Fandom` results separate. The small controlled types supply identity controls but no synonym positives in this dump.
+- Distinguish tag-only input from observed work co-tags. Work metadata contains no title, summary, body text, or original work ID.
+- Before using a work's co-tags, remove the query tag, the expected canonical target, and all tags resolving to that target; also exclude held-out aliases from retrieval and enrichment. Prevent the same work record from supplying contexts across splits.
+- Report performance by usage range, name length, script/language where actually established, punctuation, and lexical difficulty. Work language alone is not a tag-language label.
+- Keep an untouched test set. Dataset auditing and proposed split counts do not constitute evaluation.
 
 ---
 
 # 1. Establish Simple Baselines
+
+**Pending for AO3.** Complete the AO3 benchmark export and adapter before running these methods. The active [README](README.md) currently reports dataset analysis only; no AO3 retrieval or Jev result has been measured.
 
 Do not use Jev yet.
 
@@ -255,11 +158,7 @@ Test:
 - whitespace normalisation;
 - safe punctuation normalisation.
 
-Avoid destructive normalisation that collapses distinct tags such as:
-
-- `C`
-- `C++`
-- `C#`
+Avoid destructive normalisation that collapses AO3 distinctions such as `/` versus `&` in relationship tags, removes `|` name variants, or drops parenthetical fandom qualifiers. Keep raw names and record normalization collisions; ambiguous normalized lookups must abstain.
 
 Record the percentage of the benchmark solved deterministically.
 
@@ -326,26 +225,29 @@ Compare:
 Example canonical representation:
 
 ```text
-Canonical tag: PostgreSQL
+Canonical tag: [AO3 canonical name]
+Tag type: [observed AO3 type]
 
 Definition:
-A specific open-source relational database management system.
+[Curated description consistent with the intended wrangling policy]
 
 Examples:
-postgres, PostgreSQL database
+[Permitted development aliases; exclude every evaluated alias]
 
 Exclusions:
-Do not use for databases generically, MySQL, SQLite, or SQL as a language.
+[Related concepts or relationships that are not equivalent]
 ```
 
 ## 2.2 Incoming-side representation
 
 Compare:
 
-1. raw tag only;
-2. raw tag + title;
-3. raw tag + title + short relevant excerpt;
-4. raw tag + larger source context.
+1. raw tag only, within its observed tag type;
+2. raw tag + permitted observed co-tags from the same work;
+3. raw tag + selected observed fandom/character co-tags;
+4. richer observed text only after separately acquiring it with provenance.
+
+The current dump contains no work titles, summaries, or excerpts. Co-tag context must pass the leakage rules in Stage 0.
 
 Do not assume more context is always better. Long or irrelevant context may dilute the tag meaning.
 
@@ -716,7 +618,7 @@ Which candidate represents the same underlying concept as the incoming tag?
 Do not select a candidate merely because it is broader, narrower, related, or commonly associated.
 ```
 
-The strict-equivalence version should be the main production candidate.
+Compare this strict-equivalence prompt with instructions aligned to AO3's recorded wrangling policy. Select a production candidate only after checking that its definition of equivalence agrees with the Stage 0 label policy. A semantic-equivalence study using a different ontology must have separate labels and reporting.
 
 ## 7.3 Context placement in Jev
 
@@ -1092,7 +994,7 @@ To avoid an excessively large search space, start with the following constrained
 
 ## Canonical representation
 
-For the current Stack Exchange CSV snapshot, start with canonical name only. Curated definitions are not supplied by these endpoints. Once definitions have been collected with provenance and holdout checks, compare:
+For the AO3 snapshot, start with canonical name only and restrict candidates by the observed input tag type. Curated definitions are absent. Once definitions have been collected with provenance and holdout checks, compare:
 
 ```text
 canonical name + curated definition
@@ -1100,7 +1002,7 @@ canonical name + curated definition
 
 ## Incoming representation
 
-The current snapshot supplies raw tag names only. Once observed context is available, compare:
+Start with raw tag names. The works table can later supply co-tag context after resolving visible names and masking label leakage. Compare:
 
 ```text
 tag only
@@ -1109,7 +1011,7 @@ tag only
 versus:
 
 ```text
-tag + title + short relevant excerpt
+tag + permitted observed co-tags
 ```
 
 ## Lexical retrieval
