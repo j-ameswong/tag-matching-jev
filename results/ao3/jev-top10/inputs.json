@@ -1,0 +1,16 @@
+{
+  "inputs_path": "data/ao3-jev-top10/inputs.json",
+  "inputs_sha256": "6d0ff4b2b8e6620bd7782617cf42ff298eff0eb76698c49683a85a63accf3c87",
+  "cases": 2250,
+  "synonyms": 2000,
+  "identity_controls": 250,
+  "unique_shortlisted_canonicals": 15538,
+  "selected_aliases": 48080,
+  "independent_top_k_membership_checks": 9000,
+  "query_profiles_with_context": 949,
+  "source_hashes_at_preparation": {
+    "/home/contessa/Documents/Projects/tag-matching-jev/scripts/run_ao3_jev.py": "16dab02d6bd865fff6c9eab477534d29d0a40c44efd159260026b8f6da428f40",
+    "/home/contessa/Documents/Projects/tag-matching-jev/scripts/ao3_jev.py": "c951e8cca6b87f2cf5bc0cab4260b4e6403100a1fa2017f141beb9de935441f5"
+  },
+  "prepared_at_utc": "2026-10-04T14:34:48.814991+00:00"
+}

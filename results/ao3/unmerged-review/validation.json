@@ -1,0 +1,11 @@
+{
+  "sampled_tags": 500,
+  "unique_source_ids": 500,
+  "shortlist_id_score_checks": 15000,
+  "query_sample_work_records": 1601,
+  "candidate_sample_work_records": 118405,
+  "sample_work_overlap": 0,
+  "original_benchmark_query_overlap": 0,
+  "blank_reference_labels_are_not_no_match": true,
+  "original_calibration_and_test_aliases_indexed": false
+}

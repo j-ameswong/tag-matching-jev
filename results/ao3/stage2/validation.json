@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "prediction_conditions": 22,
+  "prediction_rows": 49500,
+  "independent_membership_checks": 198000,
+  "stage1_name_only_replay": {
+    "checked_queries": {
+      "lexical/raw": 2250,
+      "semantic/raw": 2250
+    },
+    "rank_or_shortlist_mismatches": {
+      "lexical/raw": 0,
+      "semantic/raw": 0
+    }
+  },
+  "profiles": {
+    "distinct_sampled_support_works": 766025,
+    "distinct_sampled_query_works": 9407,
+    "overlapping_sampled_works": 0,
+    "selected_alias_examples_checked": 48080,
+    "profile_file_sha256_verified": true,
+    "equivalent_context_mask_verified": true
+  },
+  "embedding_matrix_and_representation_checksums_verified": true,
+  "calibration_and_test_evaluated": false
+}

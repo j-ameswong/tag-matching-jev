@@ -1,0 +1,19 @@
+{
+  "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+  "works_sha256": "2ce9a15d378587245bf69fabc5bd8a75bf36908755d81c3d4e7e72c24ed2dfdb",
+  "profiles_sha256": "ef5c7af503b317adc8317873af6c6703a2bf3445df2c5d7c0bf26009ce0a3f97",
+  "counts": {
+    "works_total": 7269693,
+    "support_works": 4328616,
+    "development_context_works": 1454164,
+    "reserved_calibration_test_works": 1451923,
+    "support_works_excluded_evaluated_alias": 34990,
+    "development_works_with_query": 16437
+  },
+  "candidate_profiles_with_works": 127193,
+  "synonym_queries_with_works": 1643,
+  "synonym_queries_with_at_least_three_works": 798,
+  "permitted_aliases": 68294,
+  "excluded_evaluation_aliases": 2000,
+  "elapsed_seconds": 199.62512388999676
+}

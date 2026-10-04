@@ -1,0 +1,112 @@
+{
+  "status": "retrieval_complete_reference_review_pending",
+  "population": 166244,
+  "sample": 500,
+  "arms": {
+    "random": 400,
+    "challenge": 100
+  },
+  "partitions": {
+    "calibration": 200,
+    "challenge": 100,
+    "validation": 200
+  },
+  "selection_reasons": {
+    "random": 400,
+    "small_margin": 20,
+    "high_usage": 10,
+    "semantic_disagreement": 20,
+    "unsupported_name_target": 20,
+    "low_similarity": 20,
+    "non_ascii": 10
+  },
+  "diagnostics_are_not_accuracy": [
+    {
+      "arm": "random",
+      "tags": 400,
+      "semantic_top1_agreement": 262,
+      "all_three_top1_agreement": 93,
+      "template_top1_without_aliases": 235,
+      "non_ascii_names": 8,
+      "with_context": 308,
+      "with_three_context_works": 126,
+      "pooled_top_score_quantiles": [
+        0.5891533130620308,
+        0.7800938028378084,
+        0.825920511182089,
+        0.8749185467528983,
+        0.9787900697246552
+      ],
+      "approximate_usage_quantiles": [
+        6.0,
+        7.0,
+        10.0,
+        18.0,
+        863.0
+      ]
+    },
+    {
+      "arm": "challenge",
+      "tags": 100,
+      "semantic_top1_agreement": 42,
+      "all_three_top1_agreement": 9,
+      "template_top1_without_aliases": 76,
+      "non_ascii_names": 16,
+      "with_context": 62,
+      "with_three_context_works": 31,
+      "pooled_top_score_quantiles": [
+        0.5144549081662253,
+        0.7018509082060256,
+        0.7776952099168959,
+        0.8388465741292738,
+        0.98323275254503
+      ],
+      "approximate_usage_quantiles": [
+        6.0,
+        8.0,
+        16.0,
+        27.25,
+        13784.0
+      ]
+    }
+  ],
+  "context": {
+    "unique_context_works": 5030,
+    "total_work_rows": 7269693,
+    "tags_with_context": 370,
+    "tags_with_at_least_three_context_works": 157,
+    "co_tag_order": "sample frequency, then numeric ID; no background association"
+  },
+  "reference_judgments_generated": 0,
+  "synonym_precision": null,
+  "new_canonical_proposal_precision": null,
+  "embeddings": {
+    "strings": 2400,
+    "batches": 5,
+    "metadata_sha256": "54d95d378141592ab5dfad40bab7b8580b3efd04ba51a34569225ab11283a6d4",
+    "prompt_tokens": 25959,
+    "reported_cost_usd": 0.0005191799999999999,
+    "model": "openai/text-embedding-3-small",
+    "dimensions": 1536,
+    "providers": [
+      "OpenAI"
+    ],
+    "attempts": 5
+  },
+  "artifacts": {
+    "results/ao3/unmerged-review/protocol.json": "2491830956ad41cb333683b136e10fe01b9fd837519f21957e7700d84d0c3442",
+    "results/ao3/unmerged-review/review-amendment-2026-10-04.json": "465d07316df76b8d7860dd119f4546c7da5545b692b92624a6c57c58abdbd340",
+    "results/ao3/unmerged-review/sample.csv": "492dda54e78fc6981665d4dc0c479ac7f14f3c4d04ed9e2c149b68eeb6d85332",
+    "results/ao3/unmerged-review/candidates.csv": "5894b6476d97a55587b4977ed27d2b19fc20365edb9a1b38266b4467be71a10a",
+    "data/ao3-unmerged-review/cases.json": "eeadb9675bac9bccb51b3b6ebcf5b0aabdb8bac4856aa7fc3d84a5728e32b00b",
+    "data/ao3-unmerged-review/profiles.json": "203dc9114577d430933516c7682325a0d8476037b467a41ea501290b311d9275",
+    "data/ao3-unmerged-review/semantic.json": "48543b565f20f4811e90e8365913be141b60a461bcca6bef79ae911d1d47d9f1",
+    "results/ao3/unmerged-review/validation.json": "45dbbd7403b4db1b4b30c651c70d1c9d348bb48dd602c36c0dfc8ae716f56367"
+  },
+  "original_calibration_and_test_evaluated": false,
+  "sources_sha256": {
+    "ao3_unmerged_review.py": "b4bdded4a50c76c869c05d7aee0450ce6a4bef7c0807c73d9e1a9522410feb80",
+    "analyze_ao3_review.py": "167ab390abd87a4398adc706ba1b518c6f044decbbaf02ee32c176ca7ab3b888",
+    "ao3_review_html.py": "2424f00cc5fc00011ed126b688a197e33b47dfb4eb2eefa2a3aba19ab8fa2d01"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "work_id": 6623293,
+  "title": "Realignment",
+  "language": "English",
+  "tags": {
+    "Rating": [
+      {
+        "name": "Teen And Up Audiences",
+        "href": "/tags/Teen%20And%20Up%20Audiences/works"
+      }
+    ],
+    "ArchiveWarning": [
+      {
+        "name": "Creator Chose Not To Use Archive Warnings",
+        "href": "/tags/Choose%20Not%20To%20Use%20Archive%20Warnings/works"
+      }
+    ],
+    "Category": [
+      {
+        "name": "Gen",
+        "href": "/tags/Gen/works"
+      }
+    ],
+    "Fandom": [
+      {
+        "name": "Harry Potter - J. K. Rowling",
+        "href": "/tags/Harry%20Potter%20-%20J*d*%20K*d*%20Rowling/works"
+      }
+    ],
+    "Character": [
+      {
+        "name": "Harry Potter",
+        "href": "/tags/Harry%20Potter/works"
+      },
+      {
+        "name": "Tom Riddle",
+        "href": "/tags/Tom%20Riddle/works"
+      },
+      {
+        "name": "Gellert Grindelwald",
+        "href": "/tags/Gellert%20Grindelwald/works"
+      },
+      {
+        "name": "Albus Dumbledore",
+        "href": "/tags/Albus%20Dumbledore/works"
+      }
+    ],
+    "Freeform": [
+      {
+        "name": "Time Travel",
+        "href": "/tags/Time%20Travel/works"
+      },
+      {
+        "name": "World War II",
+        "href": "/tags/World%20War%20II/works"
+      },
+      {
+        "name": "Nazis",
+        "href": "/tags/Nazis/works"
+      }
+    ]
+  },
+  "stats": {
+    "published": "2016-04-22",
+    "status": "2018-07-26",
+    "words": 65871,
+    "chapters": "25/25",
+    "comments": 103,
+    "kudos": 534,
+    "bookmarks": 244,
+    "hits": 21909
+  },
+  "saved_chapter_containers": [
+    "chapter-1"
+  ],
+  "chapter_urls": [
+    "/works/6623293/chapters/15155914"
+  ],
+  "word_count_scope": "whole work; body may contain only selected chapters",
+  "canonical_or_merger_labels_supplied": false,
+  "source": "tests/fixtures/ao3_work.html",
+  "source_sha256": "c6ca36916b4a23266bf7fa7dbbc9f09f79ea9c3277ce31166b67c3e82882a0ba",
+  "capture_date": null,
+  "summary_present": true,
+  "summary_characters": 230,
+  "benchmark_use": "extraction validation only; one work cannot estimate summary/engagement effectiveness"
+}

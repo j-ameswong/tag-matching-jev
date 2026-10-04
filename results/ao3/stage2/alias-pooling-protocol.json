@@ -1,0 +1,56 @@
+{
+  "protocol": {
+    "version": "ao3-stage2-alias-pooling-followup-v1",
+    "motivation": "Declared after observing Stage 2 raw/template/concatenated-alias Recall@10 of 80.95/84.55/78.35; separate exploratory follow-up, not part of the original 19 conditions",
+    "model": "openai/text-embedding-3-small",
+    "dimensions": 1536,
+    "aliases": "Exactly the same globally excluded, hash-selected maximum-five examples as Stage 2; no evaluated or held-out aliases",
+    "conditions": [
+      "raw_alias_max",
+      "template_alias_max"
+    ],
+    "score": "Maximum exhaustive cosine across canonical name and its selected alias vectors; one score/shortlist position per canonical ID",
+    "templates": {
+      "raw": "{name}",
+      "template": "Tag: {name}\nType: Freeform"
+    },
+    "queries": "Same 2000 development synonyms and 250 separate identities; no work context",
+    "statistics": "Paired target-group bootstrap against the matching name-only view and selected-alias lexical reference; 2000 resamples, seed 20261003",
+    "calibration_and_test_evaluated": false
+  },
+  "benchmark": {
+    "snapshot_id": "ao3-20210226-ac07b915acab",
+    "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+    "artifacts": {
+      "catalogue.csv": {
+        "rows": 1175987,
+        "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+        "bytes": 80317513
+      },
+      "synonyms.csv": {
+        "rows": 224744,
+        "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+        "bytes": 21921338
+      },
+      "development.csv": {
+        "rows": 2250,
+        "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+        "bytes": 380125
+      }
+    },
+    "type": "Freeform",
+    "evaluation_split": "development",
+    "canonical_candidates": 181067,
+    "development_synonyms": 2000,
+    "development_synonym_groups": 1761,
+    "development_identities": 250,
+    "permitted_development_aliases": 70294,
+    "population_synonyms_by_split": {
+      "test": 21406,
+      "calibration": 24943,
+      "development": 70294
+    },
+    "calibration_and_test_evaluated": false
+  },
+  "alias_ids_sha256": "fc6014c2bc1328cbb23a62700d2a13c9972b2bf26858a9f63874b30a9205d4d8"
+}

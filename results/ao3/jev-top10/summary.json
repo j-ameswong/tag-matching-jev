@@ -1,0 +1,1779 @@
+{
+  "status": "complete_exploratory_development",
+  "protocol_sha256": "0a96588ab0997a5025a50e1021fc9e6e3a787d908cf82b963ad8a506e67b9120",
+  "metrics": [
+    {
+      "condition": "retrieval_top1",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1463,
+        "overall_accuracy": {
+          "micro": 0.7315,
+          "macro": 0.7369865606662881,
+          "micro_ci95": [
+            0.7125865127175368,
+            0.7516430591167689
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.7946768060836502,
+          "macro": 0.8003269977518904,
+          "micro_ci95": [
+            0.7760937783203944,
+            0.8128479534379848
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.7315,
+          "macro": 0.7369865606662881,
+          "micro_ci95": [
+            0.7125865127175368,
+            0.7516430591167689
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 1463,
+        "forced_rescues": 0,
+        "forced_regressions": 0,
+        "forced_selection_accuracy_if_retrieved": 0.7946768060836502,
+        "accepted": 2000,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.7315,
+        "shortlist_decision_accuracy": 0.7315,
+        "rescue": 0,
+        "regression": 0,
+        "selection_error": 378,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 159
+      },
+      "operations": null
+    },
+    {
+      "condition": "wratio_aliases",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 964,
+        "overall_accuracy": {
+          "micro": 0.482,
+          "macro": 0.4838160136286201,
+          "micro_ci95": [
+            0.4602118644830529,
+            0.5045505088364908
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.5236284627919608,
+          "macro": 0.5259554465563049,
+          "micro_ci95": [
+            0.5002636560302867,
+            0.5467581095623193
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.2495,
+          "macro": -0.253170547037668,
+          "micro_ci95": [
+            -0.2723213931435259,
+            -0.22601544751985136
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.482,
+          "macro": 0.4838160136286201,
+          "micro_ci95": [
+            0.4602118644830529,
+            0.5045505088364908
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.2495,
+          "macro": -0.253170547037668,
+          "micro_ci95": [
+            -0.2723213931435259,
+            -0.22601544751985136
+          ]
+        },
+        "forced_candidate_successes": 964,
+        "forced_rescues": 102,
+        "forced_regressions": 601,
+        "forced_selection_accuracy_if_retrieved": 0.5236284627919608,
+        "accepted": 2000,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.482,
+        "shortlist_decision_accuracy": 0.482,
+        "rescue": 102,
+        "regression": 601,
+        "selection_error": 877,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 159
+      },
+      "operations": null
+    },
+    {
+      "condition": "levenshtein_aliases",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 924,
+        "overall_accuracy": {
+          "micro": 0.462,
+          "macro": 0.4596819988642817,
+          "micro_ci95": [
+            0.44097114948920746,
+            0.4846363645405696
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.5019011406844106,
+          "macro": 0.5004087471898631,
+          "micro_ci95": [
+            0.4782550445034717,
+            0.524123188695062
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.2695,
+          "macro": -0.27730456180200647,
+          "micro_ci95": [
+            -0.29388579521176245,
+            -0.24555134661725295
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.462,
+          "macro": 0.4596819988642817,
+          "micro_ci95": [
+            0.44097114948920746,
+            0.4846363645405696
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.2695,
+          "macro": -0.27730456180200647,
+          "micro_ci95": [
+            -0.29388579521176245,
+            -0.24555134661725295
+          ]
+        },
+        "forced_candidate_successes": 924,
+        "forced_rescues": 81,
+        "forced_regressions": 620,
+        "forced_selection_accuracy_if_retrieved": 0.5019011406844106,
+        "accepted": 2000,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.462,
+        "shortlist_decision_accuracy": 0.462,
+        "rescue": 81,
+        "regression": 620,
+        "selection_error": 917,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 159
+      },
+      "operations": null
+    },
+    {
+      "condition": "generic_names",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 2,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1606,
+        "overall_accuracy": {
+          "micro": 0.803,
+          "macro": 0.8087261025932234,
+          "micro_ci95": [
+            0.7839598997493734,
+            0.8204350025290845
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.8723519826181423,
+          "macro": 0.8786020846106684,
+          "micro_ci95": [
+            0.8563908027297001,
+            0.887987012987013
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0715,
+          "macro": 0.07173954192693546,
+          "micro_ci95": [
+            0.05220752619303694,
+            0.089726860575757
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.8025,
+          "macro": 0.8081582434222978,
+          "micro_ci95": [
+            0.7835235480821381,
+            0.8202194040562837
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.071,
+          "macro": 0.07117168275600985,
+          "micro_ci95": [
+            0.05167479142201943,
+            0.08930486060562222
+          ]
+        },
+        "forced_candidate_successes": 1605,
+        "forced_rescues": 254,
+        "forced_regressions": 112,
+        "forced_selection_accuracy_if_retrieved": 0.8718087995654535,
+        "accepted": 2000,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.803,
+        "shortlist_decision_accuracy": 0.803,
+        "rescue": 254,
+        "regression": 111,
+        "selection_error": 235,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 159
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.05356369200000004,
+        "input_tokens": 1275326,
+        "output_tokens": 347360,
+        "latency_seconds_p50_p95": [
+          0.2820287275008013,
+          0.3816277356983846
+        ],
+        "attempts": 2000,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "strict_names",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 1,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1442,
+        "overall_accuracy": {
+          "micro": 0.721,
+          "macro": 0.7300776074200264,
+          "micro_ci95": [
+            0.7011468481006135,
+            0.7423040168642999
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.7832699619771863,
+          "macro": 0.7930717351318209,
+          "micro_ci95": [
+            0.7644118428475839,
+            0.8032613150392017
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.0105,
+          "macro": -0.006908953246261591,
+          "micro_ci95": [
+            -0.030699765165003928,
+            0.0099855219671743
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.8015,
+          "macro": 0.8091046753738406,
+          "micro_ci95": [
+            0.7830407492964949,
+            0.8195504959043951
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.07,
+          "macro": 0.07211811470755253,
+          "micro_ci95": [
+            0.051748451713227624,
+            0.08848922451863628
+          ]
+        },
+        "forced_candidate_successes": 1603,
+        "forced_rescues": 250,
+        "forced_regressions": 110,
+        "forced_selection_accuracy_if_retrieved": 0.870722433460076,
+        "accepted": 1620,
+        "abstentions": 380,
+        "mapping_precision_on_known_positives": 0.8901234567901235,
+        "shortlist_decision_accuracy": 0.7815,
+        "rescue": 208,
+        "regression": 229,
+        "selection_error": 140,
+        "unnecessary_abstention": 259,
+        "correct_shortlist_rejection": 121,
+        "wrong_acceptance_on_retrieval_miss": 38
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.058855691999999946,
+        "input_tokens": 1401326,
+        "output_tokens": 365746,
+        "latency_seconds_p50_p95": [
+          0.2820655280011124,
+          0.3751037438520143
+        ],
+        "attempts": 2001,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_names",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 7,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1521,
+        "overall_accuracy": {
+          "micro": 0.7605,
+          "macro": 0.7636759416997917,
+          "micro_ci95": [
+            0.7406655964534159,
+            0.7793458437038323
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.8261814231395981,
+          "macro": 0.829961169016963,
+          "micro_ci95": [
+            0.8079822986350563,
+            0.8440929805243437
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.029,
+          "macro": 0.02668938103350369,
+          "micro_ci95": [
+            0.009401806392367627,
+            0.048269721612156445
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.798,
+          "macro": 0.8038046564452016,
+          "micro_ci95": [
+            0.779857598470715,
+            0.8160635921098155
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0665,
+          "macro": 0.0668180957789135,
+          "micro_ci95": [
+            0.04751587087960224,
+            0.08416077440241516
+          ]
+        },
+        "forced_candidate_successes": 1596,
+        "forced_rescues": 242,
+        "forced_regressions": 109,
+        "forced_selection_accuracy_if_retrieved": 0.8669201520912547,
+        "accepted": 1765,
+        "abstentions": 235,
+        "mapping_precision_on_known_positives": 0.861756373937677,
+        "shortlist_decision_accuracy": 0.8125,
+        "rescue": 226,
+        "regression": 168,
+        "selection_error": 189,
+        "unnecessary_abstention": 131,
+        "correct_shortlist_rejection": 104,
+        "wrong_acceptance_on_retrieval_miss": 55
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.06313969200000005,
+        "input_tokens": 1503326,
+        "output_tokens": 366128,
+        "latency_seconds_p50_p95": [
+          0.2827455924998503,
+          0.3821385090988769
+        ],
+        "attempts": 2001,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_aliases",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1633,
+        "overall_accuracy": {
+          "micro": 0.8165,
+          "macro": 0.8216922203293583,
+          "micro_ci95": [
+            0.8,
+            0.833837251584424
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.8870179250407387,
+          "macro": 0.8929082362558757,
+          "micro_ci95": [
+            0.872200983069361,
+            0.9019289193520947
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.085,
+          "macro": 0.08470565966307024,
+          "micro_ci95": [
+            0.06887918283189984,
+            0.10124555074938946
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.836,
+          "macro": 0.8417565777020631,
+          "micro_ci95": [
+            0.8203567542174837,
+            0.8526576486093215
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.1045,
+          "macro": 0.10477001703577513,
+          "micro_ci95": [
+            0.08908574991783388,
+            0.11996167272175608
+          ]
+        },
+        "forced_candidate_successes": 1672,
+        "forced_rescues": 247,
+        "forced_regressions": 38,
+        "forced_selection_accuracy_if_retrieved": 0.9082020640956002,
+        "accepted": 1834,
+        "abstentions": 166,
+        "mapping_precision_on_known_positives": 0.8904034896401308,
+        "shortlist_decision_accuracy": 0.862,
+        "rescue": 231,
+        "regression": 61,
+        "selection_error": 133,
+        "unnecessary_abstention": 75,
+        "correct_shortlist_rejection": 91,
+        "wrong_acceptance_on_retrieval_miss": 68
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.077422128,
+        "input_tokens": 1843384,
+        "output_tokens": 366568,
+        "latency_seconds_p50_p95": [
+          0.28289362199939205,
+          0.3788518629517057
+        ],
+        "attempts": 2000,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_aliases_shuffled",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1613,
+        "overall_accuracy": {
+          "micro": 0.8065,
+          "macro": 0.8110921824720803,
+          "micro_ci95": [
+            0.7894985133146919,
+            0.824097610574479
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.8761542639869636,
+          "macro": 0.8815655017371755,
+          "micro_ci95": [
+            0.8602150537634409,
+            0.8920112710807889
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.075,
+          "macro": 0.07410562180579217,
+          "micro_ci95": [
+            0.057526899903641765,
+            0.09160391350384355
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.836,
+          "macro": 0.8410940753359832,
+          "micro_ci95": [
+            0.8199394767235252,
+            0.8518523136602937
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.1045,
+          "macro": 0.10410751466969524,
+          "micro_ci95": [
+            0.08708382295338817,
+            0.12134981227670927
+          ]
+        },
+        "forced_candidate_successes": 1672,
+        "forced_rescues": 264,
+        "forced_regressions": 55,
+        "forced_selection_accuracy_if_retrieved": 0.9082020640956002,
+        "accepted": 1809,
+        "abstentions": 191,
+        "mapping_precision_on_known_positives": 0.8916528468767275,
+        "shortlist_decision_accuracy": 0.858,
+        "rescue": 239,
+        "regression": 89,
+        "selection_error": 140,
+        "unnecessary_abstention": 88,
+        "correct_shortlist_rejection": 103,
+        "wrong_acceptance_on_retrieval_miss": 56
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.077422128,
+        "input_tokens": 1843384,
+        "output_tokens": 366448,
+        "latency_seconds_p50_p95": [
+          0.28323544600061723,
+          0.3636227878001591
+        ],
+        "attempts": 2000,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_context",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 1,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1624,
+        "overall_accuracy": {
+          "micro": 0.812,
+          "macro": 0.8164868445958735,
+          "micro_ci95": [
+            0.7948843324846334,
+            0.8293828278846915
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.8821292775665399,
+          "macro": 0.887083588800327,
+          "micro_ci95": [
+            0.8669904917678888,
+            0.8968911827858217
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0805,
+          "macro": 0.07950028392958547,
+          "micro_ci95": [
+            0.06375397683316641,
+            0.0978973657277622
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.831,
+          "macro": 0.8355101268218814,
+          "micro_ci95": [
+            0.8138957816377171,
+            0.8474578397271807
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0995,
+          "macro": 0.0985235661555934,
+          "micro_ci95": [
+            0.08253085443037975,
+            0.11610507116514533
+          ]
+        },
+        "forced_candidate_successes": 1662,
+        "forced_rescues": 264,
+        "forced_regressions": 65,
+        "forced_selection_accuracy_if_retrieved": 0.9027702335687127,
+        "accepted": 1838,
+        "abstentions": 162,
+        "mapping_precision_on_known_positives": 0.8835690968443961,
+        "shortlist_decision_accuracy": 0.861,
+        "rescue": 246,
+        "regression": 85,
+        "selection_error": 153,
+        "unnecessary_abstention": 64,
+        "correct_shortlist_rejection": 98,
+        "wrong_acceptance_on_retrieval_miss": 61
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.15698201400000006,
+        "input_tokens": 3737667,
+        "output_tokens": 366636,
+        "latency_seconds_p50_p95": [
+          0.28678783900068083,
+          0.38825159734915354
+        ],
+        "attempts": 2000,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_pairwise_aliases",
+      "example_kind": "synonym",
+      "status": "complete",
+      "expected_queries": 2000,
+      "completed_queries": 2000,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 2000,
+        "retrieved": 1841,
+        "retrieval_misses": 159,
+        "successes": 1488,
+        "overall_accuracy": {
+          "micro": 0.744,
+          "macro": 0.7442740866931669,
+          "micro_ci95": [
+            0.7250986624222713,
+            0.7630267060224867
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.8082563824008691,
+          "macro": 0.8083997547516861,
+          "micro_ci95": [
+            0.7906097697328208,
+            0.8266540306477649
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0125,
+          "macro": 0.007287526026878667,
+          "micro_ci95": [
+            -0.007988517723914628,
+            0.03214545898978788
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.744,
+          "macro": 0.7442740866931669,
+          "micro_ci95": [
+            0.7250986624222713,
+            0.7630267060224867
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0125,
+          "macro": 0.007287526026878667,
+          "micro_ci95": [
+            -0.007988517723914628,
+            0.03214545898978788
+          ]
+        },
+        "forced_candidate_successes": 1488,
+        "forced_rescues": 221,
+        "forced_regressions": 196,
+        "forced_selection_accuracy_if_retrieved": 0.8082563824008691,
+        "accepted": 2000,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.744,
+        "shortlist_decision_accuracy": 0.744,
+        "rescue": 221,
+        "regression": 196,
+        "selection_error": 353,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 159
+      },
+      "operations": {
+        "requests": 2000,
+        "reported_cost_usd": 0.1739405219999999,
+        "input_tokens": 4141441,
+        "output_tokens": 485943,
+        "latency_seconds_p50_p95": [
+          0.2879629050021322,
+          0.3775739530001374
+        ],
+        "attempts": 2000,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "retrieval_top1",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 250,
+        "overall_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 250,
+        "forced_rescues": 0,
+        "forced_regressions": 0,
+        "forced_selection_accuracy_if_retrieved": 1.0,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 1.0,
+        "shortlist_decision_accuracy": 1.0,
+        "rescue": 0,
+        "regression": 0,
+        "selection_error": 0,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": null
+    },
+    {
+      "condition": "wratio_aliases",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 250,
+        "overall_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 250,
+        "forced_rescues": 0,
+        "forced_regressions": 0,
+        "forced_selection_accuracy_if_retrieved": 1.0,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 1.0,
+        "shortlist_decision_accuracy": 1.0,
+        "rescue": 0,
+        "regression": 0,
+        "selection_error": 0,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": null
+    },
+    {
+      "condition": "levenshtein_aliases",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 250,
+        "overall_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 250,
+        "forced_rescues": 0,
+        "forced_regressions": 0,
+        "forced_selection_accuracy_if_retrieved": 1.0,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 1.0,
+        "shortlist_decision_accuracy": 1.0,
+        "rescue": 0,
+        "regression": 0,
+        "selection_error": 0,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": null
+    },
+    {
+      "condition": "generic_names",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 250,
+        "overall_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 250,
+        "forced_rescues": 0,
+        "forced_regressions": 0,
+        "forced_selection_accuracy_if_retrieved": 1.0,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 1.0,
+        "shortlist_decision_accuracy": 1.0,
+        "rescue": 0,
+        "regression": 0,
+        "selection_error": 0,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.007006859999999998,
+        "input_tokens": 166830,
+        "output_tokens": 45154,
+        "latency_seconds_p50_p95": [
+          0.2892920590002177,
+          0.4000591840491323
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "strict_names",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 250,
+        "overall_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 1.0,
+          "macro": 1.0,
+          "micro_ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": 0.0,
+          "macro": 0.0,
+          "micro_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 250,
+        "forced_rescues": 0,
+        "forced_regressions": 0,
+        "forced_selection_accuracy_if_retrieved": 1.0,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 1.0,
+        "shortlist_decision_accuracy": 1.0,
+        "rescue": 0,
+        "regression": 0,
+        "selection_error": 0,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.007668359999999999,
+        "input_tokens": 182580,
+        "output_tokens": 47654,
+        "latency_seconds_p50_p95": [
+          0.28980621749906277,
+          0.3699276455005019
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_names",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 247,
+        "overall_accuracy": {
+          "micro": 0.988,
+          "macro": 0.988,
+          "micro_ci95": [
+            0.972,
+            1.0
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.988,
+          "macro": 0.988,
+          "micro_ci95": [
+            0.972,
+            1.0
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.012,
+          "macro": -0.012,
+          "micro_ci95": [
+            -0.028,
+            0.0
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.992,
+          "macro": 0.992,
+          "micro_ci95": [
+            0.98,
+            1.0
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.008,
+          "macro": -0.008,
+          "micro_ci95": [
+            -0.02,
+            0.0
+          ]
+        },
+        "forced_candidate_successes": 248,
+        "forced_rescues": 0,
+        "forced_regressions": 2,
+        "forced_selection_accuracy_if_retrieved": 0.992,
+        "accepted": 249,
+        "abstentions": 1,
+        "mapping_precision_on_known_positives": 0.9919678714859438,
+        "shortlist_decision_accuracy": 0.988,
+        "rescue": 0,
+        "regression": 3,
+        "selection_error": 2,
+        "unnecessary_abstention": 1,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.008203860000000007,
+        "input_tokens": 195330,
+        "output_tokens": 47646,
+        "latency_seconds_p50_p95": [
+          0.2898478175011405,
+          0.3898692025506534
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_aliases",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 245,
+        "overall_accuracy": {
+          "micro": 0.98,
+          "macro": 0.98,
+          "micro_ci95": [
+            0.964,
+            0.996
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.98,
+          "macro": 0.98,
+          "micro_ci95": [
+            0.964,
+            0.996
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.02,
+          "macro": -0.02,
+          "micro_ci95": [
+            -0.036,
+            -0.004
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.984,
+          "macro": 0.984,
+          "micro_ci95": [
+            0.968,
+            0.996
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.016,
+          "macro": -0.016,
+          "micro_ci95": [
+            -0.032,
+            -0.004
+          ]
+        },
+        "forced_candidate_successes": 246,
+        "forced_rescues": 0,
+        "forced_regressions": 4,
+        "forced_selection_accuracy_if_retrieved": 0.984,
+        "accepted": 249,
+        "abstentions": 1,
+        "mapping_precision_on_known_positives": 0.9839357429718876,
+        "shortlist_decision_accuracy": 0.98,
+        "rescue": 0,
+        "regression": 5,
+        "selection_error": 4,
+        "unnecessary_abstention": 1,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.008756202000000005,
+        "input_tokens": 208481,
+        "output_tokens": 47644,
+        "latency_seconds_p50_p95": [
+          0.2856555924990971,
+          0.38435364714969145
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_aliases_shuffled",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 245,
+        "overall_accuracy": {
+          "micro": 0.98,
+          "macro": 0.98,
+          "micro_ci95": [
+            0.96,
+            0.996
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.98,
+          "macro": 0.98,
+          "micro_ci95": [
+            0.96,
+            0.996
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.02,
+          "macro": -0.02,
+          "micro_ci95": [
+            -0.04,
+            -0.004
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.98,
+          "macro": 0.98,
+          "micro_ci95": [
+            0.96,
+            0.996
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.02,
+          "macro": -0.02,
+          "micro_ci95": [
+            -0.04,
+            -0.004
+          ]
+        },
+        "forced_candidate_successes": 245,
+        "forced_rescues": 0,
+        "forced_regressions": 5,
+        "forced_selection_accuracy_if_retrieved": 0.98,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.98,
+        "shortlist_decision_accuracy": 0.98,
+        "rescue": 0,
+        "regression": 5,
+        "selection_error": 5,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.008756202000000005,
+        "input_tokens": 208481,
+        "output_tokens": 47650,
+        "latency_seconds_p50_p95": [
+          0.28451497349851707,
+          0.38579015250015786
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_context",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 244,
+        "overall_accuracy": {
+          "micro": 0.976,
+          "macro": 0.976,
+          "micro_ci95": [
+            0.956,
+            0.992
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.976,
+          "macro": 0.976,
+          "micro_ci95": [
+            0.956,
+            0.992
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.024,
+          "macro": -0.024,
+          "micro_ci95": [
+            -0.044,
+            -0.008
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.976,
+          "macro": 0.976,
+          "micro_ci95": [
+            0.956,
+            0.992
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.024,
+          "macro": -0.024,
+          "micro_ci95": [
+            -0.044,
+            -0.008
+          ]
+        },
+        "forced_candidate_successes": 244,
+        "forced_rescues": 0,
+        "forced_regressions": 6,
+        "forced_selection_accuracy_if_retrieved": 0.976,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.976,
+        "shortlist_decision_accuracy": 0.976,
+        "rescue": 0,
+        "regression": 6,
+        "selection_error": 6,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.015953195999999992,
+        "input_tokens": 379838,
+        "output_tokens": 47651,
+        "latency_seconds_p50_p95": [
+          0.2900289144999988,
+          0.38218201504860183
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    },
+    {
+      "condition": "ao3_pairwise_aliases",
+      "example_kind": "canonical_name",
+      "status": "complete",
+      "expected_queries": 250,
+      "completed_queries": 250,
+      "choice_argmax_disagreements": 0,
+      "metrics": {
+        "queries": 250,
+        "retrieved": 250,
+        "retrieval_misses": 0,
+        "successes": 215,
+        "overall_accuracy": {
+          "micro": 0.86,
+          "macro": 0.86,
+          "micro_ci95": [
+            0.816,
+            0.9
+          ]
+        },
+        "selection_accuracy_if_retrieved": {
+          "micro": 0.86,
+          "macro": 0.86,
+          "micro_ci95": [
+            0.816,
+            0.9
+          ]
+        },
+        "difference_vs_retrieval_top1": {
+          "micro": -0.14,
+          "macro": -0.14,
+          "micro_ci95": [
+            -0.184,
+            -0.1
+          ]
+        },
+        "forced_candidate_accuracy": {
+          "micro": 0.86,
+          "macro": 0.86,
+          "micro_ci95": [
+            0.816,
+            0.9
+          ]
+        },
+        "forced_difference_vs_retrieval_top1": {
+          "micro": -0.14,
+          "macro": -0.14,
+          "micro_ci95": [
+            -0.184,
+            -0.1
+          ]
+        },
+        "forced_candidate_successes": 215,
+        "forced_rescues": 0,
+        "forced_regressions": 35,
+        "forced_selection_accuracy_if_retrieved": 0.86,
+        "accepted": 250,
+        "abstentions": 0,
+        "mapping_precision_on_known_positives": 0.86,
+        "shortlist_decision_accuracy": 0.86,
+        "rescue": 0,
+        "regression": 35,
+        "selection_error": 35,
+        "unnecessary_abstention": 0,
+        "correct_shortlist_rejection": 0,
+        "wrong_acceptance_on_retrieval_miss": 0
+      },
+      "operations": {
+        "requests": 250,
+        "reported_cost_usd": 0.020757365999999992,
+        "input_tokens": 494223,
+        "output_tokens": 62258,
+        "latency_seconds_p50_p95": [
+          0.2855475239994121,
+          0.384320932898845
+        ],
+        "attempts": 250,
+        "models": [
+          "typesafe/jev-1.13-20260917"
+        ],
+        "providers": [
+          "TypeSafe"
+        ]
+      }
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "a": "ao3_names",
+      "b": "strict_names",
+      "example_kind": "synonym",
+      "difference": {
+        "micro": 0.0395,
+        "macro": 0.03359833427976529,
+        "micro_ci95": [
+          0.025421833406341614,
+          0.05388170869244166
+        ]
+      },
+      "changed_selections": 303
+    },
+    {
+      "a": "ao3_aliases",
+      "b": "ao3_names",
+      "example_kind": "synonym",
+      "difference": {
+        "micro": 0.056,
+        "macro": 0.05801627862956653,
+        "micro_ci95": [
+          0.04279350455778596,
+          0.06990778603653078
+        ]
+      },
+      "changed_selections": 250
+    },
+    {
+      "a": "ao3_context",
+      "b": "ao3_aliases",
+      "example_kind": "synonym",
+      "difference": {
+        "micro": -0.0045,
+        "macro": -0.0052053757334847624,
+        "micro_ci95": [
+          -0.014363546310054482,
+          0.00589188894343533
+        ]
+      },
+      "changed_selections": 169
+    },
+    {
+      "a": "ao3_aliases_shuffled",
+      "b": "ao3_aliases",
+      "example_kind": "synonym",
+      "difference": {
+        "micro": -0.01,
+        "macro": -0.01060003785727806,
+        "micro_ci95": [
+          -0.01902925853172939,
+          -0.0004974692723788102
+        ]
+      },
+      "changed_selections": 147
+    },
+    {
+      "a": "ao3_pairwise_aliases",
+      "b": "ao3_aliases",
+      "example_kind": "synonym",
+      "difference": {
+        "micro": -0.0725,
+        "macro": -0.07741813363619156,
+        "micro_ci95": [
+          -0.0884119296004542,
+          -0.05708245999509419
+        ]
+      },
+      "changed_selections": 431
+    },
+    {
+      "a": "ao3_names",
+      "b": "strict_names",
+      "example_kind": "canonical_name",
+      "difference": {
+        "micro": -0.012,
+        "macro": -0.012,
+        "micro_ci95": [
+          -0.028,
+          0.0
+        ]
+      },
+      "changed_selections": 3
+    },
+    {
+      "a": "ao3_aliases",
+      "b": "ao3_names",
+      "example_kind": "canonical_name",
+      "difference": {
+        "micro": -0.008,
+        "macro": -0.008,
+        "micro_ci95": [
+          -0.028,
+          0.012
+        ]
+      },
+      "changed_selections": 6
+    },
+    {
+      "a": "ao3_context",
+      "b": "ao3_aliases",
+      "example_kind": "canonical_name",
+      "difference": {
+        "micro": -0.004,
+        "macro": -0.004,
+        "micro_ci95": [
+          -0.024,
+          0.016
+        ]
+      },
+      "changed_selections": 7
+    },
+    {
+      "a": "ao3_aliases_shuffled",
+      "b": "ao3_aliases",
+      "example_kind": "canonical_name",
+      "difference": {
+        "micro": 0.0,
+        "macro": 0.0,
+        "micro_ci95": [
+          -0.012,
+          0.012
+        ]
+      },
+      "changed_selections": 2
+    },
+    {
+      "a": "ao3_pairwise_aliases",
+      "b": "ao3_aliases",
+      "example_kind": "canonical_name",
+      "difference": {
+        "micro": -0.12,
+        "macro": -0.12,
+        "micro_ci95": [
+          -0.164,
+          -0.08
+        ]
+      },
+      "changed_selections": 33
+    }
+  ],
+  "operations": {
+    "requests": 15750,
+    "reported_cost_usd": 0.7384279140000009,
+    "input_tokens": 17581617,
+    "output_tokens": 3010486,
+    "latency_seconds_p50_p95": [
+      0.2843247765013075,
+      0.3803619802507455
+    ],
+    "attempts": 15752,
+    "models": [
+      "typesafe/jev-1.13-20260917"
+    ],
+    "providers": [
+      "TypeSafe"
+    ]
+  },
+  "response_manifest": {
+    "path": "data/ao3-jev-top10/response-manifest.json",
+    "sha256": "874590c2d8bc3b0f96fb160d8016335c3dd8ac87ffd83cd31667d895bd1a26b8"
+  },
+  "calibration_and_test_evaluated": false,
+  "natural_no_match_evaluated": false,
+  "source_hashes_at_analysis": {
+    "/home/contessa/Documents/Projects/tag-matching-jev/scripts/run_ao3_jev.py": "b9a095ead94a4a7aeee6063413b9e9ccf3194128490c3fe87ff43a25f3adb6ee",
+    "/home/contessa/Documents/Projects/tag-matching-jev/scripts/ao3_jev.py": "f5e7bef129468b530a40810076bda219baffca5115ff189c51dbd39d1f574bdd"
+  }
+}

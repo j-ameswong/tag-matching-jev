@@ -4,7 +4,11 @@
 
 Evaluate lexical retrieval, semantic embedding retrieval, candidate fusion, and optional Jev adjudication for AO3 canonicalisation. Separate candidate recall, final selection, and the decision to automate a mapping.
 
-**Active dataset:** the local AO3 selective dump under `data/ao3-dump/`, with filenames dated 2021-02-26. The [README](README.md) is the live writeup. Dataset analysis, the [frozen benchmark export](results/ao3/benchmark/manifest.json), the AO3 ID/type adapter, and **Stage 1 on the frozen Freeform development sample are complete**. See the [AO3 results](results/ao3/stage1/summary.json). No previous dataset's scores carry over.
+**Active dataset:** the local AO3 selective dump under `data/ao3-dump/`, with filenames dated 2021-02-26. The [README](README.md) is the live writeup. Dataset analysis, the [frozen benchmark export](results/ao3/benchmark/manifest.json), the AO3 ID/type adapter, **Stage 1**, and **Stage 2 using the supplied dump** are complete. See the [baseline results](results/ao3/stage1/summary.json), [representation results](results/ao3/stage2/summary.json), and [alias-vector follow-up](results/ao3/stage2/alias-pooling.json). No previous dataset's scores carry over.
+
+**Unmerged review — deferred, 2026-10-04:** retain the [500-case packet](results/ao3/unmerged-review/README.md), evidence, and evaluator. Human review and new labelling are tabled at the user's request. No natural no-match accuracy or automation precision has been established.
+
+**Scoped Jev experiment complete:** seven Jev variants and three deterministic baselines use identical Stage 2 `semantic/template_alias_max` shortlists for 2,000 development synonyms, with 250 identity controls separate. The best returned Choice uses AO3 instructions plus permitted aliases: **88.70% conditional selection / 81.65% overall**, versus **79.47% / 73.15%** for retrieval. The predeclared highest-non-none-probability rule reaches **90.82% / 83.60%**. This deliberately advances the scoped adjudication experiment before broader embedding/fusion studies; it neither requires human review nor evaluates calibration/test aliases. See [results](results/ao3/jev-top10/summary.json), [the protocol](results/ao3/jev-top10/protocol.json), and Stage 7 below.
 
 ## Dataset decision — adopt AO3
 
@@ -30,6 +34,14 @@ This supports a substantial retrieval/adjudication study with natural-language a
 - Of 224,747 visible noncanonical rows with a merger, one reaches a missing target and two reach canonical/merger conflicts; the remaining 224,744 are eligible. No eligible named mapping crosses types.
 - Do not infer visibility from `cached_count`: 96,873 redacted rows have counts at least five, while 849,932 named canonical rows have counts below five. Use the actual name marker; counts are approximate.
 - Keep the 221,190 visible noncanonical rows without a merger as unlabelled data. They need a separate adjudication process before they can support no-match or ambiguous-case evaluation.
+
+### Unmerged Freeform adjudication pilot
+
+The [protocol](results/ao3/unmerged-review/protocol.json) is frozen and retrieval is complete. Select 400 random tags from the 166,244 eligible unmerged Freeforms and 100 challenge cases from a separate 2,000-tag screen. Split the random sample into 200 review-calibration and 200 review-validation tags by an independent hash. Keep the challenge arm separate from prevalence and population-performance estimates. These review splits are tag-level and do not replace the original canonical-group holdouts.
+
+Retain template-only semantic retrieval, maximum cosine over individual template/alias vectors, and the frozen PostgreSQL trigram scorer with the same permitted aliases. Retrieve ten IDs per method from the full 181,067-canonical catalogue and review their union. Search beyond that union before concluding that a concept is new. Use work context as review evidence, never as a synonym label.
+
+When this deferred pilot resumes, it requires independent reference review into `synonym`, `new_canonical`, or `unresolved`, with rationale and documented catalogue search for novelty. Separate system proposals from reference judgments; adjudicate new-canonical decisions and reviewer disagreements before final claims. Measure resolved synonym precision, false merges, coverage, unresolved acceptance, shortlist recall, and new-concept decision precision. Proposed names require additional quality review. Tune rejection policies only on review calibration, freeze before validation, and report any target-family overlap between those review splits. The current preparation report has zero reviewed cases and null accuracy. This review is not a prerequisite for Jev selection evaluation on existing merger-labelled positives.
 
 ### Frozen split and initial scope
 
@@ -144,7 +156,7 @@ Where possible, maintain:
 
 **Complete for the initial AO3 Freeform development pilot.** Name-only Recall@10 is 70.35% for the best lexical method (`pg_trgm similarity`) and 80.95% for `text-embedding-3-small`; the paired improvement is 10.60 points (95% group-bootstrap interval 8.57–12.65). Trigram retrieval with other development aliases reaches 85.00% under the separate alias-permitted condition. Results are under `results/ao3/stage1/` and summarized in the [README](README.md). Calibration/test evaluation and Jev adjudication remain later stages.
 
-Do not use Jev yet.
+Stage 1 excludes Jev so retrieval performance remains independently measurable. The later, separately frozen top-ten adjudication experiment is now authorized.
 
 The purpose of this stage is to understand how much of the task can already be solved with simple methods.
 
@@ -209,7 +221,17 @@ At this stage, do not optimise for final mapping accuracy. The main question is:
 
 # 2. Test Text Representation
 
-**Next stage; not yet run.** Stage 1 supports retaining ordinary `pg_trgm similarity` and `text-embedding-3-small` as the lexical and semantic references. Keep the frozen Freeform sample and full catalogue when comparing representations.
+**Complete for the supplied dump.** The [Stage 2 protocol](results/ao3/stage2/protocol.json) froze 19 semantic conditions and three lexical references against the unchanged Freeform sample and full catalogue, retaining `pg_trgm similarity` and `text-embedding-3-small`. A separately declared [two-condition follow-up](results/ao3/stage2/alias-pooling-protocol.json) tested individual alias vectors after concatenating aliases hurt recall. The [README](README.md#stage-2-text-and-observed-work-representations) records methods, coverage, results and limitations.
+
+The leading development configuration embeds `Tag: [name]\nType: Freeform` separately for canonical names and up to five permitted aliases, then takes maximum cosine per canonical ID: **73.15% Recall@1 and 92.05% Recall@10**, versus **64.70% / 84.55%** for the same name template alone and **58.40% / 80.95%** for raw names. Carry both templated configurations into subsequent comparisons. Alias pooling helps targets with known aliases but harms the no-alias subset (Recall@10 88.82% → 85.16%); preserve the group holdout and separately design a within-family final holdout before claiming generalisation to new aliases of described tags.
+
+Appending all work information to both-side descriptions scores 59.45% Recall@10. A fixed name-anchored vector blend recovers 85.85%, but does not isolate which contextual features help. Keep work profiles for later structured reranking/adjudication experiments rather than appending every statistic to the primary embedding. Summary and reader-engagement effectiveness remain unmeasured because only one HTML fixture is supplied.
+
+The first executable comparison uses the data actually supplied: name/template controls, permitted alias examples, fandom context, broader co-tags, length distributions, usage frequency, work metadata, and cumulative combinations. Context is added to candidates alone and to both sides. A single-work query condition and a fixed 75% name / 25% combined-feature vector test alternative context use without changing the embedding model.
+
+Globally exclude all evaluated aliases before enrichment. Partition works independently into support/development-context/calibration-context/test-context pools (60/20/10/10); discard support works containing evaluated aliases. Candidate profiles use direct canonical occurrences and permitted development alias memberships. Query profiles use only raw source occurrences, with expected canonical IDs used solely for leakage masking. All noncanonical co-tags are omitted. Candidate metadata may cover direct canonical occurrences from any group split, while holdout aliases remain unavailable and holdout queries unevaluated.
+
+The supplied HTML fixture validates extraction only. A representative, separately dated corpus is required before measuring summary or reader-engagement additions. The definition/exclusion sequence below remains a later extension because the CSV supplies neither curated definitions nor exclusions.
 
 Freeze one lexical method and one embedding model temporarily.
 
@@ -565,6 +587,40 @@ Record:
 ---
 
 # 7. Evaluate Jev's Incremental Value
+
+## Scoped top-ten experiment, 2026-10-04
+
+**Complete:** all 15,750 API requests and 22,500 baseline/model outcomes are recorded and independently validated; 60 repository tests pass. The leading returned Choice improves matching by 8.50 points (231 rescues, 61 regressions); its forced non-none rule improves by 10.45 points (247 rescues, 38 regressions). Co-tag context adds no clear benefit, and pairwise Noul trails multiclass Choice. Preserve exact canonical matches in a later fast path: some Jev variants regress on identity controls. Report the forced rule separately from API Choice, retain the 92.05% retrieval ceiling, and keep all findings scoped to this exploratory known-positive development sample. Human review remains deferred.
+
+Use the existing best Recall@10 narrowing, `semantic/template_alias_max`, without recomputing retrieval, changing distractors, or inserting missing targets. For each query, one batch of ten candidates is one trial: selecting its recorded canonical ID is success (1); another ID or abstention is failure (0) for canonical matching. Never divide successes by ten times the number of queries.
+
+Freeze these conditions before API calls:
+
+1. Generic name-only Choice, forced to select one of ten candidates.
+2. Strict-equivalence name-only Choice with `none_of_these`.
+3. AO3-policy name-only Choice with `none_of_these`.
+4. AO3-policy Choice with the same permitted alias examples used in retrieval.
+5. The same alias Choice with deterministic shuffled candidate order.
+6. The same alias Choice with previously masked observed co-tags on both sides.
+7. Ten independent candidate-specific Noul questions, selecting the highest probability with numeric-ID tie breaks.
+
+Conditions 4–6 also offer `none_of_these`, an abstention option in addition to ten actual canonical candidates. Scores and explicit ranks stay hidden. Ranked presentation still supplies implicit retrieval evidence, which condition 5 tests. Pairwise questions share only the incoming state; each question contains its own candidate description. Do not invent absent definitions, summaries, or independent labels.
+
+The controls are the frozen retrieval first choice and within-shortlist WRatio/normalized-Levenshtein reranking over names and permitted aliases. Keep all 2,000 evaluated aliases globally excluded from enrichment and calibration/test aliases unavailable. Report identity controls separately.
+
+Primary denominators:
+
+```text
+conditional selection accuracy = correct canonical selections / 1,841 retrieved targets
+overall matching accuracy     = correct canonical selections / 2,000 synonym queries
+overall matching accuracy     = Recall@10 × conditional selection accuracy
+```
+
+All 159 retrieval misses remain overall matching failures. Correct `none_of_these` answers on these misses are separately reported shortlist rejections, never successful canonical mappings or evidence of natural no-match performance. For Choice distributions, also report the highest non-none candidate as a clearly labelled derived forced-selection diagnostic; this is not a separately queried ten-way prompt.
+
+Record per-query predictions, rescues/regressions, selection errors, unnecessary abstentions, alias/context strata, canonical-group bootstrap intervals, paired comparisons, latency, cost, exact model response IDs and resumable request/response hashes. A pending or failed API request must not silently become a model decision; full-sample metrics remain null until complete. This is exploratory development evaluation on a retrieval configuration selected using these same queries, with no fitted threshold and no final-test claim.
+
+Run and analyze with [run_ao3_jev.py](scripts/run_ao3_jev.py); publish results under [results/ao3/jev-top10/](results/ao3/jev-top10/). The broader candidate-count, definitions, calibration, and natural no-match experiments below remain future work.
 
 Use the exact same frozen candidate lists as the non-Jev baselines.
 

@@ -1,0 +1,10 @@
+{
+  "version": "ao3-unmerged-review-optional-name-v1",
+  "date": "2026-10-04",
+  "original_protocol_sha256": "27b79ceb44727913f32c34b9f93c5a7fc71b8fe07b6eb0d00675b7182c0e6372",
+  "requested_change": "Allow proposed_name to remain blank for new_canonical reference judgments and system proposals",
+  "reason": "This stage evaluates whether a concept needs a new canonical; choosing its name can follow later",
+  "reference_requirements": "Named reviewer, rationale, confidence and catalogue_checked=yes; no existing canonical ID; proposed_name optional",
+  "system_proposal_requirements": "new_canonical action with no existing canonical ID; proposed_name optional",
+  "unchanged": "Sampling, partitions, retrieval, label meanings, metrics and the existing review packet identity"
+}

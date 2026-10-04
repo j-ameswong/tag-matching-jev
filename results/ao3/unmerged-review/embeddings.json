@@ -1,0 +1,13 @@
+{
+  "strings": 2400,
+  "batches": 5,
+  "metadata_sha256": "54d95d378141592ab5dfad40bab7b8580b3efd04ba51a34569225ab11283a6d4",
+  "prompt_tokens": 25959,
+  "reported_cost_usd": 0.0005191799999999999,
+  "model": "openai/text-embedding-3-small",
+  "dimensions": 1536,
+  "providers": [
+    "OpenAI"
+  ],
+  "attempts": 5
+}

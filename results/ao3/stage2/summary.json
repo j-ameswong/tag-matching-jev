@@ -1,0 +1,4406 @@
+{
+  "stage": 2,
+  "status": "complete_for_dump_based_representations",
+  "generated_at_utc": "2026-10-03T22:25:24.227635+00:00",
+  "protocol": {
+    "version": "ao3-freeform-representations-v1",
+    "lexical_method": "PostgreSQL pg_trgm similarity(query, candidate); raw names and separate alias representations",
+    "embedding_model": "openai/text-embedding-3-small",
+    "dimensions": 1536,
+    "metric": "exhaustive cosine, float64 L2 normalization and scoring",
+    "candidates": "all 181067 Freeform canonicals; no candidate pruning or ANN",
+    "sample": "unchanged Stage 1: 2000 development aliases; 250 separate identity controls",
+    "evaluated_alias_policy": "Globally exclude every sampled synonym ID from candidate examples and co-tags; also discard support works containing any of these IDs",
+    "alias_examples": {
+      "maximum": 5,
+      "order_seed": "ao3-stage2-alias-v1",
+      "max_name_characters": 160
+    },
+    "work_assignment": {
+      "seed": "ao3-stage2-works-v1",
+      "identity": "source file SHA256 and 1-based logical CSV record ordinal",
+      "rule": "first 64 SHA256 bits modulo 10: 0-5 support, 6-7 development query context, 8 calibration context, 9 test context",
+      "sampling_priority": "next 64 SHA256 bits; smallest first"
+    },
+    "candidate_work_membership": "Direct canonical IDs and permitted development Freeform aliases only; deduplicate target ID within each work",
+    "query_work_membership": "Raw source tag ID only; never resolve source to target to collect its works",
+    "co_tags": "Only visible canonical IDs from the frozen catalogue; exclude the represented target ID; all noncanonical co-tags omitted",
+    "mask_ground_truth": "Expected canonical ID is used only to remove equivalent context from query works, never to select query works or add features",
+    "profile_sample_works": 32,
+    "max_co_tags_per_type_per_work": 24,
+    "profile_minimum_works": 3,
+    "co_tag_minimum_sample_support": 2,
+    "co_tag_selection": "Count in bottom-hash sample, then smoothed association (count+1)/(support background count+10), then numeric ID; fixed per-type quotas",
+    "co_tag_quotas": {
+      "Fandom": 3,
+      "Character": 3,
+      "Relationship": 2,
+      "Freeform": 4
+    },
+    "length_bands_words": {
+      "short": [
+        0,
+        5000
+      ],
+      "medium": [
+        5000,
+        20000
+      ],
+      "long": [
+        20000,
+        100000
+      ],
+      "epic": [
+        100000,
+        null
+      ]
+    },
+    "length_features": "Percent of nonmissing lengths per band; completed and incomplete works both included; no missing-as-zero",
+    "usage_feature": "Distinct eligible work share: <1e-6 very rare, <1e-4 uncommon, <1e-2 common, otherwise very common; not reader engagement",
+    "metadata_features": "Top two work language codes; complete and restricted percentages; common canonical rating/warning/category",
+    "text_views": [
+      "raw",
+      "template",
+      "aliases",
+      "fandom",
+      "cotags",
+      "length",
+      "usage",
+      "metadata",
+      "cotags_length",
+      "all"
+    ],
+    "semantic_conditions": [
+      "raw",
+      "template",
+      "aliases",
+      "fandom_candidate",
+      "fandom_both",
+      "cotags_candidate",
+      "cotags_both",
+      "length_candidate",
+      "length_both",
+      "usage_candidate",
+      "usage_both",
+      "metadata_candidate",
+      "metadata_both",
+      "cotags_length_candidate",
+      "cotags_length_both",
+      "all_candidate",
+      "all_both",
+      "cotags_one_work",
+      "all_name_anchor"
+    ],
+    "one_work_query": "Lowest-hash observed development context work, same masking and quotas; candidate co-tag profile",
+    "name_anchor": "L2 normalize 0.75 * normalized raw-name vector + 0.25 * normalized all-features vector, on both sides",
+    "lexical_conditions": [
+      "raw",
+      "global_aliases",
+      "selected_aliases"
+    ],
+    "statistics": "Recall@1/3/5/10; macro target recall; 2000 paired target-group bootstrap resamples, seed 20261003; descriptive development comparisons, no multiplicity correction",
+    "holdouts": "Calibration and test queries are not scored; their aliases are not indexed, embedded or used to assign support works to candidates",
+    "html_scope": "Single supplied fixture: extraction validation only; no representative summary or engagement corpus and no original work-ID join in dump",
+    "generated_definitions": false,
+    "jev_used": false
+  },
+  "benchmark": {
+    "snapshot_id": "ao3-20210226-ac07b915acab",
+    "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+    "artifacts": {
+      "catalogue.csv": {
+        "rows": 1175987,
+        "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+        "bytes": 80317513
+      },
+      "synonyms.csv": {
+        "rows": 224744,
+        "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+        "bytes": 21921338
+      },
+      "development.csv": {
+        "rows": 2250,
+        "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+        "bytes": 380125
+      }
+    },
+    "type": "Freeform",
+    "evaluation_split": "development",
+    "canonical_candidates": 181067,
+    "development_synonyms": 2000,
+    "development_synonym_groups": 1761,
+    "development_identities": 250,
+    "permitted_development_aliases": 70294,
+    "population_synonyms_by_split": {
+      "test": 21406,
+      "calibration": 24943,
+      "development": 70294
+    },
+    "calibration_and_test_evaluated": false
+  },
+  "coverage": {
+    "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+    "works_sha256": "2ce9a15d378587245bf69fabc5bd8a75bf36908755d81c3d4e7e72c24ed2dfdb",
+    "profiles_sha256": "ef5c7af503b317adc8317873af6c6703a2bf3445df2c5d7c0bf26009ce0a3f97",
+    "counts": {
+      "works_total": 7269693,
+      "support_works": 4328616,
+      "development_context_works": 1454164,
+      "reserved_calibration_test_works": 1451923,
+      "support_works_excluded_evaluated_alias": 34990,
+      "development_works_with_query": 16437
+    },
+    "candidate_profiles_with_works": 127193,
+    "synonym_queries_with_works": 1643,
+    "synonym_queries_with_at_least_three_works": 798,
+    "permitted_aliases": 68294,
+    "excluded_evaluation_aliases": 2000,
+    "elapsed_seconds": 199.62512388999676
+  },
+  "representations": {
+    "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+    "benchmark": {
+      "snapshot_id": "ao3-20210226-ac07b915acab",
+      "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+      "artifacts": {
+        "catalogue.csv": {
+          "rows": 1175987,
+          "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+          "bytes": 80317513
+        },
+        "synonyms.csv": {
+          "rows": 224744,
+          "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+          "bytes": 21921338
+        },
+        "development.csv": {
+          "rows": 2250,
+          "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+          "bytes": 380125
+        }
+      },
+      "type": "Freeform",
+      "evaluation_split": "development",
+      "canonical_candidates": 181067,
+      "development_synonyms": 2000,
+      "development_synonym_groups": 1761,
+      "development_identities": 250,
+      "permitted_development_aliases": 70294,
+      "population_synonyms_by_split": {
+        "test": 21406,
+        "calibration": 24943,
+        "development": 70294
+      },
+      "calibration_and_test_evaluated": false
+    },
+    "base_embedding_cache": "data/ao3-baselines/embeddings/3aad7cb2778c2670fdb0",
+    "base_strings": 183067,
+    "unique_strings": 1025663,
+    "novel_strings": 842596,
+    "selected_alias_examples": 48080,
+    "availability": {
+      "fandom": {
+        "candidates_with_additional_text": 96782,
+        "synonym_queries_with_additional_text": 778
+      },
+      "cotags": {
+        "candidates_with_additional_text": 99544,
+        "synonym_queries_with_additional_text": 949
+      },
+      "length": {
+        "candidates_with_additional_text": 85886,
+        "synonym_queries_with_additional_text": 798
+      },
+      "usage": {
+        "candidates_with_additional_text": 85886,
+        "synonym_queries_with_additional_text": 798
+      },
+      "metadata": {
+        "candidates_with_additional_text": 85886,
+        "synonym_queries_with_additional_text": 798
+      },
+      "cotags_length": {
+        "candidates_with_additional_text": 99925,
+        "synonym_queries_with_additional_text": 1042
+      },
+      "all": {
+        "candidates_with_additional_text": 99925,
+        "synonym_queries_with_additional_text": 1042
+      }
+    },
+    "texts.json_sha256": "2502021a782bf16cafb51aefe8adc8cc163cbaffd55d9a3bb32c4344e6437efb",
+    "positions.npz_sha256": "e31a340d8867b0187cc7fb4d4d45ca9714a820b6191671b173b27e9bbe9ed611",
+    "profiles.json_sha256": "ef5c7af503b317adc8317873af6c6703a2bf3445df2c5d7c0bf26009ce0a3f97"
+  },
+  "embeddings": {
+    "recipe": {
+      "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+      "model": "openai/text-embedding-3-small",
+      "dimensions": 1536,
+      "batch_maximum": 512,
+      "batch_byte_maximum": 280000
+    },
+    "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+    "new_batches": 1670,
+    "new_strings": 842596,
+    "reused_strings": 183067,
+    "prompt_tokens": 51648664,
+    "reported_cost_usd": 1.0329732800000004,
+    "providers": [
+      "OpenAI"
+    ],
+    "response_models": [
+      "text-embedding-3-small"
+    ],
+    "attempts": 1670,
+    "batch_metadata_sha256": "8a3150c6bb56ba076bca0948bfeae74a7475cd56c10259b7747ac238110b98ea",
+    "last_session_seconds": 789.1973917840005,
+    "captured_from_utc": "2026-10-03T22:06:13.733010+00:00",
+    "captured_to_utc": "2026-10-03T22:19:16.966014+00:00"
+  },
+  "metrics": [
+    {
+      "method": "lexical",
+      "condition": "raw",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.5025,
+        "macro": 0.5129661177361348,
+        "micro_ci95": [
+          0.48030244406118094,
+          0.5263426288113106
+        ]
+      },
+      "recall@3": {
+        "micro": 0.6085,
+        "macro": 0.6208593602120008,
+        "micro_ci95": [
+          0.5860809043896175,
+          0.6306160384184106
+        ]
+      },
+      "recall@5": {
+        "micro": 0.651,
+        "macro": 0.6642059435926557,
+        "micro_ci95": [
+          0.6294233197733298,
+          0.6735952538175919
+        ]
+      },
+      "recall@10": {
+        "micro": 0.7035,
+        "macro": 0.7153132689759607,
+        "micro_ci95": [
+          0.6826003050904598,
+          0.7247678621727414
+        ]
+      }
+    },
+    {
+      "method": "lexical",
+      "condition": "raw",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "method": "lexical",
+      "condition": "global_aliases",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.6585,
+        "macro": 0.6523755441983722,
+        "micro_ci95": [
+          0.6362267937782238,
+          0.6807481032614051
+        ]
+      },
+      "recall@3": {
+        "micro": 0.785,
+        "macro": 0.7766420594359266,
+        "micro_ci95": [
+          0.7656389693510411,
+          0.8032466766381867
+        ]
+      },
+      "recall@5": {
+        "micro": 0.8145,
+        "macro": 0.8073064546659096,
+        "micro_ci95": [
+          0.7975752126498494,
+          0.8313524195103142
+        ]
+      },
+      "recall@10": {
+        "micro": 0.848,
+        "macro": 0.8417565777020634,
+        "micro_ci95": [
+          0.8323323323323323,
+          0.8636363636363636
+        ]
+      }
+    },
+    {
+      "method": "lexical",
+      "condition": "global_aliases",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "method": "lexical",
+      "condition": "selected_aliases",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.617,
+        "macro": 0.6288093886049594,
+        "micro_ci95": [
+          0.5938843707910276,
+          0.6394398617718
+        ]
+      },
+      "recall@3": {
+        "micro": 0.741,
+        "macro": 0.7491955328411887,
+        "micro_ci95": [
+          0.7209213189795964,
+          0.7608395033387121
+        ]
+      },
+      "recall@5": {
+        "micro": 0.776,
+        "macro": 0.7835510126821881,
+        "micro_ci95": [
+          0.7577713901386384,
+          0.7952730978518903
+        ]
+      },
+      "recall@10": {
+        "micro": 0.8165,
+        "macro": 0.8218815067196669,
+        "micro_ci95": [
+          0.7983108734955855,
+          0.834170412683153
+        ]
+      }
+    },
+    {
+      "method": "lexical",
+      "condition": "selected_aliases",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "raw",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.584,
+        "macro": 0.5909521105432518,
+        "micro_ci95": [
+          0.5608670979686743,
+          0.6073232715085966
+        ]
+      },
+      "recall@3": {
+        "micro": 0.7135,
+        "macro": 0.7233579405640735,
+        "micro_ci95": [
+          0.6921887055950863,
+          0.7341223658914959
+        ]
+      },
+      "recall@5": {
+        "micro": 0.7585,
+        "macro": 0.7659473783834941,
+        "micro_ci95": [
+          0.7382848994619772,
+          0.7786787660440635
+        ]
+      },
+      "recall@10": {
+        "micro": 0.8095,
+        "macro": 0.8144046943024795,
+        "micro_ci95": [
+          0.7907383194783468,
+          0.8282035764669845
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "raw",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "template",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.647,
+        "macro": 0.6498201779292069,
+        "micro_ci95": [
+          0.625557692495198,
+          0.6699424095683587
+        ]
+      },
+      "recall@3": {
+        "micro": 0.773,
+        "macro": 0.7740866931667613,
+        "micro_ci95": [
+          0.7536228277100873,
+          0.792733627094252
+        ]
+      },
+      "recall@5": {
+        "micro": 0.808,
+        "macro": 0.8086314593980692,
+        "micro_ci95": [
+          0.7898642907838382,
+          0.8263724590025259
+        ]
+      },
+      "recall@10": {
+        "micro": 0.8455,
+        "macro": 0.8466780238500852,
+        "micro_ci95": [
+          0.8282779065012948,
+          0.8620182275367975
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "template",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "aliases",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.484,
+        "macro": 0.5140071928828317,
+        "micro_ci95": [
+          0.46003971518677406,
+          0.5078443580150711
+        ]
+      },
+      "recall@3": {
+        "micro": 0.6615,
+        "macro": 0.6886238879424569,
+        "micro_ci95": [
+          0.6386488076109168,
+          0.6846642717271985
+        ]
+      },
+      "recall@5": {
+        "micro": 0.7135,
+        "macro": 0.7367972742759795,
+        "micro_ci95": [
+          0.6911148203592814,
+          0.7353859879032257
+        ]
+      },
+      "recall@10": {
+        "micro": 0.7835,
+        "macro": 0.8030475108839673,
+        "micro_ci95": [
+          0.7633254012253226,
+          0.8040716590685957
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "aliases",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.924,
+        "macro": 0.924,
+        "micro_ci95": [
+          0.888,
+          0.952
+        ]
+      },
+      "recall@3": {
+        "micro": 0.976,
+        "macro": 0.976,
+        "micro_ci95": [
+          0.956,
+          0.992
+        ]
+      },
+      "recall@5": {
+        "micro": 0.984,
+        "macro": 0.984,
+        "micro_ci95": [
+          0.968,
+          0.996
+        ]
+      },
+      "recall@10": {
+        "micro": 0.988,
+        "macro": 0.988,
+        "micro_ci95": [
+          0.972,
+          1.0
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "fandom_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.3075,
+        "macro": 0.3273708120386144,
+        "micro_ci95": [
+          0.28649993148978575,
+          0.3293439729765001
+        ]
+      },
+      "recall@3": {
+        "micro": 0.4675,
+        "macro": 0.4873178118493281,
+        "micro_ci95": [
+          0.44376216804511137,
+          0.4914413658371362
+        ]
+      },
+      "recall@5": {
+        "micro": 0.5275,
+        "macro": 0.5474162407722885,
+        "micro_ci95": [
+          0.503461918892186,
+          0.5510714831097054
+        ]
+      },
+      "recall@10": {
+        "micro": 0.6195,
+        "macro": 0.6370433465833806,
+        "micro_ci95": [
+          0.596075714920729,
+          0.6420017068273093
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "fandom_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.752,
+        "macro": 0.752,
+        "micro_ci95": [
+          0.7,
+          0.8040999999999995
+        ]
+      },
+      "recall@3": {
+        "micro": 0.848,
+        "macro": 0.848,
+        "micro_ci95": [
+          0.804,
+          0.892
+        ]
+      },
+      "recall@5": {
+        "micro": 0.88,
+        "macro": 0.88,
+        "micro_ci95": [
+          0.84,
+          0.92
+        ]
+      },
+      "recall@10": {
+        "micro": 0.932,
+        "macro": 0.932,
+        "micro_ci95": [
+          0.9,
+          0.96
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "fandom_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.3675,
+        "macro": 0.39485141018360775,
+        "micro_ci95": [
+          0.34592050225069465,
+          0.39060753903053164
+        ]
+      },
+      "recall@3": {
+        "micro": 0.5095,
+        "macro": 0.5368162029150104,
+        "micro_ci95": [
+          0.48516307840036965,
+          0.532328313391097
+        ]
+      },
+      "recall@5": {
+        "micro": 0.5625,
+        "macro": 0.5909521105432518,
+        "micro_ci95": [
+          0.5374610133960528,
+          0.5853664680223628
+        ]
+      },
+      "recall@10": {
+        "micro": 0.648,
+        "macro": 0.6722506151807685,
+        "micro_ci95": [
+          0.6240802758130474,
+          0.6708688760598133
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "fandom_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.84,
+        "macro": 0.84,
+        "micro_ci95": [
+          0.792,
+          0.884
+        ]
+      },
+      "recall@3": {
+        "micro": 0.916,
+        "macro": 0.916,
+        "micro_ci95": [
+          0.88,
+          0.948
+        ]
+      },
+      "recall@5": {
+        "micro": 0.936,
+        "macro": 0.936,
+        "micro_ci95": [
+          0.904,
+          0.964
+        ]
+      },
+      "recall@10": {
+        "micro": 0.952,
+        "macro": 0.952,
+        "micro_ci95": [
+          0.924,
+          0.976
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.2305,
+        "macro": 0.24342229793677833,
+        "micro_ci95": [
+          0.21047366301279666,
+          0.2501245953706567
+        ]
+      },
+      "recall@3": {
+        "micro": 0.3695,
+        "macro": 0.38321029717963273,
+        "micro_ci95": [
+          0.347019505793888,
+          0.39174784970117915
+        ]
+      },
+      "recall@5": {
+        "micro": 0.4285,
+        "macro": 0.442551580541359,
+        "micro_ci95": [
+          0.4053895481116157,
+          0.451226698374568
+        ]
+      },
+      "recall@10": {
+        "micro": 0.519,
+        "macro": 0.534923339011925,
+        "micro_ci95": [
+          0.4945164506480558,
+          0.5416671867199201
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.672,
+        "macro": 0.672,
+        "micro_ci95": [
+          0.612,
+          0.732
+        ]
+      },
+      "recall@3": {
+        "micro": 0.772,
+        "macro": 0.772,
+        "micro_ci95": [
+          0.716,
+          0.824
+        ]
+      },
+      "recall@5": {
+        "micro": 0.804,
+        "macro": 0.804,
+        "micro_ci95": [
+          0.752,
+          0.852
+        ]
+      },
+      "recall@10": {
+        "micro": 0.844,
+        "macro": 0.844,
+        "micro_ci95": [
+          0.796,
+          0.888
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.3365,
+        "macro": 0.3587923528298315,
+        "micro_ci95": [
+          0.3144535769388146,
+          0.3572213110373942
+        ]
+      },
+      "recall@3": {
+        "micro": 0.4785,
+        "macro": 0.5010410751466969,
+        "micro_ci95": [
+          0.45454545454545453,
+          0.5010041937212957
+        ]
+      },
+      "recall@5": {
+        "micro": 0.533,
+        "macro": 0.5565966307022524,
+        "micro_ci95": [
+          0.5094397853702322,
+          0.5562336786677512
+        ]
+      },
+      "recall@10": {
+        "micro": 0.6075,
+        "macro": 0.6289986749952677,
+        "micro_ci95": [
+          0.5838756526675218,
+          0.6303838620355247
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.808,
+        "macro": 0.808,
+        "micro_ci95": [
+          0.7599,
+          0.856
+        ]
+      },
+      "recall@3": {
+        "micro": 0.876,
+        "macro": 0.876,
+        "micro_ci95": [
+          0.832,
+          0.916
+        ]
+      },
+      "recall@5": {
+        "micro": 0.904,
+        "macro": 0.904,
+        "micro_ci95": [
+          0.864,
+          0.94
+        ]
+      },
+      "recall@10": {
+        "micro": 0.932,
+        "macro": 0.932,
+        "micro_ci95": [
+          0.9,
+          0.96
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "length_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.507,
+        "macro": 0.5152375544198372,
+        "micro_ci95": [
+          0.4846023011228807,
+          0.5303659122451159
+        ]
+      },
+      "recall@3": {
+        "micro": 0.6805,
+        "macro": 0.6912738974067764,
+        "micro_ci95": [
+          0.6581144881072811,
+          0.7035737525327728
+        ]
+      },
+      "recall@5": {
+        "micro": 0.744,
+        "macro": 0.7542116221843649,
+        "micro_ci95": [
+          0.7219702890998919,
+          0.765152943461767
+        ]
+      },
+      "recall@10": {
+        "micro": 0.801,
+        "macro": 0.8081582434222978,
+        "micro_ci95": [
+          0.7819150521609538,
+          0.8204002897564611
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "length_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.868,
+        "macro": 0.868,
+        "micro_ci95": [
+          0.824,
+          0.912
+        ]
+      },
+      "recall@3": {
+        "micro": 0.94,
+        "macro": 0.94,
+        "micro_ci95": [
+          0.908,
+          0.968
+        ]
+      },
+      "recall@5": {
+        "micro": 0.964,
+        "macro": 0.964,
+        "micro_ci95": [
+          0.94,
+          0.984
+        ]
+      },
+      "recall@10": {
+        "micro": 0.976,
+        "macro": 0.976,
+        "micro_ci95": [
+          0.956,
+          0.992
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "length_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.461,
+        "macro": 0.48088207457883775,
+        "micro_ci95": [
+          0.4386216651551362,
+          0.48457739096332386
+        ]
+      },
+      "recall@3": {
+        "micro": 0.619,
+        "macro": 0.6381790649252318,
+        "micro_ci95": [
+          0.5960088398590139,
+          0.6427855711422845
+        ]
+      },
+      "recall@5": {
+        "micro": 0.68,
+        "macro": 0.6963846299451069,
+        "micro_ci95": [
+          0.6573826419621939,
+          0.7025582231908657
+        ]
+      },
+      "recall@10": {
+        "micro": 0.7495,
+        "macro": 0.7620670073821693,
+        "micro_ci95": [
+          0.7280387096774193,
+          0.7693493357680621
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "length_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.912,
+        "macro": 0.912,
+        "micro_ci95": [
+          0.876,
+          0.948
+        ]
+      },
+      "recall@3": {
+        "micro": 0.952,
+        "macro": 0.952,
+        "micro_ci95": [
+          0.924,
+          0.976
+        ]
+      },
+      "recall@5": {
+        "micro": 0.972,
+        "macro": 0.972,
+        "micro_ci95": [
+          0.948,
+          0.992
+        ]
+      },
+      "recall@10": {
+        "micro": 0.98,
+        "macro": 0.98,
+        "micro_ci95": [
+          0.96,
+          0.996
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "usage_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.36,
+        "macro": 0.37412455044482296,
+        "micro_ci95": [
+          0.3383207800778625,
+          0.38296920405863827
+        ]
+      },
+      "recall@3": {
+        "micro": 0.5135,
+        "macro": 0.5262161650577323,
+        "micro_ci95": [
+          0.4896895262088899,
+          0.5363778977178466
+        ]
+      },
+      "recall@5": {
+        "micro": 0.58,
+        "macro": 0.5953056975203482,
+        "micro_ci95": [
+          0.5565644628807855,
+          0.6036128714080772
+        ]
+      },
+      "recall@10": {
+        "micro": 0.6735,
+        "macro": 0.686541737649063,
+        "micro_ci95": [
+          0.6508636113858666,
+          0.6965194953694238
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "usage_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.784,
+        "macro": 0.784,
+        "micro_ci95": [
+          0.732,
+          0.836
+        ]
+      },
+      "recall@3": {
+        "micro": 0.86,
+        "macro": 0.86,
+        "micro_ci95": [
+          0.816,
+          0.904
+        ]
+      },
+      "recall@5": {
+        "micro": 0.9,
+        "macro": 0.9,
+        "micro_ci95": [
+          0.86,
+          0.936
+        ]
+      },
+      "recall@10": {
+        "micro": 0.944,
+        "macro": 0.944,
+        "micro_ci95": [
+          0.912,
+          0.9680999999999994
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "usage_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.376,
+        "macro": 0.3987317811849328,
+        "micro_ci95": [
+          0.3536963108932563,
+          0.398400844453476
+        ]
+      },
+      "recall@3": {
+        "micro": 0.52,
+        "macro": 0.5384251372326329,
+        "micro_ci95": [
+          0.4970414201183432,
+          0.5428441771502679
+        ]
+      },
+      "recall@5": {
+        "micro": 0.5925,
+        "macro": 0.6109218247208026,
+        "micro_ci95": [
+          0.5698625646671253,
+          0.6155048541247485
+        ]
+      },
+      "recall@10": {
+        "micro": 0.6765,
+        "macro": 0.6930721181147076,
+        "micro_ci95": [
+          0.6550020324738479,
+          0.6983410823058588
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "usage_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.872,
+        "macro": 0.872,
+        "micro_ci95": [
+          0.828,
+          0.912
+        ]
+      },
+      "recall@3": {
+        "micro": 0.928,
+        "macro": 0.928,
+        "micro_ci95": [
+          0.896,
+          0.956
+        ]
+      },
+      "recall@5": {
+        "micro": 0.94,
+        "macro": 0.94,
+        "micro_ci95": [
+          0.908,
+          0.968
+        ]
+      },
+      "recall@10": {
+        "micro": 0.96,
+        "macro": 0.96,
+        "micro_ci95": [
+          0.936,
+          0.98
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "metadata_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.38,
+        "macro": 0.38888888888888884,
+        "micro_ci95": [
+          0.3569624084573589,
+          0.40370278620866773
+        ]
+      },
+      "recall@3": {
+        "micro": 0.5485,
+        "macro": 0.5583948514101836,
+        "micro_ci95": [
+          0.5240480340949624,
+          0.5722924435838592
+        ]
+      },
+      "recall@5": {
+        "micro": 0.6165,
+        "macro": 0.6266325951164111,
+        "micro_ci95": [
+          0.5934505936672159,
+          0.6392132213537419
+        ]
+      },
+      "recall@10": {
+        "micro": 0.7055,
+        "macro": 0.714745409805035,
+        "micro_ci95": [
+          0.683251755382688,
+          0.7278714515480195
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "metadata_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.784,
+        "macro": 0.784,
+        "micro_ci95": [
+          0.732,
+          0.836
+        ]
+      },
+      "recall@3": {
+        "micro": 0.888,
+        "macro": 0.888,
+        "micro_ci95": [
+          0.848,
+          0.924
+        ]
+      },
+      "recall@5": {
+        "micro": 0.928,
+        "macro": 0.928,
+        "micro_ci95": [
+          0.892,
+          0.96
+        ]
+      },
+      "recall@10": {
+        "micro": 0.956,
+        "macro": 0.956,
+        "micro_ci95": [
+          0.928,
+          0.98
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "metadata_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.42,
+        "macro": 0.4335604770017036,
+        "micro_ci95": [
+          0.39789464121655904,
+          0.44210619398420253
+        ]
+      },
+      "recall@3": {
+        "micro": 0.585,
+        "macro": 0.5950217679348855,
+        "micro_ci95": [
+          0.5613505721710956,
+          0.6080578716950791
+        ]
+      },
+      "recall@5": {
+        "micro": 0.6495,
+        "macro": 0.660798788567102,
+        "micro_ci95": [
+          0.6274092500211796,
+          0.6715689693061848
+        ]
+      },
+      "recall@10": {
+        "micro": 0.726,
+        "macro": 0.735566912738974,
+        "micro_ci95": [
+          0.7047353148704569,
+          0.746885899352267
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "metadata_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.904,
+        "macro": 0.904,
+        "micro_ci95": [
+          0.868,
+          0.94
+        ]
+      },
+      "recall@3": {
+        "micro": 0.944,
+        "macro": 0.944,
+        "micro_ci95": [
+          0.916,
+          0.972
+        ]
+      },
+      "recall@5": {
+        "micro": 0.972,
+        "macro": 0.972,
+        "micro_ci95": [
+          0.948,
+          0.992
+        ]
+      },
+      "recall@10": {
+        "micro": 0.98,
+        "macro": 0.98,
+        "micro_ci95": [
+          0.96,
+          0.996
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_length_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.253,
+        "macro": 0.26452773045618017,
+        "micro_ci95": [
+          0.2325229610808131,
+          0.2732735025101437
+        ]
+      },
+      "recall@3": {
+        "micro": 0.402,
+        "macro": 0.41680863145939806,
+        "micro_ci95": [
+          0.37899642134547296,
+          0.4245479872240436
+        ]
+      },
+      "recall@5": {
+        "micro": 0.466,
+        "macro": 0.4814499337497634,
+        "micro_ci95": [
+          0.44216205795719526,
+          0.4890389732545876
+        ]
+      },
+      "recall@10": {
+        "micro": 0.5585,
+        "macro": 0.5713609691463184,
+        "micro_ci95": [
+          0.5353753930305772,
+          0.5811377399535527
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_length_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.684,
+        "macro": 0.684,
+        "micro_ci95": [
+          0.624,
+          0.744
+        ]
+      },
+      "recall@3": {
+        "micro": 0.792,
+        "macro": 0.792,
+        "micro_ci95": [
+          0.736,
+          0.8400999999999994
+        ]
+      },
+      "recall@5": {
+        "micro": 0.828,
+        "macro": 0.828,
+        "micro_ci95": [
+          0.78,
+          0.876
+        ]
+      },
+      "recall@10": {
+        "micro": 0.876,
+        "macro": 0.876,
+        "micro_ci95": [
+          0.832,
+          0.916
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_length_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.349,
+        "macro": 0.3714745409805035,
+        "micro_ci95": [
+          0.3274501102216034,
+          0.3700712749611283
+        ]
+      },
+      "recall@3": {
+        "micro": 0.4925,
+        "macro": 0.5157107703956084,
+        "micro_ci95": [
+          0.4689139608695385,
+          0.5160030919123428
+        ]
+      },
+      "recall@5": {
+        "micro": 0.5495,
+        "macro": 0.5713609691463184,
+        "micro_ci95": [
+          0.5253712464463397,
+          0.5726649489750756
+        ]
+      },
+      "recall@10": {
+        "micro": 0.629,
+        "macro": 0.6489683891728184,
+        "micro_ci95": [
+          0.6057717402794106,
+          0.6519296391067302
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_length_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.82,
+        "macro": 0.82,
+        "micro_ci95": [
+          0.772,
+          0.868
+        ]
+      },
+      "recall@3": {
+        "micro": 0.88,
+        "macro": 0.88,
+        "micro_ci95": [
+          0.836,
+          0.916
+        ]
+      },
+      "recall@5": {
+        "micro": 0.912,
+        "macro": 0.912,
+        "micro_ci95": [
+          0.876,
+          0.944
+        ]
+      },
+      "recall@10": {
+        "micro": 0.952,
+        "macro": 0.952,
+        "micro_ci95": [
+          0.924,
+          0.976
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "all_candidate",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.2015,
+        "macro": 0.2120954003407155,
+        "micro_ci95": [
+          0.1832405910872161,
+          0.22016197491373019
+        ]
+      },
+      "recall@3": {
+        "micro": 0.3245,
+        "macro": 0.33664584516373275,
+        "micro_ci95": [
+          0.3025571714932612,
+          0.3465429618018638
+        ]
+      },
+      "recall@5": {
+        "micro": 0.3785,
+        "macro": 0.3909710391822828,
+        "micro_ci95": [
+          0.3550651955867603,
+          0.4012995134778166
+        ]
+      },
+      "recall@10": {
+        "micro": 0.47,
+        "macro": 0.48069278818852923,
+        "micro_ci95": [
+          0.446226907240669,
+          0.49348746193686077
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "all_candidate",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.624,
+        "macro": 0.624,
+        "micro_ci95": [
+          0.56,
+          0.684
+        ]
+      },
+      "recall@3": {
+        "micro": 0.708,
+        "macro": 0.708,
+        "micro_ci95": [
+          0.648,
+          0.764
+        ]
+      },
+      "recall@5": {
+        "micro": 0.756,
+        "macro": 0.756,
+        "micro_ci95": [
+          0.7,
+          0.808
+        ]
+      },
+      "recall@10": {
+        "micro": 0.828,
+        "macro": 0.828,
+        "micro_ci95": [
+          0.78,
+          0.876
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "all_both",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.339,
+        "macro": 0.35992807117168274,
+        "micro_ci95": [
+          0.3175058508738034,
+          0.36051089479691684
+        ]
+      },
+      "recall@3": {
+        "micro": 0.4675,
+        "macro": 0.48712852545901947,
+        "micro_ci95": [
+          0.44532648781865025,
+          0.4900882023866234
+        ]
+      },
+      "recall@5": {
+        "micro": 0.5135,
+        "macro": 0.5325572591330683,
+        "micro_ci95": [
+          0.490682091698955,
+          0.536437889960295
+        ]
+      },
+      "recall@10": {
+        "micro": 0.5945,
+        "macro": 0.6102593223547226,
+        "micro_ci95": [
+          0.570866005587394,
+          0.6170221012699983
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "all_both",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.792,
+        "macro": 0.792,
+        "micro_ci95": [
+          0.74,
+          0.84
+        ]
+      },
+      "recall@3": {
+        "micro": 0.844,
+        "macro": 0.844,
+        "micro_ci95": [
+          0.796,
+          0.8840999999999994
+        ]
+      },
+      "recall@5": {
+        "micro": 0.876,
+        "macro": 0.876,
+        "micro_ci95": [
+          0.832,
+          0.916
+        ]
+      },
+      "recall@10": {
+        "micro": 0.916,
+        "macro": 0.916,
+        "micro_ci95": [
+          0.88,
+          0.948
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_one_work",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.336,
+        "macro": 0.36920310429680103,
+        "micro_ci95": [
+          0.31354966617210683,
+          0.35764587525150904
+        ]
+      },
+      "recall@3": {
+        "micro": 0.4465,
+        "macro": 0.4879803142154079,
+        "micro_ci95": [
+          0.42249250495540136,
+          0.46981891348088534
+        ]
+      },
+      "recall@5": {
+        "micro": 0.487,
+        "macro": 0.5307590384251372,
+        "micro_ci95": [
+          0.46254165697899713,
+          0.5113136462265553
+        ]
+      },
+      "recall@10": {
+        "micro": 0.544,
+        "macro": 0.5875449555176981,
+        "micro_ci95": [
+          0.5197758549010955,
+          0.5673080559757943
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "cotags_one_work",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 0.764,
+        "macro": 0.764,
+        "micro_ci95": [
+          0.708,
+          0.816
+        ]
+      },
+      "recall@3": {
+        "micro": 0.856,
+        "macro": 0.856,
+        "micro_ci95": [
+          0.812,
+          0.9
+        ]
+      },
+      "recall@5": {
+        "micro": 0.888,
+        "macro": 0.888,
+        "micro_ci95": [
+          0.848,
+          0.928
+        ]
+      },
+      "recall@10": {
+        "micro": 0.92,
+        "macro": 0.92,
+        "micro_ci95": [
+          0.888,
+          0.952
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "all_name_anchor",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "canonical_groups": 1761,
+      "recall@1": {
+        "micro": 0.633,
+        "macro": 0.64035585841378,
+        "micro_ci95": [
+          0.6111937177789375,
+          0.6557058491999315
+        ]
+      },
+      "recall@3": {
+        "micro": 0.7735,
+        "macro": 0.783172439901571,
+        "micro_ci95": [
+          0.7540223554767339,
+          0.7928120325795871
+        ]
+      },
+      "recall@5": {
+        "micro": 0.8155,
+        "macro": 0.8207457883778156,
+        "micro_ci95": [
+          0.798274749935344,
+          0.8344109026168977
+        ]
+      },
+      "recall@10": {
+        "micro": 0.8585,
+        "macro": 0.8622941510505394,
+        "micro_ci95": [
+          0.8422352551375472,
+          0.8753105755275475
+        ]
+      }
+    },
+    {
+      "method": "semantic",
+      "condition": "all_name_anchor",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "canonical_groups": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "a": "semantic/template",
+      "b": "semantic/raw",
+      "k": 1,
+      "a_only_hits": 228,
+      "b_only_hits": 102,
+      "difference": {
+        "micro": 0.063,
+        "macro": 0.05886806738595495,
+        "micro_ci95": [
+          0.04377843463405862,
+          0.08224208424601903
+        ]
+      }
+    },
+    {
+      "a": "semantic/template",
+      "b": "semantic/raw",
+      "k": 3,
+      "a_only_hits": 191,
+      "b_only_hits": 72,
+      "difference": {
+        "micro": 0.0595,
+        "macro": 0.050728752602687874,
+        "micro_ci95": [
+          0.04347501137323715,
+          0.07571343219087176
+        ]
+      }
+    },
+    {
+      "a": "semantic/template",
+      "b": "semantic/raw",
+      "k": 5,
+      "a_only_hits": 170,
+      "b_only_hits": 71,
+      "difference": {
+        "micro": 0.0495,
+        "macro": 0.042684081014575055,
+        "micro_ci95": [
+          0.034535637650907974,
+          0.066442749343832
+        ]
+      }
+    },
+    {
+      "a": "semantic/template",
+      "b": "semantic/raw",
+      "k": 10,
+      "a_only_hits": 134,
+      "b_only_hits": 62,
+      "difference": {
+        "micro": 0.036,
+        "macro": 0.03227332954760553,
+        "micro_ci95": [
+          0.021878305233911897,
+          0.05017444435969349
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/template",
+      "k": 1,
+      "a_only_hits": 58,
+      "b_only_hits": 384,
+      "difference": {
+        "micro": -0.163,
+        "macro": -0.13581298504637518,
+        "micro_ci95": [
+          -0.18532175074167231,
+          -0.1415659212191231
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/template",
+      "k": 3,
+      "a_only_hits": 65,
+      "b_only_hits": 288,
+      "difference": {
+        "micro": -0.1115,
+        "macro": -0.08546280522430437,
+        "micro_ci95": [
+          -0.13290463105292208,
+          -0.09216900314472547
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/template",
+      "k": 5,
+      "a_only_hits": 52,
+      "b_only_hits": 241,
+      "difference": {
+        "micro": -0.0945,
+        "macro": -0.07183418512208972,
+        "micro_ci95": [
+          -0.11428606771753728,
+          -0.07688245397894868
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/template",
+      "k": 10,
+      "a_only_hits": 54,
+      "b_only_hits": 178,
+      "difference": {
+        "micro": -0.062,
+        "macro": -0.043630512966117745,
+        "micro_ci95": [
+          -0.07892566388835046,
+          -0.04508972129499217
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/raw",
+      "k": 1,
+      "a_only_hits": 148,
+      "b_only_hits": 348,
+      "difference": {
+        "micro": -0.1,
+        "macro": -0.07694491766042022,
+        "micro_ci95": [
+          -0.12269139868548536,
+          -0.07726318163816491
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/raw",
+      "k": 3,
+      "a_only_hits": 158,
+      "b_only_hits": 262,
+      "difference": {
+        "micro": -0.052,
+        "macro": -0.03473405262161651,
+        "micro_ci95": [
+          -0.07400092546273136,
+          -0.03039098136660716
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/raw",
+      "k": 5,
+      "a_only_hits": 144,
+      "b_only_hits": 234,
+      "difference": {
+        "micro": -0.045,
+        "macro": -0.029150104107514667,
+        "micro_ci95": [
+          -0.06696517857142857,
+          -0.02446908540500875
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "semantic/raw",
+      "k": 10,
+      "a_only_hits": 131,
+      "b_only_hits": 183,
+      "difference": {
+        "micro": -0.026,
+        "macro": -0.011357183418512209,
+        "micro_ci95": [
+          -0.044967084818521505,
+          -0.007429420505200594
+        ]
+      }
+    },
+    {
+      "a": "lexical/global_aliases",
+      "b": "lexical/raw",
+      "k": 1,
+      "a_only_hits": 438,
+      "b_only_hits": 126,
+      "difference": {
+        "micro": 0.156,
+        "macro": 0.13940942646223736,
+        "micro_ci95": [
+          0.13177728484642073,
+          0.17999192276812057
+        ]
+      }
+    },
+    {
+      "a": "lexical/global_aliases",
+      "b": "lexical/raw",
+      "k": 3,
+      "a_only_hits": 414,
+      "b_only_hits": 61,
+      "difference": {
+        "micro": 0.1765,
+        "macro": 0.15578269922392582,
+        "micro_ci95": [
+          0.15557638875162,
+          0.1975932276670729
+        ]
+      }
+    },
+    {
+      "a": "lexical/global_aliases",
+      "b": "lexical/raw",
+      "k": 5,
+      "a_only_hits": 384,
+      "b_only_hits": 57,
+      "difference": {
+        "micro": 0.1635,
+        "macro": 0.14310051107325383,
+        "micro_ci95": [
+          0.14313958974079818,
+          0.18394874599990352
+        ]
+      }
+    },
+    {
+      "a": "lexical/global_aliases",
+      "b": "lexical/raw",
+      "k": 10,
+      "a_only_hits": 336,
+      "b_only_hits": 47,
+      "difference": {
+        "micro": 0.1445,
+        "macro": 0.1264433087261026,
+        "micro_ci95": [
+          0.1255618925405166,
+          0.16482480471665256
+        ]
+      }
+    },
+    {
+      "a": "lexical/selected_aliases",
+      "b": "lexical/raw",
+      "k": 1,
+      "a_only_hits": 349,
+      "b_only_hits": 120,
+      "difference": {
+        "micro": 0.1145,
+        "macro": 0.11584327086882454,
+        "micro_ci95": [
+          0.09293798927135441,
+          0.13500201612903226
+        ]
+      }
+    },
+    {
+      "a": "lexical/selected_aliases",
+      "b": "lexical/raw",
+      "k": 3,
+      "a_only_hits": 331,
+      "b_only_hits": 66,
+      "difference": {
+        "micro": 0.1325,
+        "macro": 0.12833617262918795,
+        "micro_ci95": [
+          0.11328131649879415,
+          0.15196860685637512
+        ]
+      }
+    },
+    {
+      "a": "lexical/selected_aliases",
+      "b": "lexical/raw",
+      "k": 5,
+      "a_only_hits": 309,
+      "b_only_hits": 59,
+      "difference": {
+        "micro": 0.125,
+        "macro": 0.11934506908953246,
+        "micro_ci95": [
+          0.10721308666406423,
+          0.14335678918428355
+        ]
+      }
+    },
+    {
+      "a": "lexical/selected_aliases",
+      "b": "lexical/raw",
+      "k": 10,
+      "a_only_hits": 277,
+      "b_only_hits": 51,
+      "difference": {
+        "micro": 0.113,
+        "macro": 0.10656823774370622,
+        "micro_ci95": [
+          0.09603639276093183,
+          0.13084739938931525
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/selected_aliases",
+      "k": 1,
+      "a_only_hits": 222,
+      "b_only_hits": 488,
+      "difference": {
+        "micro": -0.133,
+        "macro": -0.11480219572212756,
+        "micro_ci95": [
+          -0.16055609242503258,
+          -0.10602881938572825
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/selected_aliases",
+      "k": 3,
+      "a_only_hits": 184,
+      "b_only_hits": 343,
+      "difference": {
+        "micro": -0.0795,
+        "macro": -0.060571644898731784,
+        "micro_ci95": [
+          -0.10336392892364656,
+          -0.055472968973271315
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/selected_aliases",
+      "k": 5,
+      "a_only_hits": 170,
+      "b_only_hits": 295,
+      "difference": {
+        "micro": -0.0625,
+        "macro": -0.046753738406208584,
+        "micro_ci95": [
+          -0.08522062075604235,
+          -0.040556411345943726
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/selected_aliases",
+      "k": 10,
+      "a_only_hits": 172,
+      "b_only_hits": 238,
+      "difference": {
+        "micro": -0.033,
+        "macro": -0.01883399583569941,
+        "micro_ci95": [
+          -0.05495253832522568,
+          -0.011540102136927872
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/global_aliases",
+      "k": 1,
+      "a_only_hits": 216,
+      "b_only_hits": 565,
+      "difference": {
+        "micro": -0.1745,
+        "macro": -0.1383683513155404,
+        "micro_ci95": [
+          -0.20238124910981342,
+          -0.14590242451367819
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/global_aliases",
+      "k": 3,
+      "a_only_hits": 165,
+      "b_only_hits": 412,
+      "difference": {
+        "micro": -0.1235,
+        "macro": -0.0880181714934696,
+        "micro_ci95": [
+          -0.1486435745870243,
+          -0.09744607019798374
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/global_aliases",
+      "k": 5,
+      "a_only_hits": 149,
+      "b_only_hits": 351,
+      "difference": {
+        "micro": -0.101,
+        "macro": -0.07050918038992995,
+        "micro_ci95": [
+          -0.1250015326140265,
+          -0.07665229652854096
+        ]
+      }
+    },
+    {
+      "a": "semantic/aliases",
+      "b": "lexical/global_aliases",
+      "k": 10,
+      "a_only_hits": 144,
+      "b_only_hits": 273,
+      "difference": {
+        "micro": -0.0645,
+        "macro": -0.03870906681809578,
+        "micro_ci95": [
+          -0.08597050527204701,
+          -0.041938723999804535
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_one_work",
+      "b": "semantic/cotags_both",
+      "k": 1,
+      "a_only_hits": 198,
+      "b_only_hits": 199,
+      "difference": {
+        "micro": -0.0005,
+        "macro": 0.010410751466969527,
+        "micro_ci95": [
+          -0.01946302785211141,
+          0.019839062215959
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_one_work",
+      "b": "semantic/cotags_both",
+      "k": 3,
+      "a_only_hits": 196,
+      "b_only_hits": 260,
+      "difference": {
+        "micro": -0.032,
+        "macro": -0.013060760931289031,
+        "micro_ci95": [
+          -0.05273794919347117,
+          -0.009556505700871902
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_one_work",
+      "b": "semantic/cotags_both",
+      "k": 5,
+      "a_only_hits": 188,
+      "b_only_hits": 280,
+      "difference": {
+        "micro": -0.046,
+        "macro": -0.025837592277115275,
+        "micro_ci95": [
+          -0.06820488653305443,
+          -0.023748112262736067
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_one_work",
+      "b": "semantic/cotags_both",
+      "k": 10,
+      "a_only_hits": 168,
+      "b_only_hits": 295,
+      "difference": {
+        "micro": -0.0635,
+        "macro": -0.04145371947756956,
+        "micro_ci95": [
+          -0.08429292993355879,
+          -0.04193035883647299
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/raw",
+      "k": 1,
+      "a_only_hits": 114,
+      "b_only_hits": 16,
+      "difference": {
+        "micro": 0.049,
+        "macro": 0.049403747870528106,
+        "micro_ci95": [
+          0.03796203796203796,
+          0.06016300352548378
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/raw",
+      "k": 3,
+      "a_only_hits": 125,
+      "b_only_hits": 5,
+      "difference": {
+        "micro": 0.06,
+        "macro": 0.059814499337497634,
+        "micro_ci95": [
+          0.04957436154231347,
+          0.07164182843298537
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/raw",
+      "k": 5,
+      "a_only_hits": 120,
+      "b_only_hits": 6,
+      "difference": {
+        "micro": 0.057,
+        "macro": 0.05479840999432141,
+        "micro_ci95": [
+          0.04574876590555981,
+          0.06873861654443615
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/raw",
+      "k": 10,
+      "a_only_hits": 106,
+      "b_only_hits": 8,
+      "difference": {
+        "micro": 0.049,
+        "macro": 0.04788945674805982,
+        "micro_ci95": [
+          0.03870830094571836,
+          0.059441165870799166
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 403,
+      "b_only_hits": 105,
+      "difference": {
+        "micro": 0.149,
+        "macro": 0.1263486655309483,
+        "micro_ci95": [
+          0.12631262683498934,
+          0.1718831518894005
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 309,
+      "b_only_hits": 85,
+      "difference": {
+        "micro": 0.112,
+        "macro": 0.0945485519591141,
+        "micro_ci95": [
+          0.09178359819426864,
+          0.13350077893175075
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 275,
+      "b_only_hits": 71,
+      "difference": {
+        "micro": 0.102,
+        "macro": 0.08394851410183607,
+        "micro_ci95": [
+          0.08278976417461113,
+          0.12220112831456308
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_name_anchor",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 213,
+      "b_only_hits": 63,
+      "difference": {
+        "micro": 0.075,
+        "macro": 0.05924664016657203,
+        "micro_ci95": [
+          0.05695390972088082,
+          0.09351850258863713
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/fandom_both",
+      "k": 1,
+      "a_only_hits": 107,
+      "b_only_hits": 169,
+      "difference": {
+        "micro": -0.031,
+        "macro": -0.036059057353776264,
+        "micro_ci95": [
+          -0.04747656747656748,
+          -0.014621743507848776
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/fandom_both",
+      "k": 3,
+      "a_only_hits": 108,
+      "b_only_hits": 170,
+      "difference": {
+        "micro": -0.031,
+        "macro": -0.03577512776831346,
+        "micro_ci95": [
+          -0.04822102829315461,
+          -0.015306829938114865
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/fandom_both",
+      "k": 5,
+      "a_only_hits": 111,
+      "b_only_hits": 170,
+      "difference": {
+        "micro": -0.0295,
+        "macro": -0.03435547984099943,
+        "micro_ci95": [
+          -0.0460956586539914,
+          -0.013392302311583988
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/fandom_both",
+      "k": 10,
+      "a_only_hits": 89,
+      "b_only_hits": 170,
+      "difference": {
+        "micro": -0.0405,
+        "macro": -0.04325194018550066,
+        "micro_ci95": [
+          -0.05620004637367376,
+          -0.024268458978422808
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_both",
+      "k": 1,
+      "a_only_hits": 68,
+      "b_only_hits": 43,
+      "difference": {
+        "micro": 0.0125,
+        "macro": 0.012682188150671967,
+        "micro_ci95": [
+          0.002008006939952484,
+          0.02262500370052399
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_both",
+      "k": 3,
+      "a_only_hits": 72,
+      "b_only_hits": 44,
+      "difference": {
+        "micro": 0.014,
+        "macro": 0.014669695248911603,
+        "micro_ci95": [
+          0.00301189728855301,
+          0.0246615354824006
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_both",
+      "k": 5,
+      "a_only_hits": 73,
+      "b_only_hits": 40,
+      "difference": {
+        "micro": 0.0165,
+        "macro": 0.014764338444065871,
+        "micro_ci95": [
+          0.005575124946268293,
+          0.027468797295638257
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_both",
+      "k": 10,
+      "a_only_hits": 78,
+      "b_only_hits": 35,
+      "difference": {
+        "micro": 0.0215,
+        "macro": 0.019969714177550637,
+        "micro_ci95": [
+          0.011569271081491462,
+          0.03161166704633377
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/cotags_length_both",
+      "k": 1,
+      "a_only_hits": 60,
+      "b_only_hits": 80,
+      "difference": {
+        "micro": -0.01,
+        "macro": -0.011546469808820747,
+        "micro_ci95": [
+          -0.02204630589146099,
+          0.0020040834302825416
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/cotags_length_both",
+      "k": 3,
+      "a_only_hits": 55,
+      "b_only_hits": 105,
+      "difference": {
+        "micro": -0.025,
+        "macro": -0.02858224493658906,
+        "micro_ci95": [
+          -0.03683516353787131,
+          -0.012499687812187814
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/cotags_length_both",
+      "k": 5,
+      "a_only_hits": 45,
+      "b_only_hits": 117,
+      "difference": {
+        "micro": -0.036,
+        "macro": -0.038803710013250045,
+        "micro_ci95": [
+          -0.04773929350119122,
+          -0.023746977892938777
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/cotags_length_both",
+      "k": 10,
+      "a_only_hits": 40,
+      "b_only_hits": 109,
+      "difference": {
+        "micro": -0.0345,
+        "macro": -0.03870906681809577,
+        "micro_ci95": [
+          -0.046655614628419925,
+          -0.022376648858712468
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 72,
+      "b_only_hits": 425,
+      "difference": {
+        "micro": -0.1765,
+        "macro": -0.18663638084421727,
+        "micro_ci95": [
+          -0.19870450303617818,
+          -0.154570350285708
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 43,
+      "b_only_hits": 431,
+      "difference": {
+        "micro": -0.194,
+        "macro": -0.2013060760931289,
+        "micro_ci95": [
+          -0.21535509224716387,
+          -0.17341178964752393
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 34,
+      "b_only_hits": 406,
+      "difference": {
+        "micro": -0.186,
+        "macro": -0.1893810335036911,
+        "micro_ci95": [
+          -0.20601866066059335,
+          -0.16683352348521205
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 20,
+      "b_only_hits": 348,
+      "difference": {
+        "micro": -0.164,
+        "macro": -0.1660041643005868,
+        "micro_ci95": [
+          -0.18177518515359217,
+          -0.14592703648175911
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 115,
+      "b_only_hits": 348,
+      "difference": {
+        "micro": -0.1165,
+        "macro": -0.11915578269922392,
+        "micro_ci95": [
+          -0.13831095388111347,
+          -0.09509535599895044
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 79,
+      "b_only_hits": 383,
+      "difference": {
+        "micro": -0.152,
+        "macro": -0.15180768502744654,
+        "micro_ci95": [
+          -0.17270561899086853,
+          -0.13173555243044208
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 75,
+      "b_only_hits": 377,
+      "difference": {
+        "micro": -0.151,
+        "macro": -0.14584516373272763,
+        "micro_ci95": [
+          -0.17165997978853378,
+          -0.13023335508468664
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 60,
+      "b_only_hits": 331,
+      "difference": {
+        "micro": -0.1355,
+        "macro": -0.13079689570319894,
+        "micro_ci95": [
+          -0.15519839276745354,
+          -0.11639497989857321
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/fandom_candidate",
+      "k": 1,
+      "a_only_hits": 194,
+      "b_only_hits": 74,
+      "difference": {
+        "micro": 0.06,
+        "macro": 0.06748059814499337,
+        "micro_ci95": [
+          0.044870906801007554,
+          0.07653826913456728
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/fandom_candidate",
+      "k": 3,
+      "a_only_hits": 160,
+      "b_only_hits": 76,
+      "difference": {
+        "micro": 0.042,
+        "macro": 0.04949839106568238,
+        "micro_ci95": [
+          0.02721603141877098,
+          0.05785536159600998
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/fandom_candidate",
+      "k": 5,
+      "a_only_hits": 144,
+      "b_only_hits": 74,
+      "difference": {
+        "micro": 0.035,
+        "macro": 0.04353586977096347,
+        "micro_ci95": [
+          0.020678959647354833,
+          0.04979946319671893
+        ]
+      }
+    },
+    {
+      "a": "semantic/fandom_both",
+      "b": "semantic/fandom_candidate",
+      "k": 10,
+      "a_only_hits": 128,
+      "b_only_hits": 71,
+      "difference": {
+        "micro": 0.0285,
+        "macro": 0.03520726859738785,
+        "micro_ci95": [
+          0.014535976897677343,
+          0.04307080896153807
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 55,
+      "b_only_hits": 562,
+      "difference": {
+        "micro": -0.2535,
+        "macro": -0.27058489494605337,
+        "micro_ci95": [
+          -0.2767815921792339,
+          -0.23107484118128094
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 36,
+      "b_only_hits": 620,
+      "difference": {
+        "micro": -0.292,
+        "macro": -0.3054135907628241,
+        "micro_ci95": [
+          -0.31477993146284006,
+          -0.2694724844555657
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 29,
+      "b_only_hits": 599,
+      "difference": {
+        "micro": -0.285,
+        "macro": -0.29424569373462045,
+        "micro_ci95": [
+          -0.30650019249875804,
+          -0.2642895666950727
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 14,
+      "b_only_hits": 543,
+      "difference": {
+        "micro": -0.2645,
+        "macro": -0.2681241718720424,
+        "micro_ci95": [
+          -0.2856478957372517,
+          -0.24367821679500146
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 146,
+      "b_only_hits": 441,
+      "difference": {
+        "micro": -0.1475,
+        "macro": -0.1552148400530002,
+        "micro_ci95": [
+          -0.17179234530471751,
+          -0.12397902203907886
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 109,
+      "b_only_hits": 475,
+      "difference": {
+        "micro": -0.183,
+        "macro": -0.18758281279576,
+        "micro_ci95": [
+          -0.2070218356675513,
+          -0.15995668565284557
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 107,
+      "b_only_hits": 468,
+      "difference": {
+        "micro": -0.1805,
+        "macro": -0.18020064357372703,
+        "micro_ci95": [
+          -0.20377073961333636,
+          -0.15847208208040708
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 90,
+      "b_only_hits": 442,
+      "difference": {
+        "micro": -0.176,
+        "macro": -0.1740488358886996,
+        "micro_ci95": [
+          -0.19868562380843846,
+          -0.15240397683075005
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/cotags_candidate",
+      "k": 1,
+      "a_only_hits": 291,
+      "b_only_hits": 79,
+      "difference": {
+        "micro": 0.106,
+        "macro": 0.11537005489305317,
+        "micro_ci95": [
+          0.08682675400826514,
+          0.12443107020246127
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/cotags_candidate",
+      "k": 3,
+      "a_only_hits": 307,
+      "b_only_hits": 89,
+      "difference": {
+        "micro": 0.109,
+        "macro": 0.11783077796706416,
+        "micro_ci95": [
+          0.09035742875682255,
+          0.12785520866518
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/cotags_candidate",
+      "k": 5,
+      "a_only_hits": 293,
+      "b_only_hits": 84,
+      "difference": {
+        "micro": 0.1045,
+        "macro": 0.11404505016089342,
+        "micro_ci95": [
+          0.08565797603989474,
+          0.12324786714848922
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_both",
+      "b": "semantic/cotags_candidate",
+      "k": 10,
+      "a_only_hits": 261,
+      "b_only_hits": 84,
+      "difference": {
+        "micro": 0.0885,
+        "macro": 0.0940753359833428,
+        "micro_ci95": [
+          0.0698708875608545,
+          0.10691198408751865
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 212,
+      "b_only_hits": 166,
+      "difference": {
+        "micro": 0.023,
+        "macro": 0.001230361537005492,
+        "micro_ci95": [
+          0.003034519521044605,
+          0.04378218469405958
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 162,
+      "b_only_hits": 124,
+      "difference": {
+        "micro": 0.019,
+        "macro": 0.002650009464319518,
+        "micro_ci95": [
+          0.0014999251497005987,
+          0.037037952435876306
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 141,
+      "b_only_hits": 80,
+      "difference": {
+        "micro": 0.0305,
+        "macro": 0.017414347908385384,
+        "micro_ci95": [
+          0.015156698040266169,
+          0.04590830951618458
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 98,
+      "b_only_hits": 63,
+      "difference": {
+        "micro": 0.0175,
+        "macro": 0.005110732538330494,
+        "micro_ci95": [
+          0.004446640316205534,
+          0.03036487924042556
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 139,
+      "b_only_hits": 185,
+      "difference": {
+        "micro": -0.023,
+        "macro": -0.03312511830399394,
+        "micro_ci95": [
+          -0.04032298226449042,
+          -0.005014481787849823
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 98,
+      "b_only_hits": 183,
+      "difference": {
+        "micro": -0.0425,
+        "macro": -0.05044482301722506,
+        "micro_ci95": [
+          -0.058186465433300874,
+          -0.025665867080748486
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 80,
+      "b_only_hits": 147,
+      "difference": {
+        "micro": -0.0335,
+        "macro": -0.04041264433087261,
+        "micro_ci95": [
+          -0.04880617133868174,
+          -0.018546365914786967
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 64,
+      "b_only_hits": 132,
+      "difference": {
+        "micro": -0.034,
+        "macro": -0.040980503501798216,
+        "micro_ci95": [
+          -0.04863406938603674,
+          -0.020653097275752895
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/length_candidate",
+      "k": 1,
+      "a_only_hits": 67,
+      "b_only_hits": 159,
+      "difference": {
+        "micro": -0.046,
+        "macro": -0.03435547984099943,
+        "micro_ci95": [
+          -0.06092710918949994,
+          -0.03101344663203814
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/length_candidate",
+      "k": 3,
+      "a_only_hits": 42,
+      "b_only_hits": 165,
+      "difference": {
+        "micro": -0.0615,
+        "macro": -0.05309483248154458,
+        "micro_ci95": [
+          -0.07619143143716865,
+          -0.04754638978414338
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/length_candidate",
+      "k": 5,
+      "a_only_hits": 25,
+      "b_only_hits": 153,
+      "difference": {
+        "micro": -0.064,
+        "macro": -0.057826992239258,
+        "micro_ci95": [
+          -0.0776261958174516,
+          -0.05117854695072696
+        ]
+      }
+    },
+    {
+      "a": "semantic/length_both",
+      "b": "semantic/length_candidate",
+      "k": 10,
+      "a_only_hits": 23,
+      "b_only_hits": 126,
+      "difference": {
+        "micro": -0.0515,
+        "macro": -0.04609123604012871,
+        "micro_ci95": [
+          -0.06407324140292314,
+          -0.03963835658584143
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 93,
+      "b_only_hits": 341,
+      "difference": {
+        "micro": -0.124,
+        "macro": -0.1398826424380087,
+        "micro_ci95": [
+          -0.14472378280712692,
+          -0.10356663147252616
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 68,
+      "b_only_hits": 364,
+      "difference": {
+        "micro": -0.148,
+        "macro": -0.16240772288472458,
+        "micro_ci95": [
+          -0.1680635031445536,
+          -0.12805082437372808
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 51,
+      "b_only_hits": 318,
+      "difference": {
+        "micro": -0.1335,
+        "macro": -0.14149157675563126,
+        "micro_ci95": [
+          -0.15251315345283284,
+          -0.11484987220526566
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 34,
+      "b_only_hits": 254,
+      "difference": {
+        "micro": -0.11,
+        "macro": -0.11650577323490441,
+        "micro_ci95": [
+          -0.12741695587506197,
+          -0.0937327811307042
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 77,
+      "b_only_hits": 293,
+      "difference": {
+        "micro": -0.108,
+        "macro": -0.11527541169789893,
+        "micro_ci95": [
+          -0.12645265714192436,
+          -0.08978659808010793
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 45,
+      "b_only_hits": 328,
+      "difference": {
+        "micro": -0.1415,
+        "macro": -0.15019875070982397,
+        "micro_ci95": [
+          -0.15942065546439696,
+          -0.12297171019786111
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 41,
+      "b_only_hits": 283,
+      "difference": {
+        "micro": -0.121,
+        "macro": -0.125875449555177,
+        "micro_ci95": [
+          -0.13775895517217487,
+          -0.10356918655406136
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 30,
+      "b_only_hits": 244,
+      "difference": {
+        "micro": -0.107,
+        "macro": -0.10997539276925988,
+        "micro_ci95": [
+          -0.1233217304823471,
+          -0.09158466662524957
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/usage_candidate",
+      "k": 1,
+      "a_only_hits": 126,
+      "b_only_hits": 94,
+      "difference": {
+        "micro": 0.016,
+        "macro": 0.024607230740109783,
+        "micro_ci95": [
+          0.001463420930932145,
+          0.031660878835866664
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/usage_candidate",
+      "k": 3,
+      "a_only_hits": 112,
+      "b_only_hits": 99,
+      "difference": {
+        "micro": 0.0065,
+        "macro": 0.012208972174900625,
+        "micro_ci95": [
+          -0.007500187687687687,
+          0.020561942978961974
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/usage_candidate",
+      "k": 5,
+      "a_only_hits": 100,
+      "b_only_hits": 75,
+      "difference": {
+        "micro": 0.0125,
+        "macro": 0.015616127200454287,
+        "micro_ci95": [
+          -0.00049730846611104,
+          0.02631644344459558
+        ]
+      }
+    },
+    {
+      "a": "semantic/usage_both",
+      "b": "semantic/usage_candidate",
+      "k": 10,
+      "a_only_hits": 81,
+      "b_only_hits": 75,
+      "difference": {
+        "micro": 0.003,
+        "macro": 0.00653038046564452,
+        "micro_ci95": [
+          -0.009424603174603174,
+          0.01570758975593606
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 126,
+      "b_only_hits": 334,
+      "difference": {
+        "micro": -0.104,
+        "macro": -0.12511830399394283,
+        "micro_ci95": [
+          -0.1258777212806597,
+          -0.08275305615989956
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 83,
+      "b_only_hits": 309,
+      "difference": {
+        "micro": -0.113,
+        "macro": -0.13022903653227333,
+        "micro_ci95": [
+          -0.13279688113704696,
+          -0.09339178655521632
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 73,
+      "b_only_hits": 267,
+      "difference": {
+        "micro": -0.097,
+        "macro": -0.11016467915956843,
+        "micro_ci95": [
+          -0.11500031806615776,
+          -0.07918192462592755
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 48,
+      "b_only_hits": 204,
+      "difference": {
+        "micro": -0.078,
+        "macro": -0.08830210107893242,
+        "micro_ci95": [
+          -0.09373511709448185,
+          -0.06205726042254305
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 147,
+      "b_only_hits": 275,
+      "difference": {
+        "micro": -0.064,
+        "macro": -0.08044671588112814,
+        "micro_ci95": [
+          -0.08350960218607016,
+          -0.044241672572643526
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 105,
+      "b_only_hits": 258,
+      "difference": {
+        "micro": -0.0765,
+        "macro": -0.09360212000757144,
+        "micro_ci95": [
+          -0.09607672658038374,
+          -0.05776748726487087
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 95,
+      "b_only_hits": 223,
+      "difference": {
+        "micro": -0.064,
+        "macro": -0.07599848570887752,
+        "micro_ci95": [
+          -0.0814816677844847,
+          -0.0453830244082576
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 60,
+      "b_only_hits": 175,
+      "difference": {
+        "micro": -0.0575,
+        "macro": -0.06748059814499337,
+        "micro_ci95": [
+          -0.07370569675774882,
+          -0.04242401560515333
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/metadata_candidate",
+      "k": 1,
+      "a_only_hits": 166,
+      "b_only_hits": 86,
+      "difference": {
+        "micro": 0.04,
+        "macro": 0.044671588112814686,
+        "micro_ci95": [
+          0.02479013157894737,
+          0.056624485451352236
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/metadata_candidate",
+      "k": 3,
+      "a_only_hits": 142,
+      "b_only_hits": 69,
+      "difference": {
+        "micro": 0.0365,
+        "macro": 0.036626916524701875,
+        "micro_ci95": [
+          0.02243214331110255,
+          0.05170555416531022
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/metadata_candidate",
+      "k": 5,
+      "a_only_hits": 136,
+      "b_only_hits": 70,
+      "difference": {
+        "micro": 0.033,
+        "macro": 0.0341661934506909,
+        "micro_ci95": [
+          0.01985827601848787,
+          0.04774237335429053
+        ]
+      }
+    },
+    {
+      "a": "semantic/metadata_both",
+      "b": "semantic/metadata_candidate",
+      "k": 10,
+      "a_only_hits": 100,
+      "b_only_hits": 59,
+      "difference": {
+        "micro": 0.0205,
+        "macro": 0.020821502933939053,
+        "micro_ci95": [
+          0.007991808590610985,
+          0.03387620883242428
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 68,
+      "b_only_hits": 530,
+      "difference": {
+        "micro": -0.231,
+        "macro": -0.2494794624266515,
+        "micro_ci95": [
+          -0.25443227190857215,
+          -0.20856101363462853
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 51,
+      "b_only_hits": 570,
+      "difference": {
+        "micro": -0.2595,
+        "macro": -0.2718152564830588,
+        "micro_ci95": [
+          -0.2822980713308722,
+          -0.23768708180954123
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 37,
+      "b_only_hits": 532,
+      "difference": {
+        "micro": -0.2475,
+        "macro": -0.25534734052621616,
+        "micro_ci95": [
+          -0.2688227700077749,
+          -0.2273168439002428
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 22,
+      "b_only_hits": 472,
+      "difference": {
+        "micro": -0.225,
+        "macro": -0.23168654173764908,
+        "micro_ci95": [
+          -0.24571533763814238,
+          -0.205658085964802
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 153,
+      "b_only_hits": 423,
+      "difference": {
+        "micro": -0.135,
+        "macro": -0.14253265190232822,
+        "micro_ci95": [
+          -0.15915153311084243,
+          -0.11183854680481344
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 117,
+      "b_only_hits": 455,
+      "difference": {
+        "micro": -0.169,
+        "macro": -0.17291311754684838,
+        "micro_ci95": [
+          -0.19259721946588026,
+          -0.14563137610519158
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 110,
+      "b_only_hits": 438,
+      "difference": {
+        "micro": -0.164,
+        "macro": -0.1654363051296612,
+        "micro_ci95": [
+          -0.18744003670690917,
+          -0.1402558369879398
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 91,
+      "b_only_hits": 400,
+      "difference": {
+        "micro": -0.1545,
+        "macro": -0.15407912171114896,
+        "micro_ci95": [
+          -0.176445958737603,
+          -0.13249295076849577
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_length_candidate",
+      "k": 1,
+      "a_only_hits": 294,
+      "b_only_hits": 102,
+      "difference": {
+        "micro": 0.096,
+        "macro": 0.1069468105243233,
+        "micro_ci95": [
+          0.07672877085005798,
+          0.11588519847088395
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_length_candidate",
+      "k": 3,
+      "a_only_hits": 283,
+      "b_only_hits": 102,
+      "difference": {
+        "micro": 0.0905,
+        "macro": 0.09890213893621048,
+        "micro_ci95": [
+          0.07192169399589131,
+          0.10943327185529222
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_length_candidate",
+      "k": 5,
+      "a_only_hits": 268,
+      "b_only_hits": 101,
+      "difference": {
+        "micro": 0.0835,
+        "macro": 0.08991103539655498,
+        "micro_ci95": [
+          0.0638803468584788,
+          0.10316498898738553
+        ]
+      }
+    },
+    {
+      "a": "semantic/cotags_length_both",
+      "b": "semantic/cotags_length_candidate",
+      "k": 10,
+      "a_only_hits": 244,
+      "b_only_hits": 103,
+      "difference": {
+        "micro": 0.0705,
+        "macro": 0.07760742002650009,
+        "micro_ci95": [
+          0.05136965231343951,
+          0.08987093650216559
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_candidate",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 54,
+      "b_only_hits": 619,
+      "difference": {
+        "micro": -0.2825,
+        "macro": -0.30191179254211625,
+        "micro_ci95": [
+          -0.30696791381776517,
+          -0.2590325729796657
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_candidate",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 30,
+      "b_only_hits": 704,
+      "difference": {
+        "micro": -0.337,
+        "macro": -0.35197804277872424,
+        "micro_ci95": [
+          -0.3584339633559516,
+          -0.31384161302807245
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_candidate",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 24,
+      "b_only_hits": 694,
+      "difference": {
+        "micro": -0.335,
+        "macro": -0.34582623509369675,
+        "micro_ci95": [
+          -0.3569372414617662,
+          -0.3130080276357199
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_candidate",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 13,
+      "b_only_hits": 640,
+      "difference": {
+        "micro": -0.3135,
+        "macro": -0.3223547226954382,
+        "micro_ci95": [
+          -0.3360243852583895,
+          -0.29223057644110273
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/aliases",
+      "k": 1,
+      "a_only_hits": 167,
+      "b_only_hits": 457,
+      "difference": {
+        "micro": -0.145,
+        "macro": -0.15407912171114896,
+        "micro_ci95": [
+          -0.1694448671697595,
+          -0.11986023449624925
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/aliases",
+      "k": 3,
+      "a_only_hits": 125,
+      "b_only_hits": 513,
+      "difference": {
+        "micro": -0.194,
+        "macro": -0.20149536248343744,
+        "micro_ci95": [
+          -0.21776328442304604,
+          -0.1692536870707959
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/aliases",
+      "k": 5,
+      "a_only_hits": 108,
+      "b_only_hits": 508,
+      "difference": {
+        "micro": -0.2,
+        "macro": -0.2042400151429112,
+        "micro_ci95": [
+          -0.22344003477885835,
+          -0.17613347254224274
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/aliases",
+      "k": 10,
+      "a_only_hits": 90,
+      "b_only_hits": 468,
+      "difference": {
+        "micro": -0.189,
+        "macro": -0.19278818852924476,
+        "micro_ci95": [
+          -0.21185348430391537,
+          -0.16508022622981514
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/all_candidate",
+      "k": 1,
+      "a_only_hits": 356,
+      "b_only_hits": 81,
+      "difference": {
+        "micro": 0.1375,
+        "macro": 0.14783267083096724,
+        "micro_ci95": [
+          0.11726478116791753,
+          0.15805172726810238
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/all_candidate",
+      "k": 3,
+      "a_only_hits": 373,
+      "b_only_hits": 87,
+      "difference": {
+        "micro": 0.143,
+        "macro": 0.15048268029528677,
+        "micro_ci95": [
+          0.12325991235684486,
+          0.16406138379475274
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/all_candidate",
+      "k": 5,
+      "a_only_hits": 357,
+      "b_only_hits": 87,
+      "difference": {
+        "micro": 0.135,
+        "macro": 0.14158621995078552,
+        "micro_ci95": [
+          0.1150753648233487,
+          0.15569139107216176
+        ]
+      }
+    },
+    {
+      "a": "semantic/all_both",
+      "b": "semantic/all_candidate",
+      "k": 10,
+      "a_only_hits": 323,
+      "b_only_hits": 74,
+      "difference": {
+        "micro": 0.1245,
+        "macro": 0.12956653416619346,
+        "micro_ci95": [
+          0.10533989260887038,
+          0.1431422712254896
+        ]
+      }
+    }
+  ],
+  "validation": {
+    "status": "passed",
+    "prediction_conditions": 22,
+    "prediction_rows": 49500,
+    "independent_membership_checks": 198000,
+    "stage1_name_only_replay": {
+      "checked_queries": {
+        "lexical/raw": 2250,
+        "semantic/raw": 2250
+      },
+      "rank_or_shortlist_mismatches": {
+        "lexical/raw": 0,
+        "semantic/raw": 0
+      }
+    },
+    "profiles": {
+      "distinct_sampled_support_works": 766025,
+      "distinct_sampled_query_works": 9407,
+      "overlapping_sampled_works": 0,
+      "selected_alias_examples_checked": 48080,
+      "profile_file_sha256_verified": true,
+      "equivalent_context_mask_verified": true
+    },
+    "embedding_matrix_and_representation_checksums_verified": true,
+    "calibration_and_test_evaluated": false
+  },
+  "predictions": {
+    "lexical/raw": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "benchmark": {
+          "snapshot_id": "ao3-20210226-ac07b915acab",
+          "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+          "artifacts": {
+            "catalogue.csv": {
+              "rows": 1175987,
+              "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+              "bytes": 80317513
+            },
+            "synonyms.csv": {
+              "rows": 224744,
+              "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+              "bytes": 21921338
+            },
+            "development.csv": {
+              "rows": 2250,
+              "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+              "bytes": 380125
+            }
+          },
+          "type": "Freeform",
+          "evaluation_split": "development",
+          "canonical_candidates": 181067,
+          "development_synonyms": 2000,
+          "development_synonym_groups": 1761,
+          "development_identities": 250,
+          "permitted_development_aliases": 70294,
+          "population_synonyms_by_split": {
+            "test": 21406,
+            "calibration": 24943,
+            "development": 70294
+          },
+          "calibration_and_test_evaluated": false
+        },
+        "terms_sha256": "6102cd03842d6e5dee26385a848fa28a28f6902c17f12def9744875b151067ec",
+        "selected_alias_ids_sha256": "fc6014c2bc1328cbb23a62700d2a13c9972b2bf26858a9f63874b30a9205d4d8"
+      },
+      "sha256": "9eaf38ce21fafdca1079ee1ddea059ba07a28a77d7f57138822758d298dd8b72",
+      "rows": 2250,
+      "seconds": 1499.559375971934
+    },
+    "lexical/global_aliases": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "benchmark": {
+          "snapshot_id": "ao3-20210226-ac07b915acab",
+          "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+          "artifacts": {
+            "catalogue.csv": {
+              "rows": 1175987,
+              "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+              "bytes": 80317513
+            },
+            "synonyms.csv": {
+              "rows": 224744,
+              "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+              "bytes": 21921338
+            },
+            "development.csv": {
+              "rows": 2250,
+              "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+              "bytes": 380125
+            }
+          },
+          "type": "Freeform",
+          "evaluation_split": "development",
+          "canonical_candidates": 181067,
+          "development_synonyms": 2000,
+          "development_synonym_groups": 1761,
+          "development_identities": 250,
+          "permitted_development_aliases": 70294,
+          "population_synonyms_by_split": {
+            "test": 21406,
+            "calibration": 24943,
+            "development": 70294
+          },
+          "calibration_and_test_evaluated": false
+        },
+        "terms_sha256": "6102cd03842d6e5dee26385a848fa28a28f6902c17f12def9744875b151067ec",
+        "selected_alias_ids_sha256": "fc6014c2bc1328cbb23a62700d2a13c9972b2bf26858a9f63874b30a9205d4d8"
+      },
+      "sha256": "e1583b927856851f92f7050fc193e1402febfc64eadf8f0a2c879c56b0cef8b3",
+      "rows": 2250,
+      "seconds": 1499.559375971934
+    },
+    "lexical/selected_aliases": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "benchmark": {
+          "snapshot_id": "ao3-20210226-ac07b915acab",
+          "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+          "artifacts": {
+            "catalogue.csv": {
+              "rows": 1175987,
+              "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+              "bytes": 80317513
+            },
+            "synonyms.csv": {
+              "rows": 224744,
+              "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+              "bytes": 21921338
+            },
+            "development.csv": {
+              "rows": 2250,
+              "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+              "bytes": 380125
+            }
+          },
+          "type": "Freeform",
+          "evaluation_split": "development",
+          "canonical_candidates": 181067,
+          "development_synonyms": 2000,
+          "development_synonym_groups": 1761,
+          "development_identities": 250,
+          "permitted_development_aliases": 70294,
+          "population_synonyms_by_split": {
+            "test": 21406,
+            "calibration": 24943,
+            "development": 70294
+          },
+          "calibration_and_test_evaluated": false
+        },
+        "terms_sha256": "6102cd03842d6e5dee26385a848fa28a28f6902c17f12def9744875b151067ec",
+        "selected_alias_ids_sha256": "fc6014c2bc1328cbb23a62700d2a13c9972b2bf26858a9f63874b30a9205d4d8"
+      },
+      "sha256": "5d2bd8b41ad0ed43d6190bec643fa06aaebb8250aff1cbc0146691d74af2766e",
+      "rows": 2250,
+      "seconds": 1499.559375971934
+    },
+    "semantic/raw": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "raw"
+      },
+      "sha256": "1ad5394e79d0217992026509edb0a30e225a6edd5109a8b2b210d16badd5b3be",
+      "rows": 2250,
+      "seconds": 15.768654906001757
+    },
+    "semantic/template": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "template"
+      },
+      "sha256": "5e829909c560c7735bd7344db3fa51e7f2ff1a2b24361e940e9d97575c1fbc74",
+      "rows": 2250,
+      "seconds": 15.670640760999959
+    },
+    "semantic/aliases": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "aliases"
+      },
+      "sha256": "2394a52e456ed8214774223646a96007d29ec03cb97b0d5b21d7d6d330bc82db",
+      "rows": 2250,
+      "seconds": 15.689654146000976
+    },
+    "semantic/fandom_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "fandom_candidate"
+      },
+      "sha256": "05ce1b1b3bb84263dcb05b4045421e25967ca427c2d38a34e2d4f35de63548ec",
+      "rows": 2250,
+      "seconds": 15.719515808999859
+    },
+    "semantic/fandom_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "fandom_both"
+      },
+      "sha256": "ad52dd7000dc88c5da1772a6d4a8271a10a2f650065215463d4677aa39e6b700",
+      "rows": 2250,
+      "seconds": 15.692411780997645
+    },
+    "semantic/cotags_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "cotags_candidate"
+      },
+      "sha256": "d7f87b908ee704b58dc009dc679165f83d00fbf9970d4858fe70f818ba144767",
+      "rows": 2250,
+      "seconds": 15.695162197000172
+    },
+    "semantic/cotags_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "cotags_both"
+      },
+      "sha256": "295edba50dee2fd6e3ae722c5f526830844c18807950efc9499bd1cf881417db",
+      "rows": 2250,
+      "seconds": 15.796786491002422
+    },
+    "semantic/length_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "length_candidate"
+      },
+      "sha256": "5d0148bfdd89fc255a01123704e799337cf9015493cecd305302630075b69c0c",
+      "rows": 2250,
+      "seconds": 16.027420128000813
+    },
+    "semantic/length_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "length_both"
+      },
+      "sha256": "51658ce86c5885ffca3fb2fe3b28f689b7afdf2696ac8f42247e6967ab8ad21c",
+      "rows": 2250,
+      "seconds": 15.487962868002796
+    },
+    "semantic/usage_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "usage_candidate"
+      },
+      "sha256": "b4a294ea5cc2b3d201652adaa6325b9848bbc67da583d96dfd0faf0f2a595923",
+      "rows": 2250,
+      "seconds": 15.556967260999954
+    },
+    "semantic/usage_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "usage_both"
+      },
+      "sha256": "655d5b9489b61bd707e1c47029b208e95f82bd60e7afdf15b6b2dd724601bce1",
+      "rows": 2250,
+      "seconds": 14.884181793000607
+    },
+    "semantic/metadata_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "metadata_candidate"
+      },
+      "sha256": "1348533131048aee9eeddf6c0bd6e5a6c5f7a01e45089d1dd95c0de47ca1fe9f",
+      "rows": 2250,
+      "seconds": 14.817311177997908
+    },
+    "semantic/metadata_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "metadata_both"
+      },
+      "sha256": "18327e0e4b71a0878bd745282514b1606c3be60c50da46d373c1e6d1e572fd15",
+      "rows": 2250,
+      "seconds": 14.760418695001135
+    },
+    "semantic/cotags_length_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "cotags_length_candidate"
+      },
+      "sha256": "711e9c7fa37d586840068fdc859a4291370f323753a10f6678d11cf28bd5aac3",
+      "rows": 2250,
+      "seconds": 14.822550886001409
+    },
+    "semantic/cotags_length_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "cotags_length_both"
+      },
+      "sha256": "050b79cb2dc307ae8363efebefbcdd111cd1902b3a43f771a05aa950aa971e9d",
+      "rows": 2250,
+      "seconds": 15.033932497000933
+    },
+    "semantic/all_candidate": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "all_candidate"
+      },
+      "sha256": "e39f894312ddb6881f43a9cf4368fb84974b72c2538952da3cdf0d0918f9751e",
+      "rows": 2250,
+      "seconds": 22.86191231200064
+    },
+    "semantic/all_both": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "all_both"
+      },
+      "sha256": "086d38c45b44aac9016f460784ca3ecc345338b1756953b4a5a4abb73478c60b",
+      "rows": 2250,
+      "seconds": 18.981686078001076
+    },
+    "semantic/cotags_one_work": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "cotags_one_work"
+      },
+      "sha256": "a42ad05b068a0ebf0320baafb520dea580c3019bac62743114ae62376c790189",
+      "rows": 2250,
+      "seconds": 21.298436179997225
+    },
+    "semantic/all_name_anchor": {
+      "recipe": {
+        "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+        "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+        "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+        "condition": "all_name_anchor"
+      },
+      "sha256": "831dd3d9fcbe16c02ba03bc9dca0b4a1e3cf28347842bab6d44151e0506f9c29",
+      "rows": 2250,
+      "seconds": 15.590264795999246
+    }
+  },
+  "source_sha256": {
+    "analyze_ao3_representations.py": "95094460ea2c5c1f4e03cadc20b96ee50dd5a6bfcdab07d36f3009cf32839e5f",
+    "ao3_representations.py": "65e6b989a07130a8f9a9e3aee646865009ed82ffcf5cfa31bc4dfd54390aac92",
+    "run_ao3_representations.py": "33e5cc55c608fd36ec9d6785d6e6afb2c07daac037323ee4cfb02530218bd63d",
+    "ao3_work_html.py": "236171258c346c6c8ea68086d085605c6400f93f0cabb68e7155b976c9c412c0"
+  },
+  "limitations": [
+    "Development exploration across multiple prespecified conditions; no final-test winner established",
+    "Query profiles describe recurring tags with historical context; one-work condition covers a different input setting",
+    "Canonical names from all splits are candidates; support profiles may use their direct canonical occurrences, but no held-out alias membership",
+    "Co-tags are associations, not synonym labels or curated definitions",
+    "Fixed-size work samples and rare context coverage limit profile estimates",
+    "Bootstrap groups by canonical target; shared query works can create dependence between different target groups",
+    "Single HTML fixture validates extraction only; summaries and engagement were not benchmarked",
+    "Provider supplies an unversioned model alias; vector checksums freeze these acquisitions"
+  ]
+}

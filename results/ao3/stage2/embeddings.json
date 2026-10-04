@@ -1,0 +1,26 @@
+{
+  "recipe": {
+    "inputs_sha256": "c0d96b91a97d9938c5495b1e77ba4433aafa76f6c261ada0476ffa0da8b6375d",
+    "model": "openai/text-embedding-3-small",
+    "dimensions": 1536,
+    "batch_maximum": 512,
+    "batch_byte_maximum": 280000
+  },
+  "vectors_sha256": "e4fa2425c0fe653f751962fea13fc2262068f5f3bbdcfebda375f4a70f0674f9",
+  "new_batches": 1670,
+  "new_strings": 842596,
+  "reused_strings": 183067,
+  "prompt_tokens": 51648664,
+  "reported_cost_usd": 1.0329732800000004,
+  "providers": [
+    "OpenAI"
+  ],
+  "response_models": [
+    "text-embedding-3-small"
+  ],
+  "attempts": 1670,
+  "batch_metadata_sha256": "8a3150c6bb56ba076bca0948bfeae74a7475cd56c10259b7747ac238110b98ea",
+  "last_session_seconds": 789.1973917840005,
+  "captured_from_utc": "2026-10-03T22:06:13.733010+00:00",
+  "captured_to_utc": "2026-10-03T22:19:16.966014+00:00"
+}

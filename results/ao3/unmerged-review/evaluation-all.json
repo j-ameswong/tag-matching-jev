@@ -1,0 +1,998 @@
+{
+  "status": "reference_review_pending",
+  "cases_sha256": "7cd7e34062a1300f5df46fdafd0e78372404d26ba5b421f7852210209a0a48f9",
+  "judgments_sha256": "c2141493be55484d8d5aee4bdf48630232559b17fafeef498f3aee724c958197",
+  "proposal_sha256": null,
+  "partitions": {
+    "calibration": {
+      "sampled": 200,
+      "reviewed": 0,
+      "pending": 200,
+      "status": "reference_review_pending",
+      "reference_counts": {},
+      "reference_proportions_among_reviewed": {
+        "synonym": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "new_canonical": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "unresolved": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "shortlist_recall_on_reviewed_synonyms": {
+        "template/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "union/shortlist": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "decision_baselines": {
+        "always_template": {
+          "submitted": 200,
+          "missing_proposals": 0,
+          "synonym_proposals": 200,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 200,
+            "denominator": 200,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9811546736227335,
+              1.0
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 200,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "always_alias_max": {
+          "submitted": 200,
+          "missing_proposals": 0,
+          "synonym_proposals": 200,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 200,
+            "denominator": 200,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9811546736227335,
+              1.0
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 200,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "semantic_agreement_else_abstain": {
+          "submitted": 200,
+          "missing_proposals": 0,
+          "synonym_proposals": 134,
+          "new_canonical_proposals": 0,
+          "abstentions": 66,
+          "proposal_coverage": {
+            "successes": 134,
+            "denominator": 200,
+            "estimate": 0.67,
+            "wilson95": [
+              0.602166847737769,
+              0.7314257412939605
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 134,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        }
+      },
+      "accuracy_scope": "Only resolved reviewed cases; unresolved and missing references do not enter accuracy denominators"
+    },
+    "validation": {
+      "sampled": 200,
+      "reviewed": 0,
+      "pending": 200,
+      "status": "reference_review_pending",
+      "reference_counts": {},
+      "reference_proportions_among_reviewed": {
+        "synonym": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "new_canonical": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "unresolved": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "shortlist_recall_on_reviewed_synonyms": {
+        "template/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "union/shortlist": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "decision_baselines": {
+        "always_template": {
+          "submitted": 200,
+          "missing_proposals": 0,
+          "synonym_proposals": 200,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 200,
+            "denominator": 200,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9811546736227335,
+              1.0
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 200,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "always_alias_max": {
+          "submitted": 200,
+          "missing_proposals": 0,
+          "synonym_proposals": 200,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 200,
+            "denominator": 200,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9811546736227335,
+              1.0
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 200,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "semantic_agreement_else_abstain": {
+          "submitted": 200,
+          "missing_proposals": 0,
+          "synonym_proposals": 128,
+          "new_canonical_proposals": 0,
+          "abstentions": 72,
+          "proposal_coverage": {
+            "successes": 128,
+            "denominator": 200,
+            "estimate": 0.64,
+            "wilson95": [
+              0.5714152816600309,
+              0.7033080269543346
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 128,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        }
+      },
+      "accuracy_scope": "Only resolved reviewed cases; unresolved and missing references do not enter accuracy denominators"
+    },
+    "challenge": {
+      "sampled": 100,
+      "reviewed": 0,
+      "pending": 100,
+      "status": "reference_review_pending",
+      "reference_counts": {},
+      "reference_proportions_among_reviewed": {
+        "synonym": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "new_canonical": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "unresolved": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "shortlist_recall_on_reviewed_synonyms": {
+        "template/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "union/shortlist": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "decision_baselines": {
+        "always_template": {
+          "submitted": 100,
+          "missing_proposals": 0,
+          "synonym_proposals": 100,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 100,
+            "denominator": 100,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9630065017930143,
+              1.0
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 100,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "always_alias_max": {
+          "submitted": 100,
+          "missing_proposals": 0,
+          "synonym_proposals": 100,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 100,
+            "denominator": 100,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9630065017930143,
+              1.0
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 100,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "semantic_agreement_else_abstain": {
+          "submitted": 100,
+          "missing_proposals": 0,
+          "synonym_proposals": 42,
+          "new_canonical_proposals": 0,
+          "abstentions": 58,
+          "proposal_coverage": {
+            "successes": 42,
+            "denominator": 100,
+            "estimate": 0.42,
+            "wilson95": [
+              0.3279838267435473,
+              0.5179351329695703
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 42,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        }
+      },
+      "accuracy_scope": "Only resolved reviewed cases; unresolved and missing references do not enter accuracy denominators"
+    },
+    "random_combined": {
+      "sampled": 400,
+      "reviewed": 0,
+      "pending": 400,
+      "status": "reference_review_pending",
+      "reference_counts": {},
+      "reference_proportions_among_reviewed": {
+        "synonym": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "new_canonical": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "unresolved": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "shortlist_recall_on_reviewed_synonyms": {
+        "template/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "template_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@1": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@3": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@5": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "lexical_alias_max/recall@10": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        },
+        "union/shortlist": {
+          "successes": 0,
+          "denominator": 0,
+          "estimate": null,
+          "wilson95": null
+        }
+      },
+      "decision_baselines": {
+        "always_template": {
+          "submitted": 400,
+          "missing_proposals": 0,
+          "synonym_proposals": 400,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 400,
+            "denominator": 400,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9904877056657034,
+              0.9999999999999999
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 400,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "always_alias_max": {
+          "submitted": 400,
+          "missing_proposals": 0,
+          "synonym_proposals": 400,
+          "new_canonical_proposals": 0,
+          "abstentions": 0,
+          "proposal_coverage": {
+            "successes": 400,
+            "denominator": 400,
+            "estimate": 1.0,
+            "wilson95": [
+              0.9904877056657034,
+              0.9999999999999999
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 400,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        },
+        "semantic_agreement_else_abstain": {
+          "submitted": 400,
+          "missing_proposals": 0,
+          "synonym_proposals": 262,
+          "new_canonical_proposals": 0,
+          "abstentions": 138,
+          "proposal_coverage": {
+            "successes": 262,
+            "denominator": 400,
+            "estimate": 0.655,
+            "wilson95": [
+              0.6071390167491942,
+              0.6999121720071738
+            ]
+          },
+          "resolved_synonym_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "resolved_false_merge_fraction": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "false_merge_rate_on_reference_new_concepts": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "merges_on_unresolved_references": 0,
+          "merges_without_reference": 262,
+          "new_canonical_decision_precision": {
+            "successes": 0,
+            "denominator": 0,
+            "estimate": null,
+            "wilson95": null
+          },
+          "new_canonical_proposals_on_unresolved": 0,
+          "new_canonical_proposals_without_reference": 0,
+          "new_canonical_label_quality": "Unscored: agreement on novelty does not validate proposed wording or usefulness"
+        }
+      },
+      "accuracy_scope": "Only resolved reviewed cases; unresolved and missing references do not enter accuracy denominators"
+    }
+  },
+  "notes": [
+    "Challenge cases are not pooled into population estimates.",
+    "Partial reviews may be selected by ease or order; their proportions are descriptive only.",
+    "Calibration and validation here are new review splits, not the original benchmark group holdouts.",
+    "Wilson intervals describe tag-level proportions, not independent concept clusters.",
+    "Use calibration only for threshold selection; freeze any fitted policy before validation.",
+    "The three decision baselines were fixed before review; agreement is not a calibrated confidence score."
+  ],
+  "source_sha256": "00ccc684cbcb93b5c0fb2e3159b98011f3ae230b22930271f0373878f974571c",
+  "shared_reviewed_canonical_targets_between_review_splits": 0
+}

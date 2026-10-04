@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "prediction_rows": 22500,
+  "raw_api_decisions_checked": 15750,
+  "original_shortlists_checked": 2250,
+  "aggregate_metrics_checked": 20,
+  "checks": [
+    "IDs against original benchmark",
+    "identical original ten-candidate lists",
+    "request order and response hashes",
+    "per-query decisions against raw API answers",
+    "independent conditional and overall denominators",
+    "rescues minus regressions identity",
+    "disjoint error decomposition",
+    "identity controls kept separate"
+  ],
+  "artifact_hashes": {
+    "results/ao3/jev-top10/summary.json": "4fbbcd394bfac2e8de3c914f71866d46dfde2f058bcb10695d1e31fb6e85b10f",
+    "results/ao3/jev-top10/metrics.csv": "70c796a6eb6cc0ca26e53a77e0541836e95755a2e35184887f27db7107105699",
+    "results/ao3/jev-top10/predictions.csv": "f2453df47cdc17e7ada2291cd7db34ac2c877c91e0c1bfbd13dacc1a010e3c71"
+  },
+  "validator_sha256": "8df8b72d96b000302ba3f8298ad855f77e8479e3e52ea9907ef4b598071c3cda"
+}

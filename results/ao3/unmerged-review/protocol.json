@@ -1,0 +1,88 @@
+{
+  "protocol": {
+    "version": "ao3-unmerged-review-v1",
+    "population": "Visible, named, noncanonical Freeform rows with an empty merger_id in the 2021-02-26 snapshot; unlabelled, not negatives",
+    "sampling": {
+      "seed": "ao3-unmerged-review-v1",
+      "random": 400,
+      "screen": 2000,
+      "challenge": 100,
+      "random_rule": "400 smallest SHA256(seed:random:source_id), numeric ID ties; equal-probability tag sample",
+      "screen_rule": "2000 smallest independent SHA256(seed:screen:source_id) among the remaining population",
+      "random_split": "Independent SHA256(seed:partition:source_id) order: first 200 review calibration, remaining 200 review validation",
+      "challenge_rule": "Sequential disjoint quotas from the screen: low pooled score 20, low pooled margin 20, different semantic top IDs 20, unsupported template top ID 20, highest approximate usage 10, non-ASCII names 10; source-ID hash breaks ties; hash-order fallback if a stratum is exhausted",
+      "estimation": "Only the 400 random tags estimate population proportions; challenge cases are diagnostic and never pooled into population estimates"
+    },
+    "retrieval": {
+      "model": "openai/text-embedding-3-small",
+      "dimensions": 1536,
+      "text": "Tag: {name}\nType: Freeform",
+      "candidates": 181067,
+      "aliases": "The same 48080 selected Stage 2 development aliases; globally exclude all 2000 evaluated aliases; no calibration/test aliases",
+      "semantic": "Exhaustive float64 cosine, template-only and maximum over individual canonical/alias vectors",
+      "lexical": "Exhaustive PostgreSQL pg_trgm similarity(query, raw name), maximum over canonical and the same selected alias names, on the final 500",
+      "shortlist": "Top 10 unique canonical IDs per method; retain their union; numeric canonical ID ascending on ties",
+      "scores": "Similarity and margins are descriptive, not probabilities or acceptance thresholds"
+    },
+    "context": "Raw source-ID occurrences in Stage 2 work buckets 6-7 only; up to 32 hash-sampled works for canonical co-tags; Stage 2 candidate support profiles are reused; evidence is not embedded or treated as equivalence",
+    "reference": {
+      "labels": [
+        "synonym",
+        "new_canonical",
+        "unresolved"
+      ],
+      "synonym": "One existing Freeform canonical preserves the whole meaning, including scope and qualifiers",
+      "new_canonical": "A distinct useful concept, after a documented search beyond the shortlist; a proposal for this snapshot, not an AO3 wrangling decision",
+      "unresolved": "Ambiguous, composite, expressive, wrong-type, insufficient evidence, or no useful filterable concept",
+      "required": "Named reviewer, rationale, confidence; canonical ID for synonym; proposed name and catalogue_checked=yes for new_canonical",
+      "independence": "Keep model/system proposals separate from reference judgments; model-generated labels cannot establish their own accuracy",
+      "review": "Search the full catalogue beyond the shortlist; record scope differences; independently review new-canonical decisions and disagreements before final claims"
+    },
+    "evaluation": {
+      "baselines": [
+        "always_template",
+        "always_alias_max",
+        "semantic_agreement_else_abstain"
+      ],
+      "metrics": "Synonym precision and false merges on resolved judgments, coverage, unresolved acceptance, shortlist recall for reviewed synonyms, and new-canonical proposal precision for separately supplied proposals",
+      "uncertainty": "Wilson 95% intervals for descriptive tag-level proportions; tags may share concepts; report target overlap between review splits",
+      "calibration": "Tune any future thresholds using review calibration only; freeze them before reporting review validation; challenge cases are development diagnostics",
+      "no_labels": "Report pending with null precision/recall; never substitute similarity or an LLM judgment for human reference labels"
+    },
+    "original_calibration_and_test_evaluated": false
+  },
+  "benchmark": {
+    "snapshot_id": "ao3-20210226-ac07b915acab",
+    "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+    "artifacts": {
+      "catalogue.csv": {
+        "rows": 1175987,
+        "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+        "bytes": 80317513
+      },
+      "synonyms.csv": {
+        "rows": 224744,
+        "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+        "bytes": 21921338
+      },
+      "development.csv": {
+        "rows": 2250,
+        "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+        "bytes": 380125
+      }
+    },
+    "type": "Freeform",
+    "evaluation_split": "development",
+    "canonical_candidates": 181067,
+    "development_synonyms": 2000,
+    "development_synonym_groups": 1761,
+    "development_identities": 250,
+    "permitted_development_aliases": 70294,
+    "population_synonyms_by_split": {
+      "test": 21406,
+      "calibration": 24943,
+      "development": 70294
+    },
+    "calibration_and_test_evaluated": false
+  }
+}

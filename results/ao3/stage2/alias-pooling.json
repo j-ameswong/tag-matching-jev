@@ -1,0 +1,579 @@
+{
+  "protocol": {
+    "protocol": {
+      "version": "ao3-stage2-alias-pooling-followup-v1",
+      "motivation": "Declared after observing Stage 2 raw/template/concatenated-alias Recall@10 of 80.95/84.55/78.35; separate exploratory follow-up, not part of the original 19 conditions",
+      "model": "openai/text-embedding-3-small",
+      "dimensions": 1536,
+      "aliases": "Exactly the same globally excluded, hash-selected maximum-five examples as Stage 2; no evaluated or held-out aliases",
+      "conditions": [
+        "raw_alias_max",
+        "template_alias_max"
+      ],
+      "score": "Maximum exhaustive cosine across canonical name and its selected alias vectors; one score/shortlist position per canonical ID",
+      "templates": {
+        "raw": "{name}",
+        "template": "Tag: {name}\nType: Freeform"
+      },
+      "queries": "Same 2000 development synonyms and 250 separate identities; no work context",
+      "statistics": "Paired target-group bootstrap against the matching name-only view and selected-alias lexical reference; 2000 resamples, seed 20261003",
+      "calibration_and_test_evaluated": false
+    },
+    "benchmark": {
+      "snapshot_id": "ao3-20210226-ac07b915acab",
+      "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+      "artifacts": {
+        "catalogue.csv": {
+          "rows": 1175987,
+          "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+          "bytes": 80317513
+        },
+        "synonyms.csv": {
+          "rows": 224744,
+          "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+          "bytes": 21921338
+        },
+        "development.csv": {
+          "rows": 2250,
+          "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+          "bytes": 380125
+        }
+      },
+      "type": "Freeform",
+      "evaluation_split": "development",
+      "canonical_candidates": 181067,
+      "development_synonyms": 2000,
+      "development_synonym_groups": 1761,
+      "development_identities": 250,
+      "permitted_development_aliases": 70294,
+      "population_synonyms_by_split": {
+        "test": 21406,
+        "calibration": 24943,
+        "development": 70294
+      },
+      "calibration_and_test_evaluated": false
+    },
+    "alias_ids_sha256": "fc6014c2bc1328cbb23a62700d2a13c9972b2bf26858a9f63874b30a9205d4d8"
+  },
+  "embeddings": {
+    "new_strings": 96160,
+    "batches": 188,
+    "batch_metadata_sha256": "6d8377d8f69ef2c707af8bbbe1f9010caadf7b457b1ad27f24412cc4f8687dbd",
+    "prompt_tokens": 740833,
+    "reported_cost_usd": 0.014816659999999995,
+    "providers": [
+      "OpenAI"
+    ],
+    "attempts": 188
+  },
+  "metrics": [
+    {
+      "condition": "raw_alias_max",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "recall@1": {
+        "micro": 0.6465,
+        "macro": 0.6483058868067386,
+        "micro_ci95": [
+          0.6254400947978607,
+          0.6681807918193842
+        ]
+      },
+      "recall@3": {
+        "micro": 0.7915,
+        "macro": 0.7915010410751466,
+        "micro_ci95": [
+          0.7738179018611168,
+          0.8101482291825136
+        ]
+      },
+      "recall@5": {
+        "micro": 0.834,
+        "macro": 0.8344690516751846,
+        "micro_ci95": [
+          0.8174602185013656,
+          0.8514522811116576
+        ]
+      },
+      "recall@10": {
+        "micro": 0.8765,
+        "macro": 0.8767745599091425,
+        "micro_ci95": [
+          0.8624113967913724,
+          0.8910474837541913
+        ]
+      }
+    },
+    {
+      "condition": "raw_alias_max",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "condition": "template_alias_max",
+      "example_kind": "synonym",
+      "examples": 2000,
+      "recall@1": {
+        "micro": 0.7315,
+        "macro": 0.7369865606662881,
+        "micro_ci95": [
+          0.7125865127175368,
+          0.7516430591167689
+        ]
+      },
+      "recall@3": {
+        "micro": 0.8605,
+        "macro": 0.8616316486844595,
+        "micro_ci95": [
+          0.8452640238553318,
+          0.8769875957375957
+        ]
+      },
+      "recall@5": {
+        "micro": 0.8885,
+        "macro": 0.8886996024985804,
+        "micro_ci95": [
+          0.8741788782213239,
+          0.90292334063202
+        ]
+      },
+      "recall@10": {
+        "micro": 0.9205,
+        "macro": 0.9194586409237175,
+        "micro_ci95": [
+          0.908398598037916,
+          0.9325739637265601
+        ]
+      }
+    },
+    {
+      "condition": "template_alias_max",
+      "example_kind": "canonical_name",
+      "examples": 250,
+      "recall@1": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@3": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@5": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recall@10": {
+        "micro": 1.0,
+        "macro": 1.0,
+        "micro_ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/raw",
+      "k": 1,
+      "difference": {
+        "micro": 0.0625,
+        "macro": 0.05735377626348666,
+        "micro_ci95": [
+          0.04112320463929861,
+          0.08450035425101216
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/raw",
+      "k": 3,
+      "difference": {
+        "micro": 0.078,
+        "macro": 0.06814310051107325,
+        "micro_ci95": [
+          0.05890942997268803,
+          0.09682494885821166
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/raw",
+      "k": 5,
+      "difference": {
+        "micro": 0.0755,
+        "macro": 0.06852167329169032,
+        "micro_ci95": [
+          0.05792504257648562,
+          0.09323542172038222
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/raw",
+      "k": 10,
+      "difference": {
+        "micro": 0.067,
+        "macro": 0.062369865606662876,
+        "micro_ci95": [
+          0.0513453415161021,
+          0.08308160879913146
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/aliases",
+      "k": 1,
+      "difference": {
+        "micro": 0.1625,
+        "macro": 0.13429869392390686,
+        "micro_ci95": [
+          0.13709401237295624,
+          0.18900508611369138
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/aliases",
+      "k": 3,
+      "difference": {
+        "micro": 0.13,
+        "macro": 0.10287715313268977,
+        "micro_ci95": [
+          0.10751308795733883,
+          0.15517284396723793
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/aliases",
+      "k": 5,
+      "difference": {
+        "micro": 0.1205,
+        "macro": 0.097671777399205,
+        "micro_ci95": [
+          0.09989885301917255,
+          0.14300345548450563
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "semantic/aliases",
+      "k": 10,
+      "difference": {
+        "micro": 0.093,
+        "macro": 0.0737270490251751,
+        "micro_ci95": [
+          0.0739944666001994,
+          0.11335167851589087
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 1,
+      "difference": {
+        "micro": 0.0295,
+        "macro": 0.019496498201779292,
+        "micro_ci95": [
+          0.005503939119723385,
+          0.05317603488131651
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 3,
+      "difference": {
+        "micro": 0.0505,
+        "macro": 0.04230550823395798,
+        "micro_ci95": [
+          0.029432501765229113,
+          0.0711147077759496
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 5,
+      "difference": {
+        "micro": 0.058,
+        "macro": 0.050918038992996406,
+        "micro_ci95": [
+          0.038768897153650166,
+          0.0779626112869491
+        ]
+      }
+    },
+    {
+      "a": "raw_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 10,
+      "difference": {
+        "micro": 0.06,
+        "macro": 0.05489305318947567,
+        "micro_ci95": [
+          0.042639301152187524,
+          0.07828255805685443
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/template",
+      "k": 1,
+      "difference": {
+        "micro": 0.0845,
+        "macro": 0.0871663827370812,
+        "micro_ci95": [
+          0.0648024219408475,
+          0.1052105888541166
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/template",
+      "k": 3,
+      "difference": {
+        "micro": 0.0875,
+        "macro": 0.0875449555176983,
+        "micro_ci95": [
+          0.07132314946035291,
+          0.10408417630778188
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/template",
+      "k": 5,
+      "difference": {
+        "micro": 0.0805,
+        "macro": 0.08006814310051108,
+        "micro_ci95": [
+          0.0650320135253731,
+          0.09691854551640185
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/template",
+      "k": 10,
+      "difference": {
+        "micro": 0.075,
+        "macro": 0.0727806170736324,
+        "micro_ci95": [
+          0.06060455673358899,
+          0.08898996694650013
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/aliases",
+      "k": 1,
+      "difference": {
+        "micro": 0.2475,
+        "macro": 0.22297936778345634,
+        "micro_ci95": [
+          0.22356214183735063,
+          0.2723638677679053
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/aliases",
+      "k": 3,
+      "difference": {
+        "micro": 0.199,
+        "macro": 0.17300776074200264,
+        "micro_ci95": [
+          0.1782589060842236,
+          0.2219453401351762
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/aliases",
+      "k": 5,
+      "difference": {
+        "micro": 0.175,
+        "macro": 0.1519023282226008,
+        "micro_ci95": [
+          0.15530781553060918,
+          0.1957305438905742
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "semantic/aliases",
+      "k": 10,
+      "difference": {
+        "micro": 0.137,
+        "macro": 0.11641113003975016,
+        "micro_ci95": [
+          0.11875951486856795,
+          0.1550084265740358
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 1,
+      "difference": {
+        "micro": 0.1145,
+        "macro": 0.10817717206132879,
+        "micro_ci95": [
+          0.09424842772026962,
+          0.13606652935181007
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 3,
+      "difference": {
+        "micro": 0.1195,
+        "macro": 0.11243611584327087,
+        "micro_ci95": [
+          0.10196821074571245,
+          0.13700612879164592
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 5,
+      "difference": {
+        "micro": 0.1125,
+        "macro": 0.10514858981639219,
+        "micro_ci95": [
+          0.0952612516328227,
+          0.13054585333243196
+        ]
+      }
+    },
+    {
+      "a": "template_alias_max",
+      "b": "lexical/selected_aliases",
+      "k": 10,
+      "difference": {
+        "micro": 0.104,
+        "macro": 0.09757713420405073,
+        "micro_ci95": [
+          0.08710693050427307,
+          0.12019531422109297
+        ]
+      }
+    }
+  ],
+  "alias_coverage_strata": [
+    {
+      "condition": "raw_alias_max",
+      "stratum": "target_has_selected_aliases",
+      "examples": 1508,
+      "recall@1": 0.6777188328912467,
+      "recall@3": 0.8249336870026526,
+      "recall@5": 0.8660477453580901,
+      "recall@10": 0.9025198938992043,
+      "matching_name_only_recall@10": 0.7911140583554377
+    },
+    {
+      "condition": "raw_alias_max",
+      "stratum": "target_has_no_selected_aliases",
+      "examples": 492,
+      "recall@1": 0.5508130081300813,
+      "recall@3": 0.6890243902439024,
+      "recall@5": 0.7357723577235772,
+      "recall@10": 0.7967479674796748,
+      "matching_name_only_recall@10": 0.8658536585365854
+    },
+    {
+      "condition": "template_alias_max",
+      "stratum": "target_has_selected_aliases",
+      "examples": 1508,
+      "recall@1": 0.7692307692307693,
+      "recall@3": 0.8932360742705571,
+      "recall@5": 0.916445623342175,
+      "recall@10": 0.9429708222811671,
+      "matching_name_only_recall@10": 0.8315649867374005
+    },
+    {
+      "condition": "template_alias_max",
+      "stratum": "target_has_no_selected_aliases",
+      "examples": 492,
+      "recall@1": 0.6158536585365854,
+      "recall@3": 0.7601626016260162,
+      "recall@5": 0.8028455284552846,
+      "recall@10": 0.8516260162601627,
+      "matching_name_only_recall@10": 0.8882113821138211
+    }
+  ],
+  "independent_membership_checks": 18000,
+  "selected_aliases": 48080,
+  "source_sha256": "aff86c66209d214d926473e7ff2e55319d7f9c543f64c0bce3e7a828265f33cc",
+  "status": "complete_exploratory_development_followup"
+}

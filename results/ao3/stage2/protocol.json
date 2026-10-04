@@ -1,0 +1,138 @@
+{
+  "protocol": {
+    "version": "ao3-freeform-representations-v1",
+    "lexical_method": "PostgreSQL pg_trgm similarity(query, candidate); raw names and separate alias representations",
+    "embedding_model": "openai/text-embedding-3-small",
+    "dimensions": 1536,
+    "metric": "exhaustive cosine, float64 L2 normalization and scoring",
+    "candidates": "all 181067 Freeform canonicals; no candidate pruning or ANN",
+    "sample": "unchanged Stage 1: 2000 development aliases; 250 separate identity controls",
+    "evaluated_alias_policy": "Globally exclude every sampled synonym ID from candidate examples and co-tags; also discard support works containing any of these IDs",
+    "alias_examples": {
+      "maximum": 5,
+      "order_seed": "ao3-stage2-alias-v1",
+      "max_name_characters": 160
+    },
+    "work_assignment": {
+      "seed": "ao3-stage2-works-v1",
+      "identity": "source file SHA256 and 1-based logical CSV record ordinal",
+      "rule": "first 64 SHA256 bits modulo 10: 0-5 support, 6-7 development query context, 8 calibration context, 9 test context",
+      "sampling_priority": "next 64 SHA256 bits; smallest first"
+    },
+    "candidate_work_membership": "Direct canonical IDs and permitted development Freeform aliases only; deduplicate target ID within each work",
+    "query_work_membership": "Raw source tag ID only; never resolve source to target to collect its works",
+    "co_tags": "Only visible canonical IDs from the frozen catalogue; exclude the represented target ID; all noncanonical co-tags omitted",
+    "mask_ground_truth": "Expected canonical ID is used only to remove equivalent context from query works, never to select query works or add features",
+    "profile_sample_works": 32,
+    "max_co_tags_per_type_per_work": 24,
+    "profile_minimum_works": 3,
+    "co_tag_minimum_sample_support": 2,
+    "co_tag_selection": "Count in bottom-hash sample, then smoothed association (count+1)/(support background count+10), then numeric ID; fixed per-type quotas",
+    "co_tag_quotas": {
+      "Fandom": 3,
+      "Character": 3,
+      "Relationship": 2,
+      "Freeform": 4
+    },
+    "length_bands_words": {
+      "short": [
+        0,
+        5000
+      ],
+      "medium": [
+        5000,
+        20000
+      ],
+      "long": [
+        20000,
+        100000
+      ],
+      "epic": [
+        100000,
+        null
+      ]
+    },
+    "length_features": "Percent of nonmissing lengths per band; completed and incomplete works both included; no missing-as-zero",
+    "usage_feature": "Distinct eligible work share: <1e-6 very rare, <1e-4 uncommon, <1e-2 common, otherwise very common; not reader engagement",
+    "metadata_features": "Top two work language codes; complete and restricted percentages; common canonical rating/warning/category",
+    "text_views": [
+      "raw",
+      "template",
+      "aliases",
+      "fandom",
+      "cotags",
+      "length",
+      "usage",
+      "metadata",
+      "cotags_length",
+      "all"
+    ],
+    "semantic_conditions": [
+      "raw",
+      "template",
+      "aliases",
+      "fandom_candidate",
+      "fandom_both",
+      "cotags_candidate",
+      "cotags_both",
+      "length_candidate",
+      "length_both",
+      "usage_candidate",
+      "usage_both",
+      "metadata_candidate",
+      "metadata_both",
+      "cotags_length_candidate",
+      "cotags_length_both",
+      "all_candidate",
+      "all_both",
+      "cotags_one_work",
+      "all_name_anchor"
+    ],
+    "one_work_query": "Lowest-hash observed development context work, same masking and quotas; candidate co-tag profile",
+    "name_anchor": "L2 normalize 0.75 * normalized raw-name vector + 0.25 * normalized all-features vector, on both sides",
+    "lexical_conditions": [
+      "raw",
+      "global_aliases",
+      "selected_aliases"
+    ],
+    "statistics": "Recall@1/3/5/10; macro target recall; 2000 paired target-group bootstrap resamples, seed 20261003; descriptive development comparisons, no multiplicity correction",
+    "holdouts": "Calibration and test queries are not scored; their aliases are not indexed, embedded or used to assign support works to candidates",
+    "html_scope": "Single supplied fixture: extraction validation only; no representative summary or engagement corpus and no original work-ID join in dump",
+    "generated_definitions": false,
+    "jev_used": false
+  },
+  "benchmark": {
+    "snapshot_id": "ao3-20210226-ac07b915acab",
+    "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+    "artifacts": {
+      "catalogue.csv": {
+        "rows": 1175987,
+        "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+        "bytes": 80317513
+      },
+      "synonyms.csv": {
+        "rows": 224744,
+        "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+        "bytes": 21921338
+      },
+      "development.csv": {
+        "rows": 2250,
+        "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+        "bytes": 380125
+      }
+    },
+    "type": "Freeform",
+    "evaluation_split": "development",
+    "canonical_candidates": 181067,
+    "development_synonyms": 2000,
+    "development_synonym_groups": 1761,
+    "development_identities": 250,
+    "permitted_development_aliases": 70294,
+    "population_synonyms_by_split": {
+      "test": 21406,
+      "calibration": 24943,
+      "development": 70294
+    },
+    "calibration_and_test_evaluated": false
+  }
+}

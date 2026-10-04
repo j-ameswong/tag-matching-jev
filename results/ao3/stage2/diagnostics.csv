@@ -1,0 +1,81 @@
+condition,change_vs_aliases,source_id,query,expected,expected_rank,top_prediction,query_context_works,candidate_support_works
+semantic/fandom_both,gain,29015717,little!wooyoung,Age Play Little Jung Wooyoung,7,Cute Jung Wooyoung,2,9
+semantic/fandom_both,gain,27238688,Threesome-ish,Threesome,3,Community: ff_threesomes,1,10566
+semantic/fandom_both,gain,13202566,no skating,Alternate Universe - No Ice Skating,9,Skating,3,32
+semantic/fandom_both,gain,37000741,Ineffable Advent,31 Days of Ineffables Advent Calendar Challenge (Good Omens),2,31 Days of Ineffables Advent Calendar Challenge 2019 (Good Omens),9,73
+semantic/fandom_both,gain,7641884,Pre-Stuckony,Pre-Bucky Barnes/Steve Rogers/Tony Stark,5,Pre-Iron Man 2,3,5
+semantic/fandom_both,loss,3029498,stucky friendship,Bucky Barnes & Steve Rogers Friendship,39,Stiles Stilinski & Dean Winchester Friendship,1,412
+semantic/fandom_both,loss,34582043,Sub!Hyunjin,Submissive Hwang Hyunjin,27,Hwang Hyunjin-centric,2,38
+semantic/fandom_both,loss,38795308,Jaskier dies,Dead Jaskier | Dandelion,21,Jaskier | Dandelion is Missing,1,4
+semantic/fandom_both,loss,608432,speech issues,Speech Disorders,40,Community: kings_speeches,3,235
+semantic/fandom_both,loss,933769,REC REC REC,Recommendations,40,Amplirecathon,0,50
+semantic/cotags_both,gain,29015717,little!wooyoung,Age Play Little Jung Wooyoung,1,Age Play Little Jung Wooyoung,2,9
+semantic/cotags_both,gain,27238688,Threesome-ish,Threesome,4,Community: ff_threesomes,1,10566
+semantic/cotags_both,gain,13202566,no skating,Alternate Universe - No Ice Skating,2,Skating,3,32
+semantic/cotags_both,gain,7190951,akuma!marinette,Akumatized Marinette Dupain-Cheng | Ladybug,3,Angry Marinette Dupain-Cheng,3,181
+semantic/cotags_both,gain,37000741,Ineffable Advent,31 Days of Ineffables Advent Calendar Challenge (Good Omens),9,Ineffable Husbands Week,9,73
+semantic/cotags_both,loss,16671573,EXO Cameos,Mentioned EXO (EXO),15,Jung Hoseok | J-Hope/Kim Taehyung | V-centric,2,93
+semantic/cotags_both,loss,1158965,dirt talk,Dirty Talk,20,Fíli Talks Dirty,0,41218
+semantic/cotags_both,loss,3029498,stucky friendship,Bucky Barnes & Steve Rogers Friendship,22,Stiles Stilinski & Dean Winchester Friendship,1,412
+semantic/cotags_both,loss,1358129,Implied Past Prostitution,Prostitution,17,Prostitute Prompto Argentum,1,7387
+semantic/cotags_both,loss,2777730,New Rome,New Rome (Percy Jackson),24,Modern Rome Arc (Rusty Quill Gaming),1,20
+semantic/length_both,gain,828518,Unrequited affection,Unrequited,10,Unrequited Love,3,1148
+semantic/length_both,gain,4747746,serial killer cas,Serial Killer Castiel (Supernatural),10,Serial Killer Sherlock Holmes,0,55
+semantic/length_both,gain,27238688,Threesome-ish,Threesome,5,community: jthreesome,1,10566
+semantic/length_both,gain,6900034,translation from german,Translation,8,Trans Wolfram,1,3285
+semantic/length_both,gain,6949472,Collaborative fic,Collaboration,7,Community: friend_fic,2,774
+semantic/length_both,loss,8108959,Len Needs a Hug,Leonard Snart Needs a Hug,12,Steve Needs a Hug,4,3
+semantic/length_both,loss,34582043,Sub!Hyunjin,Submissive Hwang Hyunjin,25,Human Hwang Hyunjin,2,38
+semantic/length_both,loss,38795308,Jaskier dies,Dead Jaskier | Dandelion,12,Jaskier | Dandelion is Missing,1,4
+semantic/length_both,loss,1859093,season 12,Season/Series 12,21,Pre-Season/Series 12,34,496
+semantic/length_both,loss,10209520,dominant Jungkook,Dom Jeon Jungkook,28,King Jeon Jungkook,4,635
+semantic/usage_both,gain,27238688,Threesome-ish,Threesome,10,community: jthreesome,1,10566
+semantic/usage_both,gain,4750611,drinking party,Drinking,7,Drinking Games,1,18671
+semantic/usage_both,gain,257780,OMC death,Original Character Death(s),10,Dead Oma Kokichi,1,5056
+semantic/usage_both,gain,4870615,abbyrose: Podfic,Podfic,2,HP Podfic Fest 2016,0,16873
+semantic/usage_both,gain,3521003,A little bit NSFW,Not Suitable/Safe For Work,10,A3! NSFW Week,0,13118
+semantic/usage_both,loss,8108959,Len Needs a Hug,Leonard Snart Needs a Hug,12,Brian Needs a Hug,4,3
+semantic/usage_both,loss,428601,Mermaid Harry,Merperson Harry Styles,14,Merperson Harry Potter,2,16
+semantic/usage_both,loss,2393658,1984 AU,Alternate Universe - 1984 Fusion,12,Australia,3,9
+semantic/usage_both,loss,3029498,stucky friendship,Bucky Barnes & Steve Rogers Friendship,119,Stiles Stilinski & Dean Winchester Friendship,1,412
+semantic/usage_both,loss,34582043,Sub!Hyunjin,Submissive Hwang Hyunjin,54,Human Hwang Hyunjin,2,38
+semantic/metadata_both,gain,752012,light roleplay,Roleplay,7,Sexual Roleplay,7,5310
+semantic/metadata_both,gain,828518,Unrequited affection,Unrequited,8,Unrequited Love,3,1148
+semantic/metadata_both,gain,27238688,Threesome-ish,Threesome,6,community: jthreesome,1,10566
+semantic/metadata_both,gain,212428,Mirror Verse,Mirror Universe,8,Mirror of Erised,4,1105
+semantic/metadata_both,gain,2016329,fluffstuff,Fluff,6,Flufftober 2017,1,590440
+semantic/metadata_both,loss,428601,Mermaid Harry,Merperson Harry Styles,17,Merperson Harry Potter,2,16
+semantic/metadata_both,loss,3029498,stucky friendship,Bucky Barnes & Steve Rogers Friendship,33,Stiles Stilinski & Dean Winchester Friendship,1,412
+semantic/metadata_both,loss,8384602,naga Harry,Naga Harry Potter,54,Naga,3,1
+semantic/metadata_both,loss,34582043,Sub!Hyunjin,Submissive Hwang Hyunjin,36,Human Hwang Hyunjin,2,38
+semantic/metadata_both,loss,5598150,Omega Zach,Omega Zach Mitchell,45,Omega Jack Zimmermann,0,3
+semantic/cotags_length_both,gain,828518,Unrequited affection,Unrequited,1,Unrequited,3,1148
+semantic/cotags_length_both,gain,29015717,little!wooyoung,Age Play Little Jung Wooyoung,1,Age Play Little Jung Wooyoung,2,9
+semantic/cotags_length_both,gain,27238688,Threesome-ish,Threesome,2,Community: ff_threesomes,1,10566
+semantic/cotags_length_both,gain,13202566,no skating,Alternate Universe - No Ice Skating,4,Skating,3,32
+semantic/cotags_length_both,gain,7190951,akuma!marinette,Akumatized Marinette Dupain-Cheng | Ladybug,8,Angry Marinette Dupain-Cheng,3,181
+semantic/cotags_length_both,loss,1158965,dirt talk,Dirty Talk,17,Fíli Talks Dirty,0,41218
+semantic/cotags_length_both,loss,3029498,stucky friendship,Bucky Barnes & Steve Rogers Friendship,23,Stiles Stilinski & Dean Winchester Friendship,1,412
+semantic/cotags_length_both,loss,1358129,Implied Past Prostitution,Prostitution,14,Prostitute Prompto Argentum,1,7387
+semantic/cotags_length_both,loss,2777730,New Rome,New Rome (Percy Jackson),22,Modern Rome Arc (Rusty Quill Gaming),1,20
+semantic/cotags_length_both,loss,8384602,naga Harry,Naga Harry Potter,28,Human Nagini (Harry Potter),3,1
+semantic/all_both,gain,828518,Unrequited affection,Unrequited,1,Unrequited,3,1148
+semantic/all_both,gain,29015717,little!wooyoung,Age Play Little Jung Wooyoung,1,Age Play Little Jung Wooyoung,2,9
+semantic/all_both,gain,27238688,Threesome-ish,Threesome,3,Community: ff_threesomes,1,10566
+semantic/all_both,gain,13202566,no skating,Alternate Universe - No Ice Skating,4,Skating,3,32
+semantic/all_both,gain,7190951,akuma!marinette,Akumatized Marinette Dupain-Cheng | Ladybug,4,Angry Marinette Dupain-Cheng,3,181
+semantic/all_both,loss,16671573,EXO Cameos,Mentioned EXO (EXO),41,Cute Kim Seokjin | Jin/Kim Taehyung | V,2,93
+semantic/all_both,loss,1158965,dirt talk,Dirty Talk,29,Fíli Talks Dirty,0,41218
+semantic/all_both,loss,428601,Mermaid Harry,Merperson Harry Styles,21,Merperson Harry Potter,2,16
+semantic/all_both,loss,3029498,stucky friendship,Bucky Barnes & Steve Rogers Friendship,93,Stiles Stilinski & Dean Winchester Friendship,1,412
+semantic/all_both,loss,1358129,Implied Past Prostitution,Prostitution,14,Prostitute Prompto Argentum,1,7387
+semantic/all_name_anchor,gain,752012,light roleplay,Roleplay,1,Roleplay,7,5310
+semantic/all_name_anchor,gain,828518,Unrequited affection,Unrequited,1,Unrequited,3,1148
+semantic/all_name_anchor,gain,29015717,little!wooyoung,Age Play Little Jung Wooyoung,2,Cute Jung Wooyoung,2,9
+semantic/all_name_anchor,gain,5780531,Bad Deaton,Dark Alan Deaton,7,Good Alan Deaton,1,19
+semantic/all_name_anchor,gain,884016,written in second person,POV Second Person,1,POV Second Person,3,13957
+semantic/all_name_anchor,loss,7086020,Awesome Arthur,Awesome Arthur Pendragon (Merlin),17,Poor Arthur,1,1
+semantic/all_name_anchor,loss,428601,Mermaid Harry,Merperson Harry Styles,18,Merperson Harry Potter,2,16
+semantic/all_name_anchor,loss,933769,REC REC REC,Recommendations,224,To Rec,0,50
+semantic/all_name_anchor,loss,17996301,Sid POV,POV Sidney Crosby,116,Roy POV,0,0
+semantic/all_name_anchor,loss,18842046,Bi Richie,Bisexual Richie Tozier,59,Beep Beep Richie,1,512

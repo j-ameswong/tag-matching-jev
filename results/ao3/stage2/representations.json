@@ -1,0 +1,75 @@
+{
+  "protocol_sha256": "8f3cfa18e6dfd69cd5657c77ce9612cc0f386aa248c33fa29abbe49b2b06103a",
+  "benchmark": {
+    "snapshot_id": "ao3-20210226-ac07b915acab",
+    "manifest_sha256": "0ecf97fdd18e8ecb57abf8bf13294033a4204517948dba62259a674df23f9e36",
+    "artifacts": {
+      "catalogue.csv": {
+        "rows": 1175987,
+        "sha256": "a7ceb460395b375c0555dc9bc4acf005aabf712219e3705b2ddbcf3be90a7c7d",
+        "bytes": 80317513
+      },
+      "synonyms.csv": {
+        "rows": 224744,
+        "sha256": "591fb99a3982dcc8b5ddce3883ff77877a2795dcebf8ebb48ecff3f3d92644b6",
+        "bytes": 21921338
+      },
+      "development.csv": {
+        "rows": 2250,
+        "sha256": "2049ea84c35fb4b8144313aed0fc78a9655ce71876c6a52c5267b2b34a877bfd",
+        "bytes": 380125
+      }
+    },
+    "type": "Freeform",
+    "evaluation_split": "development",
+    "canonical_candidates": 181067,
+    "development_synonyms": 2000,
+    "development_synonym_groups": 1761,
+    "development_identities": 250,
+    "permitted_development_aliases": 70294,
+    "population_synonyms_by_split": {
+      "test": 21406,
+      "calibration": 24943,
+      "development": 70294
+    },
+    "calibration_and_test_evaluated": false
+  },
+  "base_embedding_cache": "data/ao3-baselines/embeddings/3aad7cb2778c2670fdb0",
+  "base_strings": 183067,
+  "unique_strings": 1025663,
+  "novel_strings": 842596,
+  "selected_alias_examples": 48080,
+  "availability": {
+    "fandom": {
+      "candidates_with_additional_text": 96782,
+      "synonym_queries_with_additional_text": 778
+    },
+    "cotags": {
+      "candidates_with_additional_text": 99544,
+      "synonym_queries_with_additional_text": 949
+    },
+    "length": {
+      "candidates_with_additional_text": 85886,
+      "synonym_queries_with_additional_text": 798
+    },
+    "usage": {
+      "candidates_with_additional_text": 85886,
+      "synonym_queries_with_additional_text": 798
+    },
+    "metadata": {
+      "candidates_with_additional_text": 85886,
+      "synonym_queries_with_additional_text": 798
+    },
+    "cotags_length": {
+      "candidates_with_additional_text": 99925,
+      "synonym_queries_with_additional_text": 1042
+    },
+    "all": {
+      "candidates_with_additional_text": 99925,
+      "synonym_queries_with_additional_text": 1042
+    }
+  },
+  "texts.json_sha256": "2502021a782bf16cafb51aefe8adc8cc163cbaffd55d9a3bb32c4344e6437efb",
+  "positions.npz_sha256": "e31a340d8867b0187cc7fb4d4d45ca9714a820b6191671b173b27e9bbe9ed611",
+  "profiles.json_sha256": "ef5c7af503b317adc8317873af6c6703a2bf3445df2c5d7c0bf26009ce0a3f97"
+}
